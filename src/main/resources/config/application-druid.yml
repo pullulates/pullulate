@@ -1,0 +1,19 @@
+# 数据源配置
+spring:
+  datasource:
+    dynamic:
+      #设置默认的数据源或者数据源组,默认值即为master
+      primary: master
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候回抛出异常,不启动会使用默认数据源.
+      strict: false
+      datasource:
+        master:
+          url: jdbc:p6spy:mysql://106.55.165.80:3306/pullulates
+          username: root
+          password: pullulates123456
+          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+        slave_1:
+          url: jdbc:p6spy:mysql://106.55.165.80:3306/pullulates
+          username: root
+          password: pullulates123456
+          driver-class-name: com.p6spy.engine.spy.P6SpyDriver

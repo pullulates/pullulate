@@ -1,0 +1,25 @@
+package top.pullulate.system.service;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import top.pullulate.system.entity.PulRole;
+
+import java.util.List;
+
+/**
+ * @功能描述:   角色服务接口
+ * @Author: pullulates
+ * @Date: 2020/6/14 0014 16:36
+ * @CopyRight: pullulates
+ * @GitHub: https://github.com/pullulates
+ * @Gitee: https://gitee.com/pullulates
+ */
+public interface IPulRoleService extends IService<PulRole> {
+
+    /**
+     * 根据用户主键获取用户角色集合
+     *
+     * @param userId    用户主键
+     * @return  用户角色集合
+     */
+    List<PulRole> getUserRolesByUserId(String userId);
+}
