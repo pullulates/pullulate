@@ -51,13 +51,19 @@ public class PulMenu {
     private String hidden;
 
     /** 强制菜单显示为Item而不是SubItem(配合 meta.hidden) */
-    private String hideChildenInMenu;
+    private String hideChildrenInMenu;
 
     /** 是否隐藏面包屑与页面标题栏 */
     private String hiddenHeaderContent;
 
     /** 图标 */
     private String icon;
+
+    /** 菜单层级 */
+    private Integer level;
+
+    /** 排序编号 */
+    private Integer orderNum;
 
     /** 状态 */
     private String status;

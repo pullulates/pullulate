@@ -33,7 +33,8 @@ mybatis-plus:
   configuration:
     # 配置type-enums-package只对注解方式的枚举处理能提前加载缓存.
     default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+  type-aliases-package: top.pullulate.system.entity
 
 logging:
   level:
-    top.pullulate.system: debug
+    top.pullulate: debug

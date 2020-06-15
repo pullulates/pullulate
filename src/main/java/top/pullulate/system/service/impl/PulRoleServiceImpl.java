@@ -8,6 +8,7 @@ import top.pullulate.system.mapper.PulRoleMapper;
 import top.pullulate.system.service.IPulRoleService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @功能描述:   角色服务接口实现类
@@ -19,7 +20,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class IPulRoleServiceImpl extends ServiceImpl<PulRoleMapper, PulRole> implements IPulRoleService {
+public class PulRoleServiceImpl extends ServiceImpl<PulRoleMapper, PulRole> implements IPulRoleService {
 
     private final PulRoleMapper pulRoleMapper;
 
@@ -31,6 +32,7 @@ public class IPulRoleServiceImpl extends ServiceImpl<PulRoleMapper, PulRole> imp
      */
     @Override
     public List<PulRole> getUserRolesByUserId(String userId) {
-        return pulRoleMapper.selectUserRolesByUserId(userId);
+        return pulRoleMapper.selectUserRolesByUserId(userId)
+                .stream().distinct().collect(Collectors.toList());
     }
 }

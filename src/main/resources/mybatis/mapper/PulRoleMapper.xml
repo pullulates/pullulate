@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.pullulate.system.mapper.PulRoleMapper">
+
+    <resultMap id="BaseResultMap" type="PulRole">
+        <id column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
+        <result column="role_key" property="roleKey"/>
+        <result column="status" property="status"/>
+        <result column="has_all_menu" property="hasAllMenu"/>
+        <result column="has_all_data" property="hasAllData"/>
+        <result column="delete_flag" property="deleteFlag"/>
+        <result column="remark" property="remark"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_at" property="createAt"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_at" property="updateAt"/>
+    </resultMap>
+    
+    <sql id="BasicInfoField">
+        r.role_id, r.role_name, r.role_key, r.status, r.has_all_menu, r.has_all_data, r.delete_flag, r.remark, r.create_by, r.create_at, r.update_by,r.update_at
+    </sql>
+
+    <select id="selectUserRolesByUserId" parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="BasicInfoField"></include>
+        from pul_role r
+        left join pul_user_role ur on ur.role_id = r.role_id
+        where ur.user_id = #{userId} and r.status = '0' and r.delete_flag = '0'
+    </select>
+</mapper>

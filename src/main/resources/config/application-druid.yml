@@ -8,12 +8,12 @@ spring:
       strict: false
       datasource:
         master:
-          url: jdbc:p6spy:mysql://106.55.165.80:3306/pullulates
+          url: jdbc:mysql://106.55.165.80:3306/pullulates
           username: root
           password: pullulates123456
-          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+          driver-class-name: com.mysql.cj.jdbc.Driver
         slave_1:
-          url: jdbc:p6spy:mysql://106.55.165.80:3306/pullulates
+          url: jdbc:mysql://106.55.165.80:3306/pullulates
           username: root
           password: pullulates123456
-          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+          driver-class-name: com.mysql.cj.jdbc.Driver
