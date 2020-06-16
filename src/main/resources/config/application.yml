@@ -31,10 +31,13 @@ mybatis-plus:
   # 配置通用枚举
   type-enums-package: top.pullulate.common.enums
   configuration:
+    #使用驼峰法映射属性,配置这个resultType可以映射
+    map-underscore-to-camel-case: true
     # 配置type-enums-package只对注解方式的枚举处理能提前加载缓存.
     default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+    # 日志信息
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # 配置实体类别名
   type-aliases-package: top.pullulate.system.entity
-
-logging:
-  level:
-    top.pullulate: debug
+  # 配置xml信息
+  mapper-locations: classpath:/mybatis/mapper/*.xml

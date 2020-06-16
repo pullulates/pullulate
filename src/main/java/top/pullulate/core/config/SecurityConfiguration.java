@@ -78,4 +78,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailService).passwordEncoder(bCryptPasswordEncoder());
     }
+
+    public static void main(String[] args) {
+        System.out.println(new BCryptPasswordEncoder().encode("pullulate"));
+//        System.out.println(new BCryptPasswordEncoder().matches());
+    }
 }

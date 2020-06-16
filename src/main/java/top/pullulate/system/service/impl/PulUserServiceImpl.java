@@ -30,7 +30,7 @@ public class PulUserServiceImpl extends ServiceImpl<PulUserMapper, PulUser> impl
     @Override
     public PulUser getUserInfoByUserId(String userId) {
         if (StrUtil.isBlank(userId)) {
-            log.error("获取用户信息服务，用户标识为空");
+            log.warn("获取用户信息服务，用户标识为空");
             return null;
         }
         return getById(userId);
@@ -45,11 +45,10 @@ public class PulUserServiceImpl extends ServiceImpl<PulUserMapper, PulUser> impl
     @Override
     public PulUser getUserInfoByPhone(String phone) {
         if (StrUtil.isBlank(phone)) {
-            log.error("获取用户信息服务，手机号码为空");
+            log.warn("获取用户信息服务，手机号码为空");
             return null;
         }
-        PulUser user = getOne(Wrappers.<PulUser>query()
-                        .lambda().eq(PulUser::getPhone, phone));
+        PulUser user = getOne(Wrappers.<PulUser>query().lambda().eq(PulUser::getPhone, phone));
         return user;
     }
 
@@ -62,11 +61,10 @@ public class PulUserServiceImpl extends ServiceImpl<PulUserMapper, PulUser> impl
     @Override
     public PulUser getUserInfoByUserName(String userName) {
         if (StrUtil.isBlank(userName)) {
-            log.error("获取用户信息服务，用户名称为空");
+            log.warn("获取用户信息服务，用户名称为空");
             return null;
         }
-        PulUser user = getOne(Wrappers.<PulUser>query()
-                .lambda().eq(PulUser::getUserName, userName));
+        PulUser user = getOne(Wrappers.<PulUser>query().lambda().eq(PulUser::getUserName, userName));
         return user;
     }
 }

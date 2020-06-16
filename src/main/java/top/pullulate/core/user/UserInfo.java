@@ -1,17 +1,11 @@
-/*
- * Copyright (c) 2020. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
- */
-
 package top.pullulate.core.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import top.pullulate.common.enums.LockFlag;
 import top.pullulate.system.entity.PulDept;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.entity.PulRole;
@@ -24,7 +18,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class UserInfo extends User {
+public class UserInfo implements UserDetails {
 
     /** 用户主键 */
     private String userId;
@@ -65,13 +59,58 @@ public class UserInfo extends User {
     /** 权限集合 */
     private Set<String> permissions;
 
-    public UserInfo(String userId, PulUser user, PulDept dept, List<PulRole> roles, List<PulMenu> menus, Set<String> permissions, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired,
-                    boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+    public UserInfo(String userId, PulUser user) {
+        this.userId = userId;
+        this.user = user;
+    }
+
+    public UserInfo(String userId, PulUser user, PulDept dept, List<PulRole> roles, List<PulMenu> menus, Set<String> permissions) {
         this.userId = userId;
         this.user = user;
         this.dept = dept;
         this.roles = roles;
         this.permissions = permissions;
+    }
+
+    @JsonIgnore
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @JsonIgnore
+    @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
+
+    @JsonIgnore
+    @Override
+    public String getUsername() {
+        return user.getUserName();
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        return !LockFlag.hasLocked(user.getLockFlag());
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isEnabled() {
+        return !LockFlag.hasLocked(user.getLockFlag());
     }
 }

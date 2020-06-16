@@ -3,6 +3,7 @@ package top.pullulate.system.entity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
  * @Gitee: https://gitee.com/pullulates
  */
 @Data
-public class PulRole {
+public class PulRole implements Serializable {
 
     /** 角色主键 */
     @TableId

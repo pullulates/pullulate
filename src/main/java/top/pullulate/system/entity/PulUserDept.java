@@ -2,6 +2,8 @@ package top.pullulate.system.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @功能描述:   用户部门实体类
  * @Author: pullulates
@@ -11,7 +13,7 @@ import lombok.Data;
  * @Gitee: https://gitee.com/pullulates
  */
 @Data
-public class PulUserDept {
+public class PulUserDept implements Serializable {
 
     /** 用户主键 */
     private String userId;

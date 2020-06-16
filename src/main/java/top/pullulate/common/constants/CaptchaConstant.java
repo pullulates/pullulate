@@ -13,7 +13,7 @@ public class CaptchaConstant {
     /**
      * 当前验证码类型
      */
-    public static final String CURRENT_CAPTCHA_TYPE = "gif";
+    public static final String CURRENT_CAPTCHA_TYPE = "arithmetic";
 
     /**
      * 图片验证码

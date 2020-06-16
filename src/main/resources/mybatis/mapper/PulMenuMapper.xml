@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mappem.dtd">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="top.pullulate.system.mapper.PulMenuMapper">
 
@@ -35,7 +37,7 @@
     </sql>
 
     <sql id="BuildMenuField">
-        m.menu_id, m.parent_id, m.title, m.name, m.path, m.redirect, m.component, m.keep_alive, m.permission, m.target, m.hidden, m.hide_childen_in_menu,
+        m.menu_id, m.parent_id, m.title, m.name, m.path, m.redirect, m.component, m.keep_alive, m.permission, m.target, m.hidden, m.hide_children_in_menu,
         m.hidden_header_content, m.icon, m.level, m.order_num
     </sql>
 
