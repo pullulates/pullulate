@@ -17,6 +17,7 @@ public interface IPulRoleService extends IService<PulRole> {
 
     /**
      * 根据用户主键获取用户角色集合
+     * 不包含那些被禁用或被删除的角色信息
      *
      * @param userId    用户主键
      * @return  用户角色集合

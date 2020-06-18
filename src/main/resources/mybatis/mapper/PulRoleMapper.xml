@@ -20,8 +20,12 @@
         <result column="update_at" property="updateAt"/>
     </resultMap>
     
-    <sql id="BasicInfoField">
+    <sql id="AllInfoField">
         r.role_id, r.role_name, r.role_key, r.status, r.has_all_menu, r.has_all_data, r.delete_flag, r.remark, r.create_by, r.create_at, r.update_by,r.update_at
+    </sql>
+
+    <sql id="BasicInfoField">
+        r.role_id, r.role_name, r.role_key, r.status, r.has_all_menu, r.has_all_data, r.delete_flag
     </sql>
 
     <select id="selectUserRolesByUserId" parameterType="String" resultMap="BaseResultMap">

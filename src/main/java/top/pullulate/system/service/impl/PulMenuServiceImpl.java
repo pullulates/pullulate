@@ -29,6 +29,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
     /**
      * 根据用户主键查询用户菜单信息
      * 包含了菜单和按钮
+     * 不包含那些被禁用或被删除的菜单信息
      *
      * @param userId    用户主键
      * @return  用户菜单信息

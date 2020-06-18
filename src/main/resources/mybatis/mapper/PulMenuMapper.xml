@@ -31,7 +31,7 @@
         <result column="update_at" property="updateAt"/>
     </resultMap>
     
-    <sql id="BasicInfoField">
+    <sql id="AllInfoField">
         m.menu_id, m.parent_id, m.title, m.name, m.path, m.redirect, m.component, m.keep_alive, m.permission, m.target, m.hidden, m.hide_children_in_menu,
         m.hidden_header_content, m.icon, m.level, m.order_num, m.status, m.delete_flag, m.remark, m.create_by, m.create_at, m.update_by,m.update_at
     </sql>

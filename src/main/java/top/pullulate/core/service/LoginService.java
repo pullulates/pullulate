@@ -16,8 +16,10 @@ import top.pullulate.common.enums.LoginType;
 import top.pullulate.core.user.UserInfo;
 import top.pullulate.core.utils.RedisUtils;
 import top.pullulate.core.utils.TokeUtils;
+import top.pullulate.system.entity.PulDept;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.entity.PulRole;
+import top.pullulate.system.service.IPulDeptService;
 import top.pullulate.system.service.IPulMenuService;
 import top.pullulate.system.service.IPulRoleService;
 import top.pullulate.utils.security.RSAUtils;
@@ -49,6 +51,8 @@ public class LoginService {
     private final IPulRoleService pulRoleService;
 
     private final IPulMenuService pulMenuService;
+
+    private final IPulDeptService pulDeptService;
 
     public P login(LoginVo loginVo) {
         // 验证图形验证码
@@ -96,6 +100,7 @@ public class LoginService {
         // 获取用户信息
         UserInfo userInfo = (UserInfo) authentication.getPrincipal();
         // 在保证用户输入的登录凭证是正确的情况下，再去拉取其它用户信息
+        PulDept dept = pulDeptService.getUserDeptByUserId(userInfo.getUserId());
         List<PulRole> roles = pulRoleService.getUserRolesByUserId(userInfo.getUserId());
         List<PulMenu> menus = pulMenuService.getUserMenusByUserId(userInfo.getUserId());
         Set<String> permissions = menus.stream().map(pulMenu -> pulMenu.getPermission()).collect(Collectors.toSet());
@@ -103,6 +108,6 @@ public class LoginService {
         userInfo.setMenus(menus);
         userInfo.setPermissions(permissions);
         String token = tokeUtils.createToken(userInfo);
-        return P.success(userInfo, token);
+        return P.token(token);
     }
 }
