@@ -15,6 +15,8 @@ import java.io.Serializable;
 @Data
 public class PulUserRole implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /** 用户主键 */
     private String userId;
 

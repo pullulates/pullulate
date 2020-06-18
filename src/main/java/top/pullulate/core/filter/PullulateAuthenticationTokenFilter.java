@@ -2,6 +2,7 @@ package top.pullulate.core.filter;
 
 import cn.hutool.core.util.ObjectUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -23,6 +24,7 @@ import java.io.IOException;
  * @GitHub: https://github.com/pullulates
  * @Gitee: https://gitee.com/pullulates
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class PullulateAuthenticationTokenFilter extends OncePerRequestFilter {

@@ -78,4 +78,16 @@ public class GlobalExceptionHandler {
         log.error("业务异常：", e);
         return P.error(e.getMessage());
     }
+
+    /**
+     * 通用的业务异常
+     *
+     * @param e 异常信息
+     * @return  P
+     */
+    @ExceptionHandler(RedisCacheException.class)
+    public P businessExceptionHandler(RedisCacheException e){
+        log.error("缓存异常：", e);
+        return P.error(e.getMessage());
+    }
 }

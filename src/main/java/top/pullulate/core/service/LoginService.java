@@ -104,6 +104,7 @@ public class LoginService {
         List<PulRole> roles = pulRoleService.getUserRolesByUserId(userInfo.getUserId());
         List<PulMenu> menus = pulMenuService.getUserMenusByUserId(userInfo.getUserId());
         Set<String> permissions = menus.stream().map(pulMenu -> pulMenu.getPermission()).collect(Collectors.toSet());
+        userInfo.setDept(dept);
         userInfo.setRoles(roles);
         userInfo.setMenus(menus);
         userInfo.setPermissions(permissions);

@@ -55,7 +55,6 @@ public class TokeUtils {
         String token = getToken(request);
         if (StrUtil.isNotBlank(token)) {
             Claims claims = parseToken(token);
-            // 解析对应的权限以及用户信息
             String uuid = (String) claims.get(CacheConstant.CACHE_USER_INFO_PREFFIX);
             String userKey = getTokenKey(uuid);
             UserInfo userInfo = redisUtils.getCacheObject(userKey);

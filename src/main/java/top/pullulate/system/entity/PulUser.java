@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 @Data
 public class PulUser implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /** 用户主键 */
     @TableId
     private String userId;

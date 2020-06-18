@@ -33,7 +33,7 @@
         select
         <include refid="BasicInfoField"></include>
         from pul_dept d
-        left join pul_user_dept ud on ud.user_id = d.user_id
+        left join pul_user_dept ud on ud.dept_id = d.dept_id
         where ud.user_id = #{userId} and d.delete_flag = '0'
     </select>
 </mapper>

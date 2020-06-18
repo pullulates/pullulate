@@ -17,6 +17,8 @@ import java.time.LocalDateTime;
 @Data
 public class PulDept implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /** 部门主键 */
     @TableId
     private String deptId;
