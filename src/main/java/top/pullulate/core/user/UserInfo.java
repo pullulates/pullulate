@@ -11,7 +11,7 @@ import top.pullulate.system.entity.PulDept;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.entity.PulRole;
 import top.pullulate.system.entity.PulUser;
-
+import top.pullulate.web.data.vo.RouterVo;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -56,7 +56,7 @@ public class UserInfo implements UserDetails {
     private List<PulRole> roles;
 
     /** 拥有菜单集合 */
-    private List<PulMenu> menus;
+    private List<RouterVo> routers;
 
     /** 权限集合 */
     private Set<String> permissions;

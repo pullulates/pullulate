@@ -1,7 +1,14 @@
 package top.pullulate.core.handler;
 
+import cn.hutool.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import top.pullulate.common.constants.HttpConstant;
+import top.pullulate.core.utils.RedisUtils;
+import top.pullulate.core.utils.TokeUtils;
+import top.pullulate.utils.MessageUtils;
+import top.pullulate.utils.ServletUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +24,15 @@ import java.io.IOException;
  * @Gitee: https://gitee.com/pullulates
  */
 @Component
+@RequiredArgsConstructor
 public class LogoutSuccessHandler implements org.springframework.security.web.authentication.logout.LogoutSuccessHandler {
 
-    @Override
-    public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+    private final TokeUtils tokeUtils;
 
+    @Override
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        response.setStatus(HttpStatus.HTTP_OK);
+        tokeUtils.deleteUserInfo(request);
+        ServletUtils.write(response, MessageUtils.get("login.out.success"), HttpConstant.CONTENT_TYPE_JSON);
     }
 }

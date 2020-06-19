@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @功能描述:   菜单实体类
@@ -29,8 +30,14 @@ public class PulMenu implements Serializable {
     /** 标题 */
     private String title;
 
+    /** 英文标题 */
+    private String usTitle;
+
     /** 名称 */
     private String name;
+
+    /** 英文名称 */
+    private String usName;
 
     /** 访问路径 */
     private String path;
@@ -62,6 +69,9 @@ public class PulMenu implements Serializable {
     /** 图标 */
     private String icon;
 
+    /** 菜单类型 */
+    private String menuType;
+
     /** 菜单层级 */
     private Integer level;
 
@@ -88,4 +98,7 @@ public class PulMenu implements Serializable {
 
     /** 更新时间 */
     private LocalDateTime updateAt;
+
+    /** 子菜单 */
+    private List<PulMenu> childrenMenus;
 }

@@ -51,7 +51,6 @@ public class TokeUtils {
      * @return 用户信息
      */
     public UserInfo getUserInfo(HttpServletRequest request) {
-        // 获取请求携带的令牌
         String token = getToken(request);
         if (StrUtil.isNotBlank(token)) {
             Claims claims = parseToken(token);
@@ -61,6 +60,21 @@ public class TokeUtils {
             return userInfo;
         }
         return null;
+    }
+
+    /**
+     * 删除用户身份信息
+     *
+     * @return 用户信息
+     */
+    public void deleteUserInfo(HttpServletRequest request) {
+        String token = getToken(request);
+        if (StrUtil.isNotBlank(token)) {
+            Claims claims = parseToken(token);
+            String uuid = (String) claims.get(CacheConstant.CACHE_USER_INFO_PREFFIX);
+            String userKey = getTokenKey(uuid);
+            redisUtils.deleteObject(userKey);
+        }
     }
 
     /**

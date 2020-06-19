@@ -25,6 +25,8 @@ import top.pullulate.system.service.IPulRoleService;
 import top.pullulate.utils.security.RSAUtils;
 import top.pullulate.web.data.dto.P;
 import top.pullulate.web.data.vo.LoginVo;
+import top.pullulate.web.data.vo.RouterVo;
+
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -102,11 +104,11 @@ public class LoginService {
         // 在保证用户输入的登录凭证是正确的情况下，再去拉取其它用户信息
         PulDept dept = pulDeptService.getUserDeptByUserId(userInfo.getUserId());
         List<PulRole> roles = pulRoleService.getUserRolesByUserId(userInfo.getUserId());
-        List<PulMenu> menus = pulMenuService.getUserMenusByUserId(userInfo.getUserId());
-        Set<String> permissions = menus.stream().map(pulMenu -> pulMenu.getPermission()).collect(Collectors.toSet());
+        List<RouterVo> routers = pulMenuService.buildRoutersByUserId(userInfo.getUserId());
+        Set<String> permissions = pulMenuService.getUserPermissionsByUserId(userInfo.getUserId());
         userInfo.setDept(dept);
         userInfo.setRoles(roles);
-        userInfo.setMenus(menus);
+        userInfo.setRouters(routers);
         userInfo.setPermissions(permissions);
         String token = tokeUtils.createToken(userInfo);
         return P.token(token);

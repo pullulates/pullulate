@@ -9,7 +9,9 @@
         <id column="menu_id" property="menuId"/>
         <result column="parent_id" property="parentId"/>
         <result column="title" property="title"/>
+        <result column="us_title" property="usTitle"/>
         <result column="name" property="name"/>
+        <result column="us_name" property="usName"/>
         <result column="path" property="path"/>
         <result column="redirect" property="redirect"/>
         <result column="component" property="component"/>
@@ -20,6 +22,7 @@
         <result column="hide_children_in_menu" property="hideChildrenInMenu"/>
         <result column="hidden_header_content" property="hiddenHeaderContent"/>
         <result column="icon" property="icon"/>
+        <result column="menu_type" property="menuType"/>
         <result column="level" property="level"/>
         <result column="order_num" property="orderNum"/>
         <result column="status" property="status"/>
@@ -32,24 +35,24 @@
     </resultMap>
     
     <sql id="AllInfoField">
-        m.menu_id, m.parent_id, m.title, m.name, m.path, m.redirect, m.component, m.keep_alive, m.permission, m.target, m.hidden, m.hide_children_in_menu,
-        m.hidden_header_content, m.icon, m.level, m.order_num, m.status, m.delete_flag, m.remark, m.create_by, m.create_at, m.update_by,m.update_at
+        m.menu_id, m.parent_id, m.title, m.us_title, m.name, m.us_name, m.path, m.redirect, m.component, m.keep_alive, m.permission, m.target, m.hidden, m.hide_children_in_menu,
+        m.hidden_header_content, m.icon, m.level, m.menu_type, m.order_num, m.status, m.delete_flag, m.remark, m.create_by, m.create_at, m.update_by,m.update_at
     </sql>
 
     <sql id="BuildMenuField">
-        m.menu_id, m.parent_id, m.title, m.name, m.path, m.redirect, m.component, m.keep_alive, m.permission, m.target, m.hidden, m.hide_children_in_menu,
-        m.hidden_header_content, m.icon, m.level, m.order_num
+        m.menu_id, m.parent_id, m.title, m.us_title, m.name, m.us_name, m.path, m.redirect, m.component, m.keep_alive, m.permission, m.target, m.hidden, m.hide_children_in_menu,
+        m.hidden_header_content, m.icon, m.level, m.menu_type, m.order_num
     </sql>
 
     <select id="selectUserMenusByUserId" parameterType="String" resultMap="BaseResultMap">
         select
-        <include refid="BuildMenuField"></include>
+        distinct <include refid="BuildMenuField"></include>
         from pul_menu m
         left join pul_role_menu rm on rm.menu_id = m.menu_id
         left join (
             select r.role_id from pul_role r left join pul_user_role ur on ur.role_id = r.role_id
             where ur.user_id = #{userId} and r.status = '0' and r.delete_flag = '0'
         ) roles on roles.role_id = rm.role_id
-        order by m.level asc, m.order_num desc
+        order by m.level, m.order_num asc
     </select>
 </mapper>
