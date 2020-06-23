@@ -3,7 +3,6 @@ package top.pullulate.core.service;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -11,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import top.pullulate.common.constants.CacheConstant;
 import top.pullulate.common.constants.RSAConstant;
-import top.pullulate.common.enums.LockFlag;
 import top.pullulate.common.enums.LoginType;
 import top.pullulate.core.user.UserInfo;
 import top.pullulate.core.utils.RedisUtils;
@@ -104,8 +102,9 @@ public class LoginService {
         // 在保证用户输入的登录凭证是正确的情况下，再去拉取其它用户信息
         PulDept dept = pulDeptService.getUserDeptByUserId(userInfo.getUserId());
         List<PulRole> roles = pulRoleService.getUserRolesByUserId(userInfo.getUserId());
-        List<RouterVo> routers = pulMenuService.buildRoutersByUserId(userInfo.getUserId());
-        Set<String> permissions = pulMenuService.getUserPermissionsByUserId(userInfo.getUserId());
+        List<PulMenu> pulMenus = pulMenuService.getUserMenusByUserId(userInfo.getUserId());
+        List<RouterVo> routers = pulMenuService.getRouters(pulMenus);
+        Set<String> permissions = pulMenuService.getPermissions(pulMenus);
         userInfo.setDept(dept);
         userInfo.setRoles(roles);
         userInfo.setRouters(routers);

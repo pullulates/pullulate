@@ -31,16 +31,16 @@ public interface IPulMenuService extends IService<PulMenu> {
     /**
      * 构建前端路由信息
      *
-     * @param userId    用户主键
+     * @param menus    用户菜单
      * @return  前端路由信息
      */
-    List<RouterVo> buildRoutersByUserId(String userId);
+    List<RouterVo> getRouters(List<PulMenu> menus);
 
     /**
-     * 根据用户主键查询权限集合
+     * 根据用户菜单获取权限集合
      *
-     * @param userId    用户主键
+     * @param menus    用户菜单
      * @return  权限集合
      */
-    Set<String> getUserPermissionsByUserId(String userId);
+    Set<String> getPermissions(List<PulMenu> menus);
 }

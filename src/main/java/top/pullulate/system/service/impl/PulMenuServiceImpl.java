@@ -52,24 +52,22 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
     /**
      * 构建前端路由信息
      *
-     * @param userId    用户主键
+     * @param menus    用户菜单集合
      * @return  前端路由信息
      */
     @Override
-    public List<RouterVo> buildRoutersByUserId(String userId) {
-        List<PulMenu> pulMenus = getUserMenusByUserId(userId);
-        return buildRouters(pulMenus, pulMenus, new HashSet<String>());
+    public List<RouterVo> getRouters(List<PulMenu> menus) {
+        return buildRouters(menus, menus, new HashSet<String>());
     }
 
     /**
-     * 根据用户主键查询权限集合
+     * 根据用户菜单获取权限集合
      *
-     * @param userId    用户主键
+     * @param pulMenus    用户菜单
      * @return  权限集合
      */
     @Override
-    public Set<String> getUserPermissionsByUserId(String userId) {
-        List<PulMenu> pulMenus = getUserMenusByUserId(userId);
+    public Set<String> getPermissions(List<PulMenu> pulMenus) {
         return pulMenus.stream().map(pulMenu -> pulMenu.getPermission()).collect(Collectors.toSet());
     }
 
