@@ -61,7 +61,11 @@ public class CaptchaController {
                 break;
         }
         String uuid = IdUtil.fastSimpleUUID();
-        redisUtils.setCacheObject(CacheConstant.CACHE_IMAGE_CAPTCHA_PREFFIX + uuid, result, CacheConstant.CACHE_IMAGE_CAPTCHA_EXPIRE_TIME, TimeUnit.MINUTES);
+        redisUtils.setCacheObject(
+                CacheConstant.CACHE_IMAGE_CAPTCHA_PREFFIX + uuid,
+                result,
+                CacheConstant.CACHE_IMAGE_CAPTCHA_EXPIRE_TIME,
+                TimeUnit.MINUTES);
         return P.success(img, uuid);
     }
 }

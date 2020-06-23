@@ -45,9 +45,6 @@ public class PulUser implements Serializable {
     /** 出生日期 */
     private LocalDate birth;
 
-    /** 密码加密盐 */
-    private String salt;
-
     /** 登录密码 */
     private String password;
 

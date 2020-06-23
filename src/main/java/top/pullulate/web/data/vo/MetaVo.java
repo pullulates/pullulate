@@ -46,15 +46,21 @@ public class MetaVo {
      */
     private Boolean show;
 
+    /**
+     * 是否本窗口打开
+     */
+    private String target;
+
     public MetaVo() {
     }
 
-    public MetaVo(String title, String icon, String[] permission, Boolean keepAlive, Boolean hiddenHeaderContent, Boolean show) {
+    public MetaVo(String title, String icon, String[] permission, Boolean keepAlive, Boolean hiddenHeaderContent, Boolean show, String target) {
         this.title = title;
         this.icon = icon;
         this.permission = permission;
         this.keepAlive = keepAlive;
         this.hiddenHeaderContent = hiddenHeaderContent;
         this.show = show;
+        this.target = target;
     }
 }

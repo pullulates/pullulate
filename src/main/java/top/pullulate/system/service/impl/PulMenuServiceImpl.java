@@ -90,7 +90,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
             RouterVo router = new RouterVo(
                         menu.getName(),
                         menu.getPath(),
-                        Show.show(menu.getHidden()),
+                        !Show.show(menu.getHidden()),
                         menu.getRedirect(),
                         menu.getComponent(),
                         new MetaVo(
@@ -99,9 +99,10 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
                                 new String[]{menu.getPermission()},
                                 KeepAlive.keepAlive(menu.getKeepAlive()),
                                 HiddenHeaderContent.hiddenHeaderContent(menu.getHiddenHeaderContent()),
-                                Show.show(menu.getHidden())
+                                Show.show(menu.getHidden()),
+                                menu.getTarget()
                         ),
-                        Show.show(menu.getHideChildrenInMenu())
+                        !Show.show(menu.getHideChildrenInMenu())
             );
             List<PulMenu> childrenMenus = getChildrenMenuList(menu, allMenus);
             if (CollectionUtil.isNotEmpty(childrenMenus)) {

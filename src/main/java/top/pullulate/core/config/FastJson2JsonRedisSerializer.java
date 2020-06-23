@@ -55,7 +55,7 @@ public class FastJson2JsonRedisSerializer<T> implements RedisSerializer<T> {
     }
 
     public void setObjectMapper(ObjectMapper objectMapper) {
-        Assert.notNull(objectMapper, "'objectMapper' must not be null");
+        Assert.notNull(objectMapper, "objectMapper must not be null");
         this.objectMapper = objectMapper;
     }
 
