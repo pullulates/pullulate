@@ -122,13 +122,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
      */
     private List<PulMenu> getChildrenMenuList(PulMenu parentMenu, List<PulMenu> menus) {
         if (!MenuType.button(parentMenu.getMenuType())) {
-            List<PulMenu> childrenMenus = new ArrayList<>();
-            for (PulMenu menu:menus) {
-                if (parentMenu.getMenuId().equals(menu.getParentId())) {
-                    childrenMenus.add(menu);
-                }
-            }
-            return childrenMenus;
+            return menus.stream().filter(menu -> parentMenu.getMenuId().equals(menu.getParentId())).collect(Collectors.toList());
         }
         return null;
     }

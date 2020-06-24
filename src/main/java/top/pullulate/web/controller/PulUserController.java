@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Gitee: https://gitee.com/pullulates
  */
 @RestController
-@RequestMapping("/pul/users")
+@RequestMapping("/system/users")
 @RequiredArgsConstructor
 public class PulUserController {
 

@@ -1,6 +1,5 @@
 package top.pullulate.web.data.vo;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

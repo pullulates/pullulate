@@ -27,4 +27,5 @@ public class LoginController {
     public P login(@Validated @RequestBody LoginVo loginVo) {
         return loginService.login(loginVo);
     }
+
 }

@@ -32,6 +32,7 @@ public class LogoutSuccessHandler implements org.springframework.security.web.au
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         response.setStatus(HttpStatus.HTTP_OK);
+        response.setCharacterEncoding(HttpConstant.UTF8);
         tokeUtils.deleteUserInfo(request);
         ServletUtils.write(response, MessageUtils.get("login.out.success"), HttpConstant.CONTENT_TYPE_JSON);
     }

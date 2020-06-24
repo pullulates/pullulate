@@ -36,9 +36,6 @@ public class PulMenu implements Serializable {
     /** 名称 */
     private String name;
 
-    /** 英文名称 */
-    private String usName;
-
     /** 访问路径 */
     private String path;
 
