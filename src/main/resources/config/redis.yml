@@ -1,8 +1,8 @@
 spring:
   redis:
-    host: localhost
-    port: 6379
-    password:
+    host: 106.55.165.80
+    port: 63790
+    password: pullulates123456
     timeout: 10s
     lettuce:
       pool:

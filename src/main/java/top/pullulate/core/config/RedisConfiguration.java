@@ -41,7 +41,6 @@ public class RedisConfiguration extends CachingConfigurerSupport {
                 .registerModule(new Jdk8Module())
                 .registerModule(new LocaDateTimeConfiguration());
         serializer.setObjectMapper(objectMapper);
-
         redisTemplate.setDefaultSerializer(serializer);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(serializer);
