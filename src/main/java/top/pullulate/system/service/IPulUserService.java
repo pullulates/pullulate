@@ -1,7 +1,13 @@
 package top.pullulate.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.pullulate.system.entity.PulUser;
+import top.pullulate.web.data.viewvo.PulUserViewVo;
+import top.pullulate.web.data.vo.PulUserVo;
+
+import java.util.List;
 
 /**
  * @功能描述:   用户服务接口
@@ -36,4 +42,13 @@ public interface IPulUserService extends IService<PulUser> {
      * @return  用户信息
      */
     PulUser getUserInfoByUserName(String userName);
+
+    /**
+     * 获取系统用户分页数据
+     *
+     * @param pulUserVo 查询参数
+     * @param page  分页参数
+     * @return  分页数据
+     */
+    IPage<List<PulUserViewVo>> getUserPage(PulUserVo pulUserVo, Page page);
 }

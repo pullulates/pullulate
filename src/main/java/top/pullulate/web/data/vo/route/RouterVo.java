@@ -1,4 +1,4 @@
-package top.pullulate.web.data.vo;
+package top.pullulate.web.data.vo.route;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -23,11 +23,10 @@ import top.pullulate.system.service.IPulRoleService;
 import top.pullulate.utils.security.RSAUtils;
 import top.pullulate.web.data.dto.P;
 import top.pullulate.web.data.vo.LoginVo;
-import top.pullulate.web.data.vo.RouterVo;
+import top.pullulate.web.data.vo.route.RouterVo;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @功能描述: 用户登录

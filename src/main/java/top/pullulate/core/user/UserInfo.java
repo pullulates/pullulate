@@ -11,7 +11,7 @@ import top.pullulate.system.entity.PulDept;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.entity.PulRole;
 import top.pullulate.system.entity.PulUser;
-import top.pullulate.web.data.vo.RouterVo;
+import top.pullulate.web.data.vo.route.RouterVo;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;

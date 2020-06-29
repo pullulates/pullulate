@@ -12,8 +12,8 @@ import top.pullulate.common.enums.Show;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.mapper.PulMenuMapper;
 import top.pullulate.system.service.IPulMenuService;
-import top.pullulate.web.data.vo.MetaVo;
-import top.pullulate.web.data.vo.RouterVo;
+import top.pullulate.web.data.vo.route.MetaVo;
+import top.pullulate.web.data.vo.route.RouterVo;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -93,6 +93,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
                         menu.getComponent(),
                         new MetaVo(
                                 menu.getTitle(),
+                                menu.getUsTitle(),
                                 menu.getIcon(),
                                 new String[]{menu.getPermission()},
                                 KeepAlive.keepAlive(menu.getKeepAlive()),

@@ -1,13 +1,19 @@
 package top.pullulate.system.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import top.pullulate.system.entity.PulUser;
 import top.pullulate.system.mapper.PulUserMapper;
 import top.pullulate.system.service.IPulUserService;
+import top.pullulate.web.data.viewvo.PulUserViewVo;
+import top.pullulate.web.data.vo.PulUserVo;
+
+import java.util.List;
 
 /**
  * @功能描述:   用户服务接口实现类
@@ -66,5 +72,17 @@ public class PulUserServiceImpl extends ServiceImpl<PulUserMapper, PulUser> impl
         }
         PulUser user = getOne(Wrappers.<PulUser>query().lambda().eq(PulUser::getUserName, userName));
         return user;
+    }
+
+    /**
+     * 获取系统用户分页数据
+     *
+     * @param pulUserVo 查询参数
+     * @param page  分页参数
+     * @return  分页数据
+     */
+    @Override
+    public IPage<List<PulUserViewVo>> getUserPage(PulUserVo pulUserVo, Page page) {
+        return baseMapper.selectUserPage(pulUserVo, page);
     }
 }

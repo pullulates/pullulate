@@ -2,7 +2,7 @@ package top.pullulate.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.pullulate.system.entity.PulMenu;
-import top.pullulate.web.data.vo.RouterVo;
+import top.pullulate.web.data.vo.route.RouterVo;
 
 import java.util.List;
 import java.util.Set;
