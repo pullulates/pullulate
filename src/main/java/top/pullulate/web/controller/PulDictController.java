@@ -54,4 +54,17 @@ public class PulDictController {
         IPage<List<PulDictDataViewVo>> pages = dictService.getDictDataPage(dictVo, page);
         return P.data(pages);
     }
+
+    /**
+     * 获取建议的排序编号
+     *
+     * @param type  类型，代表获取的是字典类别还是字典数据的排序编号
+     * @param dictTypeId  字典类别主键
+     * @return
+     */
+    @GetMapping("/suggest-ordernum")
+    public P getSuggestOrderNum(String type, String dictTypeId) {
+        int orderNum = dictService.getSuggestOrderNum(type, dictTypeId);
+        return P.data(orderNum);
+    }
 }

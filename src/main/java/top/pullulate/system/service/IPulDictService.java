@@ -35,4 +35,13 @@ public interface IPulDictService {
      * @return
      */
     IPage<List<PulDictDataViewVo>> getDictDataPage(PulDictVo dictVo, Page page);
+
+    /**
+     * 获取建议的排序编号
+     *
+     * @param type  类型，代表获取的是字典类别还是字典数据的排序编号
+     * @param dictTypeId  字典类别主键
+     * @return
+     */
+    int getSuggestOrderNum(String type, String dictTypeId);
 }

@@ -1,10 +1,14 @@
 package top.pullulate.system.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import top.pullulate.common.constants.ParamConstant;
+import top.pullulate.system.entity.PulDictData;
+import top.pullulate.system.entity.PulDictType;
 import top.pullulate.system.mapper.PulDictDataMapper;
 import top.pullulate.system.mapper.PulDictTypeMapper;
 import top.pullulate.system.service.IPulDictService;
@@ -52,5 +56,27 @@ public class PulDictServiceImpl implements IPulDictService {
     @Override
     public IPage<List<PulDictDataViewVo>> getDictDataPage(PulDictVo dictVo, Page page) {
         return dictDataMapper.selectDictDataPage(dictVo, page);
+    }
+
+    /**
+     * 获取建议的排序编号
+     *
+     * @param type  类型，代表获取的是字典类别还是字典数据的排序编号
+     * @param dictTypeId  字典类别主键
+     * @return
+     */
+    @Override
+    public int getSuggestOrderNum(String type, String dictTypeId) {
+        int suggestOrderNum = 0;
+        if (ParamConstant.DICT_TYPE.equals(type)) {
+            suggestOrderNum = dictTypeMapper.selectCount(Wrappers.<PulDictType>query().lambda()
+                    .eq(PulDictType::getDeleteFlag, ParamConstant.HAS_DELETED));
+        }
+        if (ParamConstant.DICT_DATA.equals(type)) {
+            suggestOrderNum = dictDataMapper.selectCount(Wrappers.<PulDictData>query().lambda()
+                            .eq(PulDictData::getDictTypeId, dictTypeId)
+                            .eq(PulDictData::getDeleteFlag, ParamConstant.HAS_DELETED));
+        }
+        return suggestOrderNum++;
     }
 }
