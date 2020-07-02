@@ -63,10 +63,10 @@
         where
         u.delete_flag = '0'
         <if test="userVo.userName != null and userVo.userName != ''">
-            and u.user_name LIKE CONCAT('%',#{query.userName},'%')
+            and u.user_name LIKE CONCAT('%',#{userVo.userName},'%')
         </if>
         <if test="userVo.phone != null and userVo.phone != ''">
-            and u.phone LIKE CONCAT('%',#{query.phone},'%')
+            and u.phone LIKE CONCAT('%',#{userVo.phone},'%')
         </if>
         order by u.create_at desc
     </select>

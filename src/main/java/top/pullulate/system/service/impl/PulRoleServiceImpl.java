@@ -22,8 +22,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PulRoleServiceImpl extends ServiceImpl<PulRoleMapper, PulRole> implements IPulRoleService {
 
-    private final PulRoleMapper pulRoleMapper;
-
     /**
      * 根据用户主键获取用户角色集合
      * 不包含那些被禁用或被删除的角色信息
@@ -33,7 +31,7 @@ public class PulRoleServiceImpl extends ServiceImpl<PulRoleMapper, PulRole> impl
      */
     @Override
     public List<PulRole> getUserRolesByUserId(String userId) {
-        return pulRoleMapper.selectUserRolesByUserId(userId)
+        return baseMapper.selectUserRolesByUserId(userId)
                 .stream().distinct().collect(Collectors.toList());
     }
 }

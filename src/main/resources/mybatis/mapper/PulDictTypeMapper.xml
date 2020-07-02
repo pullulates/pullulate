@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.pullulate.system.mapper.PulDictTypeMapper">
+
+    <resultMap id="BaseResultMap" type="PulDictType">
+        <id column="dict_type_id" property="dictTypeId"/>
+        <result column="key" property="key"/>
+        <result column="description" property="description"/>
+        <result column="order_num" property="orderNum"/>
+        <result column="status" property="status"/>
+        <result column="defaulted" property="defaulted"/>
+        <result column="delete_flag" property="deleteFlag"/>
+        <result column="remark" property="remark"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_at" property="createAt"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_at" property="updateAt"/>
+    </resultMap>
+
+    <resultMap id="PulDictViewVoResultMap" type="top.pullulate.web.data.viewvo.PulDictTypeViewVo">
+        <id column="dict_type_id" property="dictTypeId"/>
+        <result column="key" property="key"/>
+        <result column="description" property="description"/>
+        <result column="order_num" property="orderNum"/>
+        <result column="status" property="status"/>
+        <result column="defaulted" property="defaulted"/>
+        <result column="remark" property="remark"/>
+        <result column="create_at" property="createAt"/>
+    </resultMap>
+    
+    <sql id="AllInfoField">
+        dt.dict_type_id, dt.key, dt.description, dt.order_num, dt.status, dt.defaulted, dt.delete_flag, dt.create_by, dt.create_at, dt.update_by, dt.update_at
+    </sql>
+
+    <sql id="DictTypePageField">
+        dt.dict_type_id, dt.key, dt.description, dt.order_num, dt.status, dt.defaulted, dt.create_at
+    </sql>
+
+    <select id="selectDictTypePage" resultMap="PulDictViewVoResultMap">
+        select
+        <include refid="DictTypePageField"></include>
+        from pul_dict_type dt
+        where
+        dt.delete_flag = '0'
+        <if test="dictVo.key != null and dictVo.key != ''">
+            and dt.key LIKE CONCAT('%',#{dictVo.key},'%')
+        </if>
+        <if test="dictVo.description != null and dictVo.description != ''">
+            and dt.description LIKE CONCAT('%',#{dictVo.description},'%')
+        </if>
+        order by dt.create_at desc
+    </select>
+</mapper>

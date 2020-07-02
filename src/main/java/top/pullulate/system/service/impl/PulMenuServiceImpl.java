@@ -30,8 +30,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> implements IPulMenuService {
 
-    private final PulMenuMapper pulMenuMapper;
-
     /**
      * 根据用户主键查询用户菜单信息
      * 包含了菜单和按钮
@@ -46,7 +44,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
             log.warn("获取用户菜单信息，用户主键为空");
             return null;
         }
-        return pulMenuMapper.selectUserMenusByUserId(userId);
+        return baseMapper.selectUserMenusByUserId(userId);
     }
 
     /**
