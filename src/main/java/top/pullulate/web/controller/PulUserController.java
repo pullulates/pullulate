@@ -1,5 +1,7 @@
 package top.pullulate.web.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +12,11 @@ import top.pullulate.core.utils.TokeUtils;
 import top.pullulate.system.entity.PulUser;
 import top.pullulate.system.service.IPulUserService;
 import top.pullulate.web.data.dto.P;
+import top.pullulate.web.data.viewvo.PulUserViewVo;
+import top.pullulate.web.data.vo.PulUserVo;
+
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @功能描述:   用户前端控制器
@@ -51,5 +57,17 @@ public class PulUserController {
     public P getUserInfoByUserId(@PathVariable("userId") String userId) {
         PulUser pulUser = userService.getUserInfoByUserId(userId);
         return P.data(pulUser);
+    }
+
+    /**
+     * 获取用户列表分页数据
+     *
+     * @param pulUserVo   查询参数
+     * @return
+     */
+    @GetMapping
+    public P getUserPage(PulUserVo pulUserVo, Page page) {
+        IPage<List<PulUserViewVo>> pages = userService.getUserPage(pulUserVo, page);
+        return P.data(pages);
     }
 }

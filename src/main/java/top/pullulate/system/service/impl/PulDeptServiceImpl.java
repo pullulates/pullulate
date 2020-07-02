@@ -21,8 +21,6 @@ import top.pullulate.system.service.IPulDeptService;
 @RequiredArgsConstructor
 public class PulDeptServiceImpl extends ServiceImpl<PulDeptMapper, PulDept> implements IPulDeptService {
 
-    private final PulDeptMapper pulDeptMapper;
-
     /**
      * 根据用户主键获取其所在部门信息
      * 包含被禁用，不包含被删除的数据
@@ -36,6 +34,6 @@ public class PulDeptServiceImpl extends ServiceImpl<PulDeptMapper, PulDept> impl
             log.warn("获取用户部门信息，用户主键为空");
             return null;
         }
-        return pulDeptMapper.selectUserDeptByUserId(userId);
+        return baseMapper.selectUserDeptByUserId(userId);
     }
 }

@@ -59,4 +59,9 @@ public class CacheConstant {
      * 手机验证码缓存键统一前缀
      */
     public static final String CACHE_PHONE_CAPTCHA_PREFFIX = "pullulate_phone_captcha_";
+
+    /**
+     * 数据字典缓存键统一前缀
+     */
+    public static final String CACHE_DICT_PREFFIX = "pullulate_dict_";
 }

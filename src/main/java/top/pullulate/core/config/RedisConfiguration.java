@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import top.pullulate.core.exception.RedisCacheException;
 
@@ -33,9 +34,10 @@ public class RedisConfiguration extends CachingConfigurerSupport {
     @Bean
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
-        FastJson2JsonRedisSerializer serializer = new FastJson2JsonRedisSerializer(Object.class);
+        Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
         ObjectMapper objectMapper = new ObjectMapper()
                 .setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
+                .enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL)
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                 .registerModule(new ParameterNamesModule())
                 .registerModule(new Jdk8Module())

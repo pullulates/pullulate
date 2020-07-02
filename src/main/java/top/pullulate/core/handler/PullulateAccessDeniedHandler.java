@@ -24,6 +24,7 @@ public class PullulateAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) {
         response.setStatus(HttpStatus.HTTP_UNAUTHORIZED);
+        response.setCharacterEncoding(HttpConstant.UTF8);
         ServletUtils.write(response, MessageUtils.get("no.permission"), HttpConstant.CONTENT_TYPE_JSON);
     }
 }

@@ -1,4 +1,4 @@
-package top.pullulate.web.data.vo;
+package top.pullulate.web.data.vo.route;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +19,11 @@ public class MetaVo {
      * 设置该路由在侧边栏和面包屑中展示的名字
      */
     private String title;
+
+    /**
+     * 英文名字
+     */
+    private String usTitle;
 
     /**
      * 设置该路由的图标，对应路径src/icons/svg
@@ -53,8 +58,9 @@ public class MetaVo {
     public MetaVo() {
     }
 
-    public MetaVo(String title, String icon, String[] permission, Boolean keepAlive, Boolean hiddenHeaderContent, Boolean show, String target) {
+    public MetaVo(String title, String usTitle, String icon, String[] permission, Boolean keepAlive, Boolean hiddenHeaderContent, Boolean show, String target) {
         this.title = title;
+        this.usTitle = usTitle;
         this.icon = icon;
         this.permission = permission;
         this.keepAlive = keepAlive;
