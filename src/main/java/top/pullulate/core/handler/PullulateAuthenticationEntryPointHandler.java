@@ -1,8 +1,12 @@
 package top.pullulate.core.handler;
 
+import cn.hutool.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
+import top.pullulate.common.constants.HttpConstant;
+import top.pullulate.utils.MessageUtils;
+import top.pullulate.utils.ServletUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +25,9 @@ import java.io.IOException;
 public class PullulateAuthenticationEntryPointHandler implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
+        response.setStatus(HttpStatus.HTTP_UNAUTHORIZED);
+        response.setCharacterEncoding(HttpConstant.UTF8);
+        ServletUtils.write(response, MessageUtils.get("exception.login.token.error"), HttpConstant.CONTENT_TYPE_JSON);
     }
 }
