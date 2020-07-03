@@ -25,6 +25,19 @@ spring:
         max-idle: 8
         max-active: 8
         max-wait: -1ms
+  rabbitmq:
+    host: 106.55.165.80
+    port: 5672
+    username: pullulate
+    password: pullulates123456
+    listener:
+      simple:
+        # 并发消费者的初始化值
+        concurrency: 10
+        # 并发消费者的最大值
+        max-concurrency: 20
+        # 每个消费者每次监听时可拉取处理的消息数量
+        prefetch: 5
 
 mybatis-plus:
   global-config:
