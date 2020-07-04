@@ -43,4 +43,12 @@ public class ServletUtils extends ServletUtil {
         return (ServletRequestAttributes) attributes;
     }
 
+    public static String getUserAgent() {
+        return getRequest().getHeader("User-Agent");
+    }
+
+    public static String getIp() {
+        return ServletUtils.getClientIP(ServletUtils.getRequest());
+    }
+
 }

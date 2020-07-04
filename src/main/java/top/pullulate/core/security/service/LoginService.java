@@ -1,6 +1,9 @@
-package top.pullulate.core.service;
+package top.pullulate.core.security.service;
 
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,20 +14,22 @@ import org.springframework.stereotype.Component;
 import top.pullulate.common.constants.CacheConstant;
 import top.pullulate.common.constants.RSAConstant;
 import top.pullulate.common.enums.LoginType;
-import top.pullulate.core.user.UserInfo;
+import top.pullulate.core.rabbitmq.producer.RabbitMqLoginRecordProducer;
+import top.pullulate.core.security.user.UserInfo;
 import top.pullulate.core.utils.RedisUtils;
 import top.pullulate.core.utils.TokeUtils;
 import top.pullulate.system.entity.PulDept;
+import top.pullulate.system.entity.PulLoginRecord;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.entity.PulRole;
 import top.pullulate.system.service.IPulDeptService;
 import top.pullulate.system.service.IPulMenuService;
 import top.pullulate.system.service.IPulRoleService;
+import top.pullulate.utils.ServletUtils;
 import top.pullulate.utils.security.RSAUtils;
 import top.pullulate.web.data.dto.P;
 import top.pullulate.web.data.vo.LoginVo;
 import top.pullulate.web.data.vo.route.RouterVo;
-
 import java.util.List;
 import java.util.Set;
 
@@ -53,15 +58,24 @@ public class LoginService {
 
     private final IPulDeptService pulDeptService;
 
+    private final RabbitMqLoginRecordProducer loginRecordProducer;
+
     public P login(LoginVo loginVo) {
+        UserAgent userAgent = UserAgentUtil.parse(ServletUtils.getUserAgent());
+        PulLoginRecord loginRecord = new PulLoginRecord(IdUtil.fastSimpleUUID(), loginVo.getUserName(),
+                ServletUtils.getIp(), "安徽省合肥市", userAgent.getBrowser().getName(), userAgent.getOs().getName(), "0", "operate.success");
         // 验证图形验证码
         String captchaKey = CacheConstant.CACHE_IMAGE_CAPTCHA_PREFFIX.concat(loginVo.getUuid());
         String captcha = redisUtils.getCacheObject(captchaKey);
         if (StrUtil.isBlank(captcha)) {
+            loginRecord.setResult("1");
+            loginRecordProducer.sendLoginInfor(loginRecord);
             return P.error("captcha.has.expired");
         }
         redisUtils.deleteObject(captchaKey);
         if (!StrUtil.equalsIgnoreCase(captcha,loginVo.getCaptcha())) {
+            loginRecord.setResult("1");
+            loginRecordProducer.sendLoginInfor(loginRecord);
             return P.error("captcha.text.error");
         }
         if (LoginType.loginWithPhoneCaptcha(loginVo.getType()))

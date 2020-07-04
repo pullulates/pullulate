@@ -29,7 +29,7 @@ spring:
     host: 106.55.165.80
     port: 5672
     username: pullulate
-    password: pullulates123456
+    password: pullulate123456
     listener:
       simple:
         # 并发消费者的初始化值

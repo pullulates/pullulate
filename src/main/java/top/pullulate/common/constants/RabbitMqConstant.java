@@ -11,7 +11,7 @@ package top.pullulate.common.constants;
 public class RabbitMqConstant {
 
     /**
-     * 登录日志队列名称
+     * 登录日志队列
      */
     public static final String QUEUE_RECORD_LOGIN = "rabbitmq.queue.record.login";
     /**

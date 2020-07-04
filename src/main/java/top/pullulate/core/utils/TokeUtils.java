@@ -9,7 +9,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import top.pullulate.common.constants.CacheConstant;
-import top.pullulate.core.user.UserInfo;
+import top.pullulate.core.security.user.UserInfo;
 import top.pullulate.utils.*;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;

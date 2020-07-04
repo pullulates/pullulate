@@ -24,13 +24,13 @@ public class RabbitMqLoginRecordQueue {
         return new Queue(RabbitMqConstant.QUEUE_RECORD_LOGIN, true);
     }
 
-    @Bean(name = "loginRecordExchange")
+    @Bean
     public DirectExchange loginRecordExchange() {
         return new DirectExchange(RabbitMqConstant.EXCHANGE_RECORD_LOGIN, true, false);
     }
 
-    @Bean(name = "loginRecordBinding")
-    public Binding loginRecordBinding() {
+    @Bean
+    public Binding loginRecordNoOneBinding() {
         return BindingBuilder.bind(loginRecordQueue()).to(loginRecordExchange()).with(RabbitMqConstant.ROUTING_KEY_RECORD_LOGIN);
     }
 }

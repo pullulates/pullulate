@@ -1,19 +1,16 @@
-package top.pullulate.core.handler;
+package top.pullulate.core.security.handler;
 
 import cn.hutool.http.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import top.pullulate.common.constants.HttpConstant;
-import top.pullulate.core.utils.RedisUtils;
 import top.pullulate.core.utils.TokeUtils;
 import top.pullulate.utils.MessageUtils;
 import top.pullulate.utils.ServletUtils;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @功能描述:   用户登出处理

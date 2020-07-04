@@ -1,4 +1,4 @@
-package top.pullulate.core.service;
+package top.pullulate.core.security.service;
 
 import cn.hutool.core.util.ReUtil;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import top.pullulate.common.constants.RegexConstant;
-import top.pullulate.core.user.UserInfo;
+import top.pullulate.core.security.user.UserInfo;
 import top.pullulate.system.entity.PulUser;
 import top.pullulate.system.service.IPulUserService;
 

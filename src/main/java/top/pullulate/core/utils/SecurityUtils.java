@@ -2,7 +2,7 @@ package top.pullulate.core.utils;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import top.pullulate.core.user.UserInfo;
+import top.pullulate.core.security.user.UserInfo;
 
 /**
  * @功能描述: security安全工具类

@@ -1,4 +1,4 @@
-package top.pullulate.core.handler;
+package top.pullulate.core.security.handler;
 
 import cn.hutool.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
