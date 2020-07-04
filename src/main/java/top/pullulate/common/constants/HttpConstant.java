@@ -44,4 +44,14 @@ public class HttpConstant {
      * gbk编码
      */
     public static final String GBK = "gbk";
+
+    public static final String HTTP_METHOD_GET = "GET";
+
+    public static final String HTTP_METHOD_POST = "POST";
+
+    public static final String HTTP_METHOD_DELTE = "DELTE";
+
+    public static final String HTTP_METHOD_PATCH = "PATCH";
+
+    public static final String HTTP_METHOD_PUT = "PUT";
 }
