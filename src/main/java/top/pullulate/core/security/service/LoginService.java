@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import top.pullulate.common.constants.CacheConstant;
 import top.pullulate.common.constants.RSAConstant;
 import top.pullulate.common.enums.LoginType;
+import top.pullulate.common.enums.OperResult;
 import top.pullulate.core.rabbitmq.producer.RabbitMqLoginRecordProducer;
 import top.pullulate.core.security.user.UserInfo;
 import top.pullulate.core.utils.RedisUtils;
@@ -27,6 +28,7 @@ import top.pullulate.system.service.IPulMenuService;
 import top.pullulate.system.service.IPulRoleService;
 import top.pullulate.utils.IPUtils;
 import top.pullulate.utils.LocationUtils;
+import top.pullulate.utils.MessageUtils;
 import top.pullulate.utils.ServletUtils;
 import top.pullulate.utils.security.RSAUtils;
 import top.pullulate.web.data.dto.P;
@@ -66,18 +68,18 @@ public class LoginService {
         String ip = IPUtils.getIP();
         UserAgent userAgent = UserAgentUtil.parse(ServletUtils.getUserAgent());
         PulLoginRecord loginRecord = new PulLoginRecord(IdUtil.fastSimpleUUID(), loginVo.getUserName(),
-                ip, LocationUtils.getLocation(ip), userAgent.getBrowser().getName(), userAgent.getOs().getName(), "0", "operate.success");
+                ip, LocationUtils.getLocation(ip), userAgent.getBrowser().getName(), userAgent.getOs().getName(), OperResult.ERROR.getCode());
         // 验证图形验证码
         String captchaKey = CacheConstant.CACHE_IMAGE_CAPTCHA_PREFFIX.concat(loginVo.getUuid());
         String captcha = redisUtils.getCacheObject(captchaKey);
         if (StrUtil.isBlank(captcha)) {
-            loginRecord.setResult("1");
+            loginRecord.setPromtMsg(MessageUtils.get("captcha.has.expired"));
             loginRecordProducer.sendLoginInfor(loginRecord);
             return P.error("captcha.has.expired");
         }
         redisUtils.deleteObject(captchaKey);
         if (!StrUtil.equalsIgnoreCase(captcha,loginVo.getCaptcha())) {
-            loginRecord.setResult("1");
+            loginRecord.setPromtMsg(MessageUtils.get("captcha.text.error"));
             loginRecordProducer.sendLoginInfor(loginRecord);
             return P.error("captcha.text.error");
         }
@@ -87,10 +89,14 @@ public class LoginService {
             String smsCaptchaKey = CacheConstant.CACHE_PHONE_CAPTCHA_PREFFIX.concat(loginVo.getUuid());
             String smsCaptcha = redisUtils.getCacheObject(smsCaptchaKey);
             if (StrUtil.isBlank(smsCaptcha)) {
+                loginRecord.setPromtMsg(MessageUtils.get("sms.captcha.has.expired"));
+                loginRecordProducer.sendLoginInfor(loginRecord);
                 return P.error("sms.captcha.has.expired");
             }
             redisUtils.deleteObject(smsCaptchaKey);
             if (!smsCaptcha.equals(loginVo.equals(loginVo.getCredential()))) {
+                loginRecord.setPromtMsg(MessageUtils.get("sms.captcha.text.error"));
+                loginRecordProducer.sendLoginInfor(loginRecord);
                 return P.error("sms.captcha.text.error");
             }
         }
@@ -101,11 +107,15 @@ public class LoginService {
                 loginVo.setCredential(RSAUtils.decryptByPrivateKey(RSAConstant.PRIVATE_KEY, loginVo.getCredential()));
             } catch (Exception e) {
                 log.warn("用户：{}登录时无法解密登录凭证，登录失败。异常信息：{}", loginVo.getUserName(), e);
+                loginRecord.setPromtMsg(MessageUtils.get("login.password.error"));
+                loginRecordProducer.sendLoginInfor(loginRecord);
                 return P.error("login.password.error");
             }
         } else
         // 不支持的登录方式
         {
+            loginRecord.setPromtMsg(MessageUtils.get("login.type.unsupport"));
+            loginRecordProducer.sendLoginInfor(loginRecord);
             return P.error("login.type.unsupport");
         }
         // 构建登录信息
@@ -126,6 +136,9 @@ public class LoginService {
         userInfo.setRouters(routers);
         userInfo.setPermissions(permissions);
         String token = tokeUtils.createToken(userInfo);
+        loginRecord.setResult(OperResult.SUCCESS.getCode());
+        loginRecord.setPromtMsg(MessageUtils.get("operate.success"));
+        loginRecordProducer.sendLoginInfor(loginRecord);
         return P.token(token);
     }
 }

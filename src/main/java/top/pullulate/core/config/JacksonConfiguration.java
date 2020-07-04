@@ -24,7 +24,6 @@ public class JacksonConfiguration {
         ObjectMapper objectMapper = new ObjectMapper()
                 .setLocale(Locale.CHINA)
                 .registerModule(new Jdk8Module())
-                .setTimeZone(TimeZone.getDefault())
                 .registerModule(new LocaDateTimeConfiguration());
         return objectMapper;
     }

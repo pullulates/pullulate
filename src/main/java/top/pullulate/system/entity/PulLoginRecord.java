@@ -49,7 +49,7 @@ public class PulLoginRecord implements Serializable {
     /** 登录时间 */
     private LocalDateTime loginTime;
 
-    public PulLoginRecord(String recordId, String userName, String ip, String location, String browser, String os, String result, String promtMsg) {
+    public PulLoginRecord(String recordId, String userName, String ip, String location, String browser, String os, String result) {
         this.recordId = recordId;
         this.userName = userName;
         this.ip = ip;
@@ -57,7 +57,6 @@ public class PulLoginRecord implements Serializable {
         this.browser = browser;
         this.os = os;
         this.result = result;
-        this.promtMsg = MessageUtils.get(promtMsg);
         this.loginTime = LocalDateTime.now();
     }
 }
