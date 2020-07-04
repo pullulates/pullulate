@@ -11,7 +11,8 @@ import java.net.UnknownHostException;
  */
 public class IPUtils {
 
-    public static String getIP(HttpServletRequest request) {
+    public static String getIP() {
+        HttpServletRequest request = ServletUtils.getRequest();
         if (request == null) {
             return "未知";
         }

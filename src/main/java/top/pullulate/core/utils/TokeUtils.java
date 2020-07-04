@@ -157,9 +157,9 @@ public class TokeUtils {
      */
     public void setUserAgent(UserInfo userInfo) {
         UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
-        String ip = IPUtils.getIP(ServletUtils.getRequest());
+        String ip = IPUtils.getIP();
         userInfo.setIp(ip);
-        userInfo.setLocation(LocationUtils.getRealAddressByIP(ip));
+        userInfo.setLocation(LocationUtils.getLocation(ip));
         userInfo.setBrowser(userAgent.getBrowser().getName());
         userInfo.setOs(userAgent.getOperatingSystem().getName());
     }

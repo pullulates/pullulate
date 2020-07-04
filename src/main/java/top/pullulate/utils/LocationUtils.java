@@ -1,6 +1,5 @@
 package top.pullulate.utils;
 
-import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
@@ -12,26 +11,27 @@ import cn.hutool.json.JSONUtil;
  */
 public class LocationUtils {
 
-    public static final String URL = "http://whois.pconline.com.cn/ipJson.jsp";
+    private static final String ak = "5U7mhhfsTS1Ha8Y651OyBlvNcBZ0XgGG";
 
-    public static final String UNKNOWN = "未知";
+    public static final String url = "http://api.map.baidu.com/location/ip";
 
-    public static String getRealAddressByIP(String ip) {
-        String address = UNKNOWN;
+    public static String getLocation(String ip) {
+        String location = "未知";
         if (IPUtils.internalIp(ip)) {
-            return address;
+            return location;
         }
-        try {
-            String rspStr = HttpUtil.get(URL + "?ip=" + ip + "&json=true", CharsetUtil.CHARSET_GBK);
-            if (StrUtil.isBlank(rspStr)) {
-                return address;
-            }
-            JSONObject json = JSONUtil.parseObj(rspStr);
-            String region = json.getStr("pro");
-            String city = json.getStr("city");
-            return String.format("%s %s", region, city);
-        } catch (Exception e) {
-            return address;
+        String rspStr = HttpUtil.get(url + "?ip=" + ip + "&ak=" + ak);
+        if (StrUtil.isBlank(rspStr)) {
+            return location;
         }
+        JSONObject obj = JSONUtil.parseObj(rspStr);
+        if (obj.getInt("status") == 0) {
+            JSONObject content = obj.getJSONObject("content");
+            JSONObject addressDetail = content.getJSONObject("address_detail");
+            location = UnicodeUtils.unicodeDecode(addressDetail.getStr("province"))
+                    + UnicodeUtils.unicodeDecode(addressDetail.getStr("city"))
+                    + UnicodeUtils.unicodeDecode(addressDetail.getStr("district"));
+        }
+        return location;
     }
 }

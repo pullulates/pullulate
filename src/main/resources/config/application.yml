@@ -65,3 +65,8 @@ mybatis-plus:
   type-aliases-package: top.pullulate.system.entity
   # 配置xml信息
   mapper-locations: classpath:/mybatis/mapper/*.xml
+
+# 百度开发者账号配置
+baidu:
+  name: pullulates
+  ak: 5U7mhhfsTS1Ha8Y651OyBlvNcBZ0XgGG

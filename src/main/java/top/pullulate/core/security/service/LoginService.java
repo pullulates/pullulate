@@ -25,6 +25,8 @@ import top.pullulate.system.entity.PulRole;
 import top.pullulate.system.service.IPulDeptService;
 import top.pullulate.system.service.IPulMenuService;
 import top.pullulate.system.service.IPulRoleService;
+import top.pullulate.utils.IPUtils;
+import top.pullulate.utils.LocationUtils;
 import top.pullulate.utils.ServletUtils;
 import top.pullulate.utils.security.RSAUtils;
 import top.pullulate.web.data.dto.P;
@@ -61,9 +63,10 @@ public class LoginService {
     private final RabbitMqLoginRecordProducer loginRecordProducer;
 
     public P login(LoginVo loginVo) {
+        String ip = IPUtils.getIP();
         UserAgent userAgent = UserAgentUtil.parse(ServletUtils.getUserAgent());
         PulLoginRecord loginRecord = new PulLoginRecord(IdUtil.fastSimpleUUID(), loginVo.getUserName(),
-                ServletUtils.getIp(), "安徽省合肥市", userAgent.getBrowser().getName(), userAgent.getOs().getName(), "0", "operate.success");
+                ip, LocationUtils.getLocation(ip), userAgent.getBrowser().getName(), userAgent.getOs().getName(), "0", "operate.success");
         // 验证图形验证码
         String captchaKey = CacheConstant.CACHE_IMAGE_CAPTCHA_PREFFIX.concat(loginVo.getUuid());
         String captcha = redisUtils.getCacheObject(captchaKey);
