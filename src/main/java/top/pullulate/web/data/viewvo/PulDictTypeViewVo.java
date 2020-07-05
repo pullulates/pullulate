@@ -30,7 +30,7 @@ public class PulDictTypeViewVo {
     private String status;
 
     /** 是否默认：0-默认；1-非默认 */
-    private String defaulted;
+    private String willDefault;
 
     /** 备注信息 */
     private String remark;

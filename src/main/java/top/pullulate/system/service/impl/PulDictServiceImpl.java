@@ -1,5 +1,6 @@
 package top.pullulate.system.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -7,14 +8,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import top.pullulate.common.constants.ParamConstant;
+import top.pullulate.core.utils.TokeUtils;
 import top.pullulate.system.entity.PulDictData;
 import top.pullulate.system.entity.PulDictType;
 import top.pullulate.system.mapper.PulDictDataMapper;
 import top.pullulate.system.mapper.PulDictTypeMapper;
 import top.pullulate.system.service.IPulDictService;
+import top.pullulate.utils.ServletUtils;
+import top.pullulate.web.data.dto.P;
 import top.pullulate.web.data.viewvo.PulDictDataViewVo;
 import top.pullulate.web.data.viewvo.PulDictTypeViewVo;
-import top.pullulate.web.data.vo.PulDictVo;
+import top.pullulate.web.data.vo.PulDictTypeVo;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -34,6 +40,8 @@ public class PulDictServiceImpl implements IPulDictService {
 
     private final PulDictDataMapper dictDataMapper;
 
+    private final TokeUtils tokeUtils;
+
     /**
      * 获取字典类别分页数据
      *
@@ -42,7 +50,7 @@ public class PulDictServiceImpl implements IPulDictService {
      * @return
      */
     @Override
-    public IPage<List<PulDictTypeViewVo>> getDictTypePage(PulDictVo dictVo, Page page) {
+    public IPage<List<PulDictTypeViewVo>> getDictTypePage(PulDictTypeVo dictVo, Page page) {
         return dictTypeMapper.selectDictTypePage(dictVo, page);
     }
 
@@ -54,7 +62,7 @@ public class PulDictServiceImpl implements IPulDictService {
      * @return
      */
     @Override
-    public IPage<List<PulDictDataViewVo>> getDictDataPage(PulDictVo dictVo, Page page) {
+    public IPage<List<PulDictDataViewVo>> getDictDataPage(PulDictTypeVo dictVo, Page page) {
         return dictDataMapper.selectDictDataPage(dictVo, page);
     }
 
@@ -78,5 +86,25 @@ public class PulDictServiceImpl implements IPulDictService {
                             .eq(PulDictData::getDeleteFlag, ParamConstant.HAS_DELETED));
         }
         return suggestOrderNum++;
+    }
+
+    /**
+     * 保存字典类别数据
+     *
+     * @param dictTypeVo    字典类别数据
+     * @return
+     */
+    @Override
+    public P saveDictType(PulDictTypeVo dictTypeVo) {
+        PulDictType dictType = BeanUtil.toBean(dictTypeVo, PulDictType.class);
+        int count = dictTypeMapper.selectCount(Wrappers.<PulDictType>query().lambda()
+                .eq(PulDictType::getKey, dictType.getKey())
+                .eq(PulDictType::getDeleteFlag, ParamConstant.HAS_DELETED));
+        if (count > 0) {
+            return P.error("字典键已经存在");
+        }
+        dictType.setCreateBy(tokeUtils.getUserInfo(ServletUtils.getRequest()).getUsername());
+        dictType.setCreateAt(LocalDateTime.now());
+        return P.p(dictTypeMapper.insert(dictType));
     }
 }

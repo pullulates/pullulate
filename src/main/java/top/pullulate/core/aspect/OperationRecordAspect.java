@@ -4,6 +4,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +15,9 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
 import top.pullulate.common.constants.HttpConstant;
-import top.pullulate.core.annotations.OperationRecordAnnotation;
+import top.pullulate.core.annotations.OperationRecord;
+import top.pullulate.core.rabbitmq.producer.RabbitMqOperationRecordProducer;
 import top.pullulate.core.security.user.UserInfo;
-import top.pullulate.core.utils.SecurityUtils;
 import top.pullulate.core.utils.TokeUtils;
 import top.pullulate.system.entity.PulOperationRecord;
 import top.pullulate.utils.IPUtils;
@@ -43,7 +44,9 @@ public class OperationRecordAspect {
 
     private final TokeUtils tokeUtils;
 
-    @Pointcut("@annotation(top.pullulate.core.annotations.OperationRecordAnnotation)")
+    private final RabbitMqOperationRecordProducer operationRecordProducer;
+
+    @Pointcut("@annotation(top.pullulate.core.annotations.OperationRecord)")
     public void operationRecordPointCut() {
     }
 
@@ -70,7 +73,7 @@ public class OperationRecordAspect {
     public void buildOperationRecord(ProceedingJoinPoint joinPoint, int cost, Object result) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        OperationRecordAnnotation recordAnnotation = method.getAnnotation(OperationRecordAnnotation.class);
+        OperationRecord recordAnnotation = method.getAnnotation(OperationRecord.class);
         if (ObjectUtil.isNotNull(recordAnnotation)) {
             String title = recordAnnotation.title();
             String ip = IPUtils.getIP();
@@ -79,7 +82,13 @@ public class OperationRecordAspect {
             HttpServletRequest request = ServletUtils.getRequest();
             String params = getReqestParams(request, joinPoint);
             UserInfo userInfo = tokeUtils.getUserInfo(request);
-//            PulOperationRecord operationRecord = new PulOperationRecord(IdUtil.fastSimpleUUID(), title, ServletUtils.get)
+            String costText = cost < 3 ? "不足3S" : cost + "S";
+            PulOperationRecord operationRecord = new PulOperationRecord(
+                    IdUtil.fastSimpleUUID(), title, ServletUtils.getRequest().getRequestURI(),
+                    ip, location, userAgent.getBrowser().getName(), userAgent.getOs().getName(),
+                    params, JSONUtil.toJsonStr(result), "0", null, userInfo.getUserId(), userInfo.getUsername(),
+                    userInfo.getDept().getDeptId(), userInfo.getDept().getDeptName(), LocalDateTime.now(), costText);
+            operationRecordProducer.sendOperationInfor(operationRecord);
         }
     }
 

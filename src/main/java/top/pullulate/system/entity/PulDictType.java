@@ -34,7 +34,7 @@ public class PulDictType implements Serializable {
     private String status;
 
     /** 是否默认：0-默认；1-非默认 */
-    private String defaulted;
+    private String willDefault;
 
     /** 删除状态：0-正常；1-已删除 */
     private String deleteFlag;

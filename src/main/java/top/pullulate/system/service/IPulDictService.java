@@ -2,9 +2,10 @@ package top.pullulate.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import top.pullulate.web.data.dto.P;
 import top.pullulate.web.data.viewvo.PulDictDataViewVo;
 import top.pullulate.web.data.viewvo.PulDictTypeViewVo;
-import top.pullulate.web.data.vo.PulDictVo;
+import top.pullulate.web.data.vo.PulDictTypeVo;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface IPulDictService {
      * @param page  分页参数
      * @return
      */
-    IPage<List<PulDictTypeViewVo>> getDictTypePage(PulDictVo dictVo, Page page);
+    IPage<List<PulDictTypeViewVo>> getDictTypePage(PulDictTypeVo dictVo, Page page);
 
     /**
      * 获取字典数据分页数据
@@ -34,7 +35,7 @@ public interface IPulDictService {
      * @param page  分页参数
      * @return
      */
-    IPage<List<PulDictDataViewVo>> getDictDataPage(PulDictVo dictVo, Page page);
+    IPage<List<PulDictDataViewVo>> getDictDataPage(PulDictTypeVo dictVo, Page page);
 
     /**
      * 获取建议的排序编号
@@ -44,4 +45,12 @@ public interface IPulDictService {
      * @return
      */
     int getSuggestOrderNum(String type, String dictTypeId);
+
+    /**
+     * 保存字典类别数据
+     *
+     * @param dictTypeVo    字典类别数据
+     * @return
+     */
+    P saveDictType(PulDictTypeVo dictTypeVo);
 }

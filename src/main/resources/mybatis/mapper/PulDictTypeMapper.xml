@@ -11,7 +11,7 @@
         <result column="description" property="description"/>
         <result column="order_num" property="orderNum"/>
         <result column="status" property="status"/>
-        <result column="defaulted" property="defaulted"/>
+        <result column="will_default" property="willDefault"/>
         <result column="delete_flag" property="deleteFlag"/>
         <result column="remark" property="remark"/>
         <result column="create_by" property="createBy"/>
@@ -26,17 +26,17 @@
         <result column="description" property="description"/>
         <result column="order_num" property="orderNum"/>
         <result column="status" property="status"/>
-        <result column="defaulted" property="defaulted"/>
+        <result column="will_default" property="willDefault"/>
         <result column="remark" property="remark"/>
         <result column="create_at" property="createAt"/>
     </resultMap>
     
     <sql id="AllInfoField">
-        dt.dict_type_id, dt.key, dt.description, dt.order_num, dt.status, dt.defaulted, dt.delete_flag, dt.create_by, dt.create_at, dt.update_by, dt.update_at
+        dt.dict_type_id, dt.key, dt.description, dt.order_num, dt.status, dt.willDefault, dt.delete_flag, dt.create_by, dt.create_at, dt.update_by, dt.update_at
     </sql>
 
     <sql id="DictTypePageField">
-        dt.dict_type_id, dt.key, dt.description, dt.order_num, dt.status, dt.defaulted, dt.create_at
+        dt.dict_type_id, dt.key, dt.description, dt.order_num, dt.status, dt.willDefault, dt.create_at
     </sql>
 
     <select id="selectDictTypePage" resultMap="PulDictViewVoResultMap">

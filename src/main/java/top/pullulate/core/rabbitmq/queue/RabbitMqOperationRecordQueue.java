@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import top.pullulate.common.constants.RabbitMqConstant;
 
 /**
- * @功能描述:   登录日志记录队列类
+ * @功能描述:   操作日志记录队列类
  * @Author: pullulates
  * @Date: 2020/7/3 0003 21:08
  * @CopyRight: pullulates
@@ -17,20 +17,20 @@ import top.pullulate.common.constants.RabbitMqConstant;
  * @Gitee: https://gitee.com/pullulates
  */
 @Configuration
-public class RabbitMqLoginRecordQueue {
+public class RabbitMqOperationRecordQueue {
 
-    @Bean(name = "loginRecordQueue")
-    public Queue loginRecordQueue() {
-        return new Queue(RabbitMqConstant.QUEUE_RECORD_LOGIN, true);
+    @Bean(name = "operationRecordQueue")
+    public Queue operationRecordQueue() {
+        return new Queue(RabbitMqConstant.QUEUE_RECORD_OPERATION, true);
     }
 
     @Bean
-    public DirectExchange loginRecordExchange() {
-        return new DirectExchange(RabbitMqConstant.EXCHANGE_RECORD_LOGIN, true, false);
+    public DirectExchange operationRecordExchange() {
+        return new DirectExchange(RabbitMqConstant.EXCHANGE_RECORD_OPERATION, true, false);
     }
 
     @Bean
-    public Binding loginRecordBinding() {
-        return BindingBuilder.bind(loginRecordQueue()).to(loginRecordExchange()).with(RabbitMqConstant.ROUTING_KEY_RECORD_LOGIN);
+    public Binding operationRecordBinding() {
+        return BindingBuilder.bind(operationRecordQueue()).to(operationRecordExchange()).with(RabbitMqConstant.ROUTING_KEY_RECORD_OPERATION);
     }
 }

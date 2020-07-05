@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 import top.pullulate.system.entity.PulDictType;
 import top.pullulate.web.data.viewvo.PulDictTypeViewVo;
-import top.pullulate.web.data.vo.PulDictVo;
+import top.pullulate.web.data.vo.PulDictTypeVo;
 
 import java.util.List;
 
@@ -27,5 +27,5 @@ public interface PulDictTypeMapper extends BaseMapper<PulDictType> {
      * @param page  分页参数
      * @return
      */
-    IPage<List<PulDictTypeViewVo>> selectDictTypePage(@Param("dictVo") PulDictVo dictVo, Page page);
+    IPage<List<PulDictTypeViewVo>> selectDictTypePage(@Param("dictVo") PulDictTypeVo dictVo, Page page);
 }
