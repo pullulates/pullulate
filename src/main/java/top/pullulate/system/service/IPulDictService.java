@@ -53,4 +53,12 @@ public interface IPulDictService {
      * @return
      */
     P saveDictType(PulDictTypeVo dictTypeVo);
+
+    /**
+     * 修改字典类别数据
+     *
+     * @param dictTypeVo    字典类别数据
+     * @return
+     */
+    P updateDictType(PulDictTypeVo dictTypeVo);
 }

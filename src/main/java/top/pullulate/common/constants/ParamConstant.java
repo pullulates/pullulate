@@ -23,10 +23,10 @@ public class ParamConstant {
     /**
      * 已删除
      */
-    public static final String HAS_DELETED = "0";
+    public static final String NOT_DELETED = "0";
 
     /**
      * 未删除
      */
-    public static final String NOT_DELETED = "0";
+    public static final String HAS_DELETED = "1";
 }

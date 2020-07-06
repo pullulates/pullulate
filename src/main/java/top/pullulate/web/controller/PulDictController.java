@@ -80,4 +80,16 @@ public class PulDictController {
     public P saveDictType(@Validated @RequestBody PulDictTypeVo dictTypeVo) {
         return dictService.saveDictType(dictTypeVo);
     }
+
+    /**
+     * 修改字典类别数据
+     *
+     * @param dictTypeVo    字典类别数据
+     * @return
+     */
+    @PutMapping("/types")
+    @OperationRecord(title = "数据字典-修改字典分类")
+    public P updateDictType(@Validated @RequestBody PulDictTypeVo dictTypeVo) {
+        return dictService.updateDictType(dictTypeVo);
+    }
 }

@@ -19,7 +19,7 @@ public class PulDictTypeVo {
 
     @NotBlank(message = "字典键不能为空")
     @Size(max = 50, message = "字典键最多50字")
-    private String key;
+    private String dictKey;
 
     @NotBlank(message = "字典描述不能为空")
     @Size(max = 100, message = "字典描述最多100字")

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import top.pullulate.common.constants.Constant;
 import top.pullulate.common.enums.LockFlag;
 import top.pullulate.system.entity.PulDept;
 import top.pullulate.system.entity.PulMenu;
@@ -72,6 +73,10 @@ public class UserInfo implements UserDetails {
         this.dept = dept;
         this.roles = roles;
         this.permissions = permissions;
+    }
+
+    public Boolean willSuperman() {
+        return roles.stream().anyMatch(role -> Constant.ROLE_KEY_SUPREMAN.equals(role.getRoleKey()));
     }
 
     @JsonIgnore

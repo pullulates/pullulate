@@ -18,7 +18,7 @@ public class PulDictTypeViewVo {
     private String dictTypeId;
 
     /** 字典类别键 */
-    private String key;
+    private String dictKey;
 
     /** 字典类别描述 */
     private String description;
