@@ -8,8 +8,8 @@
     <resultMap id="BaseResultMap" type="PulDictData">
         <id column="dict_data_id" property="dictDataId"/>
         <id column="dict_type_id" property="dictTypeId"/>
-        <result column="value" property="value"/>
-        <result column="label" property="label"/>
+        <result column="dict_value" property="dictValue"/>
+        <result column="dict_label" property="dictLabel"/>
         <result column="order_num" property="orderNum"/>
         <result column="status" property="status"/>
         <result column="delete_flag" property="deleteFlag"/>
@@ -23,8 +23,8 @@
     <resultMap id="PulDictDataViewVoResultMap" type="top.pullulate.web.data.viewvo.PulDictDataViewVo">
         <id column="dict_data_id" property="dictDataId"/>
         <id column="dict_type_id" property="dictTypeId"/>
-        <result column="value" property="value"/>
-        <result column="label" property="label"/>
+        <result column="dict_value" property="dictValue"/>
+        <result column="dict_label" property="dictLabel"/>
         <result column="order_num" property="orderNum"/>
         <result column="status" property="status"/>
         <result column="remark" property="remark"/>
@@ -32,11 +32,11 @@
     </resultMap>
     
     <sql id="AllInfoField">
-        dd.dict_data_id, dd.dict_type_id, dd.value, dd.label, dd.order_num, dd.status, dd.delete_flag, dd.create_by, dd.create_at, dd.update_by, dd.update_at
+        dd.dict_data_id, dd.dict_type_id, dd.dict_value, dd.dict_label, dd.order_num, dd.status, dd.delete_flag, dd.create_by, dd.create_at, dd.update_by, dd.update_at
     </sql>
 
     <sql id="DictDataPageField">
-        dd.dict_data_id, dd.dict_type_id, dd.value, dd.label, dd.order_num, dd.status, dd.create_at
+        dd.dict_data_id, dd.dict_type_id, dd.dict_value, dd.dict_label, dd.order_num, dd.status, dd.create_at
     </sql>
 
     <select id="selectDictDataPage" resultMap="PulDictDataViewVoResultMap">

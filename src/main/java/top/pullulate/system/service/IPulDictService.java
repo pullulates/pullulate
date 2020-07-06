@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import top.pullulate.web.data.dto.P;
 import top.pullulate.web.data.viewvo.PulDictDataViewVo;
 import top.pullulate.web.data.viewvo.PulDictTypeViewVo;
+import top.pullulate.web.data.vo.PulDictDataVo;
 import top.pullulate.web.data.vo.PulDictTypeVo;
 
 import java.util.List;
@@ -61,4 +62,20 @@ public interface IPulDictService {
      * @return
      */
     P updateDictType(PulDictTypeVo dictTypeVo);
+
+    /**
+     * 保存字典数据
+     *
+     * @param dictDataVo    字典数据
+     * @return
+     */
+    P saveDictData(PulDictDataVo dictDataVo);
+
+    /**
+     * 修改字典数据
+     *
+     * @param dictDataVo    字典数据
+     * @return
+     */
+    P updateDictData(PulDictDataVo dictDataVo);
 }

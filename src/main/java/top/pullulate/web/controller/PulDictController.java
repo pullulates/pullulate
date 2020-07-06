@@ -100,7 +100,7 @@ public class PulDictController {
      * @param dictDataVo    字典数据
      * @return
      */
-    @PostMapping("/types")
+    @PostMapping("/datas")
     @OperationRecord(title = "数据字典-保存字典数据")
     public P saveDictData(@Validated @RequestBody PulDictDataVo dictDataVo) {
         return dictService.saveDictData(dictDataVo);
@@ -112,7 +112,7 @@ public class PulDictController {
      * @param dictDataVo    字典数据
      * @return
      */
-    @PutMapping("/types")
+    @PutMapping("/datas")
     @OperationRecord(title = "数据字典-修改字典数据")
     public P updateDictData(@Validated @RequestBody PulDictDataVo dictDataVo) {
         return dictService.updateDictData(dictDataVo);

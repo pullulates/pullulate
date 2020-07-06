@@ -21,6 +21,7 @@ import top.pullulate.utils.ServletUtils;
 import top.pullulate.web.data.dto.P;
 import top.pullulate.web.data.viewvo.PulDictDataViewVo;
 import top.pullulate.web.data.viewvo.PulDictTypeViewVo;
+import top.pullulate.web.data.vo.PulDictDataVo;
 import top.pullulate.web.data.vo.PulDictTypeVo;
 
 import java.time.LocalDateTime;
@@ -119,7 +120,9 @@ public class PulDictServiceImpl implements IPulDictService {
      */
     @Override
     public P updateDictType(PulDictTypeVo dictTypeVo) {
-        PulDictType check = dictTypeMapper.selectById(dictTypeVo.getDictTypeId());
+        PulDictType check = dictTypeMapper.selectOne(Wrappers.<PulDictType>query().lambda()
+                .eq(PulDictType::getDictTypeId, dictTypeVo.getDictTypeId())
+                .eq(PulDictType::getDeleteFlag, ParamConstant.NOT_DELETED));
         if (ObjectUtil.isNull(check)) {
             return P.error("字典不存在");
         }
@@ -138,5 +141,68 @@ public class PulDictServiceImpl implements IPulDictService {
         dictType.setUpdateBy(userInfo.getUsername());
         dictType.setUpdateAt(LocalDateTime.now());
         return P.p(dictTypeMapper.updateById(dictType));
+    }
+
+    /**
+     * 保存字典数据
+     *
+     * @param dictDataVo    字典数据
+     * @return
+     */
+    @Override
+    public P saveDictData(PulDictDataVo dictDataVo) {
+        PulDictType checkDictType = dictTypeMapper.selectOne(Wrappers.<PulDictType>query().lambda()
+                .eq(PulDictType::getDictTypeId, dictDataVo.getDictTypeId())
+                .eq(PulDictType::getDeleteFlag, ParamConstant.NOT_DELETED));
+        if (ObjectUtil.isNull(checkDictType)) {
+            return P.error("字典类别不存在");
+        }
+        UserInfo userInfo = tokeUtils.getUserInfo(ServletUtils.getRequest());
+        if (DictType.willDefault(checkDictType.getWillDefault()) && !userInfo.willSuperman()) {
+            return P.error("您不能修改默认字典");
+        }
+        PulDictData dictData = BeanUtil.toBean(dictDataVo, PulDictData.class);
+        int count = dictDataMapper.selectCount(Wrappers.<PulDictData>query().lambda()
+                .eq(PulDictData::getDictTypeId, dictData.getDictTypeId())
+                .eq(PulDictData::getDictValue, dictData.getDictValue())
+                .eq(PulDictData::getDeleteFlag, ParamConstant.NOT_DELETED));
+        if (count > 0) {
+            return P.error("字典值已经存在");
+        }
+        dictData.setCreateBy(userInfo.getUsername());
+        dictData.setCreateAt(LocalDateTime.now());
+        return P.p(dictDataMapper.insert(dictData));
+    }
+
+    /**
+     * 修改字典数据
+     *
+     * @param dictDataVo    字典数据
+     * @return
+     */
+    @Override
+    public P updateDictData(PulDictDataVo dictDataVo) {
+        PulDictType checkDictType = dictTypeMapper.selectOne(Wrappers.<PulDictType>query().lambda()
+                .eq(PulDictType::getDictTypeId, dictDataVo.getDictTypeId())
+                .eq(PulDictType::getDeleteFlag, ParamConstant.NOT_DELETED));
+        if (ObjectUtil.isNull(checkDictType)) {
+            return P.error("字典类别不存在");
+        }
+        UserInfo userInfo = tokeUtils.getUserInfo(ServletUtils.getRequest());
+        if (DictType.willDefault(checkDictType.getWillDefault()) && !userInfo.willSuperman()) {
+            return P.error("您不能修改默认字典");
+        }
+        PulDictData dictData = BeanUtil.toBean(dictDataVo, PulDictData.class);
+        int count = dictDataMapper.selectCount(Wrappers.<PulDictData>query().lambda()
+                .ne(PulDictData::getDictDataId, dictData.getDictDataId())
+                .eq(PulDictData::getDictTypeId, dictData.getDictTypeId())
+                .eq(PulDictData::getDictValue, dictData.getDictValue())
+                .eq(PulDictData::getDeleteFlag, ParamConstant.NOT_DELETED));
+        if (count > 0) {
+            return P.error("字典值已经存在");
+        }
+        dictData.setUpdateBy(userInfo.getUsername());
+        dictData.setUpdateAt(LocalDateTime.now());
+        return P.p(dictDataMapper.updateById(dictData));
     }
 }
