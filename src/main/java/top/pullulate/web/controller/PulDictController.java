@@ -10,6 +10,7 @@ import top.pullulate.system.service.IPulDictService;
 import top.pullulate.web.data.dto.P;
 import top.pullulate.web.data.viewvo.PulDictDataViewVo;
 import top.pullulate.web.data.viewvo.PulDictTypeViewVo;
+import top.pullulate.web.data.vo.PulDictDataVo;
 import top.pullulate.web.data.vo.PulDictTypeVo;
 
 import javax.validation.Valid;
@@ -91,5 +92,29 @@ public class PulDictController {
     @OperationRecord(title = "数据字典-修改字典分类")
     public P updateDictType(@Validated @RequestBody PulDictTypeVo dictTypeVo) {
         return dictService.updateDictType(dictTypeVo);
+    }
+
+    /**
+     * 保存字典数据
+     *
+     * @param dictDataVo    字典数据
+     * @return
+     */
+    @PostMapping("/types")
+    @OperationRecord(title = "数据字典-保存字典数据")
+    public P saveDictData(@Validated @RequestBody PulDictDataVo dictDataVo) {
+        return dictService.saveDictData(dictDataVo);
+    }
+
+    /**
+     * 修改字典数据
+     *
+     * @param dictDataVo    字典数据
+     * @return
+     */
+    @PutMapping("/types")
+    @OperationRecord(title = "数据字典-修改字典数据")
+    public P updateDictData(@Validated @RequestBody PulDictDataVo dictDataVo) {
+        return dictService.updateDictData(dictDataVo);
     }
 }

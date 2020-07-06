@@ -25,10 +25,10 @@ public class PulDictData implements Serializable {
     private String dictTypeId;
 
     /** 值 */
-    private String value;
+    private String dictValue;
 
     /** 标签 */
-    private String label;
+    private String dictLabel;
 
     /** 排序编号 */
     private Integer orderNum;

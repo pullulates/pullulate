@@ -37,6 +37,6 @@ public class PulDictTypeVo {
 
     private String deleteFlag;
 
-
+    @Size(max = 250, message = "备注信息最多250字")
     private String remark;
 }
