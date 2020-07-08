@@ -205,4 +205,30 @@ public class PulDictServiceImpl implements IPulDictService {
         dictData.setUpdateAt(LocalDateTime.now());
         return P.p(dictDataMapper.updateById(dictData));
     }
+
+    /**
+     * 修改字典数据的状态
+     *
+     * @param dictDataVo    字典数据主键 目标状态
+     * @return
+     */
+    @Override
+    public P updateDictDataStatus(PulDictDataVo dictDataVo) {
+        PulDictData dictData = BeanUtil.toBean(dictDataVo, PulDictData.class);
+        dictData.setUpdateBy(tokeUtils.getUserInfo(ServletUtils.getRequest()).getUsername());
+        dictData.setUpdateAt(LocalDateTime.now());
+        return P.p(dictDataMapper.update(dictData, Wrappers.<PulDictData>lambdaUpdate()
+                .eq(PulDictData::getDictDataId, dictData.getDictDataId())));
+    }
+
+    /**
+     * 删除字典数据
+     *
+     * @param dictDataId    字典数据主键
+     * @return
+     */
+    @Override
+    public P deleteDictData(String dictDataId) {
+        return P.p(dictDataMapper.deleteById(dictDataId));
+    }
 }

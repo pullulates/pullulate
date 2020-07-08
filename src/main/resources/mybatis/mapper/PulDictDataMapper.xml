@@ -45,6 +45,9 @@
         from pul_dict_data dd
         where
         dd.delete_flag = '0'
+        <if test="dictVo.dictTypeId != null and dictVo.dictTypeId != ''">
+            and dd.dict_type_id = #{dictVo.dictTypeId}
+        </if>
         order by dd.order_num asc
     </select>
 </mapper>

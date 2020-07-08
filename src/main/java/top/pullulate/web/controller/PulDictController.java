@@ -12,8 +12,6 @@ import top.pullulate.web.data.viewvo.PulDictDataViewVo;
 import top.pullulate.web.data.viewvo.PulDictTypeViewVo;
 import top.pullulate.web.data.vo.PulDictDataVo;
 import top.pullulate.web.data.vo.PulDictTypeVo;
-
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -116,5 +114,28 @@ public class PulDictController {
     @OperationRecord(title = "数据字典-修改字典数据")
     public P updateDictData(@Validated @RequestBody PulDictDataVo dictDataVo) {
         return dictService.updateDictData(dictDataVo);
+    }
+
+    /**
+     * 修改字典数据的状态
+     *
+     * @param dictDataVo    字典数据主键 目标状态
+     * @return
+     */
+    @PatchMapping("/datas")
+    @OperationRecord(title = "数据字典-修改字典数据状态")
+    public P updateDictDataStatus(@RequestBody PulDictDataVo dictDataVo) {
+        return  dictService.updateDictDataStatus(dictDataVo);
+    }
+
+    /**
+     * 删除字典数据
+     *
+     * @param dictDataId    字典数据主键
+     * @return
+     */
+    @DeleteMapping("/datas")
+    public P deleteDictData(String dictDataId) {
+        return dictService.deleteDictData(dictDataId);
     }
 }

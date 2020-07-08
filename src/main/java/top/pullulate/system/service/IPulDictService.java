@@ -78,4 +78,20 @@ public interface IPulDictService {
      * @return
      */
     P updateDictData(PulDictDataVo dictDataVo);
+
+    /**
+     * 修改字典数据的状态
+     *
+     * @param dictDataVo    字典数据主键 目标状态
+     * @return
+     */
+    P updateDictDataStatus(PulDictDataVo dictDataVo);
+
+    /**
+     * 删除字典数据
+     *
+     * @param dictDataId    字典数据主键
+     * @return
+     */
+    P deleteDictData(String dictDataId);
 }
