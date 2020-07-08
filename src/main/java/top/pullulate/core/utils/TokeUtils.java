@@ -46,6 +46,33 @@ public class TokeUtils {
     }
 
     /**
+     * 获取用户主键
+     *
+     * @return  用户主键
+     */
+    public String getUserId() {
+        return getUserInfo(ServletUtils.getRequest()).getUserId();
+    }
+
+    /**
+     * 获取用户名称
+     *
+     * @return  用户名称
+     */
+    public String getUserName() {
+        return getUserInfo(ServletUtils.getRequest()).getUserId();
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @return  用户信息
+     */
+    public UserInfo getUserInfo() {
+        return getUserInfo(ServletUtils.getRequest());
+    }
+
+    /**
      * 获取用户身份信息
      *
      * @return 用户信息

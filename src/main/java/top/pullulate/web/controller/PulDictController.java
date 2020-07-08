@@ -117,6 +117,30 @@ public class PulDictController {
     }
 
     /**
+     * 修改字典类别的状态
+     *
+     * @param dictTypeVo    字典类别主键 目标状态
+     * @return
+     */
+    @PatchMapping("/types")
+    @OperationRecord(title = "数据字典-修改字典类别状态")
+    public P updateDictTypeStatus(@RequestBody PulDictTypeVo dictTypeVo) {
+        return  dictService.updateDictTypeStatus(dictTypeVo);
+    }
+
+    /**
+     * 删除字典类别
+     *
+     * @param dictTypeId    字典类别主键
+     * @return
+     */
+    @DeleteMapping("/types")
+    @OperationRecord(title = "数据字典-删除字典类别")
+    public P deleteDictType(String dictTypeId) {
+        return dictService.deleteDictType(dictTypeId);
+    }
+
+    /**
      * 修改字典数据的状态
      *
      * @param dictDataVo    字典数据主键 目标状态
@@ -135,6 +159,7 @@ public class PulDictController {
      * @return
      */
     @DeleteMapping("/datas")
+    @OperationRecord(title = "数据字典-删除字典数据")
     public P deleteDictData(String dictDataId) {
         return dictService.deleteDictData(dictDataId);
     }

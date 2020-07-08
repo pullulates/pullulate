@@ -24,6 +24,7 @@ import top.pullulate.system.entity.PulLoginRecord;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.entity.PulRole;
 import top.pullulate.system.service.IPulDeptService;
+import top.pullulate.system.service.IPulDictService;
 import top.pullulate.system.service.IPulMenuService;
 import top.pullulate.system.service.IPulRoleService;
 import top.pullulate.utils.IPUtils;
@@ -32,9 +33,11 @@ import top.pullulate.utils.MessageUtils;
 import top.pullulate.utils.ServletUtils;
 import top.pullulate.utils.security.RSAUtils;
 import top.pullulate.web.data.dto.P;
+import top.pullulate.web.data.viewvo.PulDictDataViewVo;
 import top.pullulate.web.data.vo.LoginVo;
 import top.pullulate.web.data.vo.route.RouterVo;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -63,6 +66,8 @@ public class LoginService {
     private final IPulDeptService pulDeptService;
 
     private final RabbitMqLoginRecordProducer loginRecordProducer;
+
+    private final IPulDictService dictService;
 
     public P login(LoginVo loginVo) {
         String ip = IPUtils.getIP();
@@ -131,10 +136,12 @@ public class LoginService {
         List<PulMenu> pulMenus = pulMenuService.getUserMenusByUserId(userInfo.getUserId());
         List<RouterVo> routers = pulMenuService.getRouters(pulMenus);
         Set<String> permissions = pulMenuService.getPermissions(pulMenus);
+        Map<String, List<PulDictDataViewVo>> dicts = dictService.buildFrontDictCache();
         userInfo.setDept(dept);
         userInfo.setRoles(roles);
         userInfo.setRouters(routers);
         userInfo.setPermissions(permissions);
+        userInfo.setDicts(dicts);
         String token = tokeUtils.createToken(userInfo);
         loginRecord.setResult(OperResult.SUCCESS.getCode());
         loginRecord.setPromtMsg(MessageUtils.get("operate.success"));

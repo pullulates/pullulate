@@ -12,10 +12,12 @@ import top.pullulate.system.entity.PulDept;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.entity.PulRole;
 import top.pullulate.system.entity.PulUser;
+import top.pullulate.web.data.viewvo.PulDictDataViewVo;
 import top.pullulate.web.data.vo.route.RouterVo;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Getter
@@ -61,6 +63,9 @@ public class UserInfo implements UserDetails {
 
     /** 权限集合 */
     private Set<String> permissions;
+
+    /** 字典集合 */
+    private Map<String, List<PulDictDataViewVo>> dicts;
 
     public UserInfo(String userId, PulUser user) {
         this.userId = userId;

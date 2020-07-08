@@ -9,6 +9,7 @@ import top.pullulate.web.data.vo.PulDictDataVo;
 import top.pullulate.web.data.vo.PulDictTypeVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @功能描述:   数据字典服务接口
@@ -19,6 +20,13 @@ import java.util.List;
  * @Gitee: https://gitee.com/pullulates
  */
 public interface IPulDictService {
+
+    /**
+     * 构建前端字典缓存
+     *
+     * @return  前端字典
+     */
+    Map<String, List<PulDictDataViewVo>> buildFrontDictCache();
 
     /**
      * 获取字典类别分页数据
@@ -94,4 +102,20 @@ public interface IPulDictService {
      * @return
      */
     P deleteDictData(String dictDataId);
+
+    /**
+     * 修改字典类别的状态
+     *
+     * @param dictTypeVo    字典类别主键 目标状态
+     * @return
+     */
+    P updateDictTypeStatus(PulDictTypeVo dictTypeVo);
+
+    /**
+     * 删除字典类别
+     *
+     * @param dictTypeId    字典类别主键
+     * @return
+     */
+    P deleteDictType(String dictTypeId);
 }
