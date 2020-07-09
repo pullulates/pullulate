@@ -64,4 +64,19 @@ public class CacheConstant {
      * 数据字典缓存键统一前缀
      */
     public static final String CACHE_DICT_PREFFIX = "pullulate_dict_";
+
+    /**
+     * 数据字典缓存键统一前缀
+     */
+    public static final String CACHE_DICT_FRONT_KEY = "pullulate_dict_front";
+
+    /**
+     * 所有菜单缓存键
+     */
+    public static final String CACHE_MENU_ALL = "pullulate_menu_all";
+
+    /**
+     * 菜单列表树缓存键
+     */
+    public static final String CACHE_MENU_LIST_TREE = "pullulate_menu_list_tree";
 }
