@@ -1,27 +1,19 @@
-package top.pullulate.system.entity;
+package top.pullulate.web.data.vo;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
-
 /**
- * @功能描述:   菜单实体类
- * @Author: pullulates
- * @Date: 2020/6/13 0013 9:59
+ * @功能描述:   菜单参数接收类
+ * @Author: xuyong
+ * @Date: 2020/7/9 8:25
  * @CopyRight: pullulates
  * @GitHub: https://github.com/pullulates
  * @Gitee: https://gitee.com/pullulates
  */
 @Data
-public class PulMenu implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class PulMenuVo {
 
     /** 菜单主键 */
-    @TableId
     private String menuId;
 
     /** 父级主键 */
@@ -75,24 +67,6 @@ public class PulMenu implements Serializable {
     /** 状态 */
     private String status;
 
-    /** 删除标识 */
-    private String deleteFlag;
-
     /** 备注信息 */
     private String remark;
-
-    /** 创建人 */
-    private String createBy;
-
-    /** 创建时间 */
-    private LocalDateTime createAt;
-
-    /** 更新人 */
-    private String updateBy;
-
-    /** 更新时间 */
-    private LocalDateTime updateAt;
-
-    /** 子菜单 */
-    private transient List<PulMenu> childrenMenus;
 }

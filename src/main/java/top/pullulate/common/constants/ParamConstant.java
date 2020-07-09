@@ -29,4 +29,9 @@ public class ParamConstant {
      * 未删除
      */
     public static final String HAS_DELETED = "1";
+
+    /**
+     * 目录菜单
+     */
+    public static final String MENU_TYPE_DIRECTORY = "0";
 }
