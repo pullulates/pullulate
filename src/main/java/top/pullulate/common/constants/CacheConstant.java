@@ -64,9 +64,4 @@ public class CacheConstant {
      * 数据字典缓存键统一前缀
      */
     public static final String CACHE_DICT_PREFFIX = "pullulate_dict_";
-
-    /**
-     * 用户登录后返回的数据字典缓存键
-     */
-    public static final String CACHE_DICT_FRONT_KEY = "pullulate_dict_front";
 }

@@ -29,14 +29,4 @@ public class ParamConstant {
      * 未删除
      */
     public static final String HAS_DELETED = "1";
-
-    /**
-     * 正常
-     */
-    public static final String NORMAL = "0";
-
-    /**
-     * 禁用
-     */
-    public static final String DISABLED = "1";
 }
