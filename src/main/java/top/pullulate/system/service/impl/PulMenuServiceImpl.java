@@ -92,6 +92,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
     public List<PulMenuViewVo> getMenuTreeList(PulMenuVo menuVo) {
         List<PulMenuViewVo> menuListTree = redisUtils.getCacheList(CacheConstant.CACHE_MENU_LIST_TREE);
         if (ObjectUtil.isNull(menuVo) && CollectionUtil.isNotEmpty(menuListTree)) {
+            Collections.sort(menuListTree);
             return menuListTree;
         }
         List<PulMenuViewVo> allMenus = redisUtils.getCacheList(CacheConstant.CACHE_MENU_ALL);
@@ -101,7 +102,9 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
                     .orderByAsc(PulMenu::getOrderNum))
                     .stream().map(menu-> BeanUtil.toBean(menu, PulMenuViewVo.class))
                     .collect(Collectors.toList());
+            redisUtils.setCacheList(CacheConstant.CACHE_MENU_ALL, allMenus);
         }
+        Collections.sort(allMenus);
         Set<String> dupMenuSet = new HashSet<>(allMenus.size());
         List<PulMenuViewVo> tree = buildMenuListTree(allMenus, allMenus, dupMenuSet);
         if (ObjectUtil.isNull(menuVo) && CollectionUtil.isEmpty(menuListTree)) {
@@ -122,15 +125,14 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
         List<PulMenuViewVo> menuViewVos = new ArrayList<>(allMenus.size());
         menus.forEach(menu -> {
             if (!dupMenuSet.contains(menu.getPermission())) {
+                dupMenuSet.add(menu.getPermission());
                 List<PulMenuViewVo> children = menus.stream()
                         .filter(item -> item.getParentId().equals(menu.getMenuId()))
                         .map(item -> BeanUtil.toBean(item, PulMenuViewVo.class))
                         .collect(Collectors.toList());
                 PulMenuViewVo pulMenuViewVo = BeanUtil.toBean(menu, PulMenuViewVo.class);
-                if (CollectionUtil.isNotEmpty(children)) {
-                    children.forEach(child -> dupMenuSet.add(child.getPermission()));
-                    pulMenuViewVo.setChildrenMenus(buildMenuListTree(children, allMenus, dupMenuSet));
-                }
+                pulMenuViewVo.setChildren(buildMenuListTree(children, allMenus, dupMenuSet));
+                children.forEach(child -> dupMenuSet.add(child.getPermission()));
                 menuViewVos.add(pulMenuViewVo);
             }
         });

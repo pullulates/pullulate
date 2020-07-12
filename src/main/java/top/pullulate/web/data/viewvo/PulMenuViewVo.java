@@ -1,5 +1,6 @@
 package top.pullulate.web.data.viewvo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * @Gitee: https://gitee.com/pullulates
  */
 @Data
-public class PulMenuViewVo {
+public class PulMenuViewVo implements Comparable<PulMenuViewVo> {
 
     /** 菜单主键 */
     private String menuId;
@@ -72,5 +73,15 @@ public class PulMenuViewVo {
     private String remark;
 
     /** 子菜单 */
-    private List<PulMenuViewVo> childrenMenus;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private List<PulMenuViewVo> children;
+
+    @Override
+    public int compareTo(PulMenuViewVo o) {
+        int i = Integer.valueOf(this.getMenuType()) - Integer.valueOf(o.getMenuType());//先按照年龄排序
+        if(i == 0){
+            return this.getOrderNum() - o.getOrderNum();//如果年龄相等了再用分数进行排序
+        }
+        return i;
+    }
 }

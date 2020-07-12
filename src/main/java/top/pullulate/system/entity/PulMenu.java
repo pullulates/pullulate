@@ -94,5 +94,5 @@ public class PulMenu implements Serializable {
     private LocalDateTime updateAt;
 
     /** 子菜单 */
-    private transient List<PulMenu> childrenMenus;
+    private transient List<PulMenu> children;
 }
