@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import top.pullulate.system.entity.PulDictData;
 import top.pullulate.web.data.viewvo.PulDictDataViewVo;
+import top.pullulate.web.data.vo.PulDictDataVo;
 import top.pullulate.web.data.vo.PulDictTypeVo;
 
 import java.util.List;
@@ -26,5 +27,5 @@ public interface PulDictDataMapper extends BaseMapper<PulDictData> {
      * @param page  分页参数
      * @return
      */
-    IPage<List<PulDictDataViewVo>> selectDictDataPage(PulDictTypeVo dictVo, Page page);
+    IPage<List<PulDictDataViewVo>> selectDictDataPage(PulDictDataVo dictVo, Page page);
 }

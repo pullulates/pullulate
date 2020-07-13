@@ -36,6 +36,9 @@ public class PulDictData implements Serializable {
     /** 状态：0-正常；1-禁用 */
     private String status;
 
+    /** 字典样式 */
+    private String dictCss;
+
     /** 删除状态：0-正常；1-已删除 */
     private String deleteFlag;
 

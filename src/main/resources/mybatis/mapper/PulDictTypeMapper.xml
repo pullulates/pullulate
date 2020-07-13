@@ -51,6 +51,9 @@
         <if test="dictVo.description != null and dictVo.description != ''">
             and dt.description LIKE CONCAT('%',#{dictVo.description},'%')
         </if>
+        <if test="dictVo.status != null and dictVo.status != ''">
+            and dt.status = #{dictVo.status}
+        </if>
         order by dt.create_at desc
     </select>
 </mapper>

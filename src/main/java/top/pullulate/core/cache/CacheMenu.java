@@ -52,8 +52,12 @@ public class CacheMenu {
 
     @PreDestroy
     public void destroy() {
+        log.info("-----------------------启动销毁系统菜单缓存任务-----------------------");
+        log.info("--->销毁菜单信息缓存");
         redisUtils.deleteObject(CacheConstant.CACHE_MENU_ALL);
+        log.info("--->销毁前端菜单列表树信息");
         redisUtils.deleteObject(CacheConstant.CACHE_MENU_LIST_TREE);
+        log.info("-----------------------销毁系统菜单缓存任务结束-----------------------");
     }
 
 }

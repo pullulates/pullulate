@@ -50,7 +50,7 @@ public class PulDictController {
      * @return
      */
     @GetMapping("/datas")
-    public P getDictDataPage(PulDictTypeVo dictVo, Page page) {
+    public P getDictDataPage(PulDictDataVo dictVo, Page page) {
         IPage<List<PulDictDataViewVo>> pages = dictService.getDictDataPage(dictVo, page);
         return P.data(pages);
     }

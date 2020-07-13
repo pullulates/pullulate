@@ -32,6 +32,9 @@ public class PulDictDataViewVo {
     /** 状态：0-正常；1-禁用 */
     private String status;
 
+    /** 字典样式 */
+    private String dictCss;
+
     /** 备注信息 */
     private String remark;
 

@@ -40,6 +40,11 @@ public class PulDictDataVo {
     /** 状态：0-正常；1-禁用 */
     private String status;
 
+    /** 字典样式 */
+    @NotBlank(message = "字典样式不能为空")
+    @Size(max = 20, message = "字典样式最多20字")
+    private String dictCss;
+
     /** 删除状态：0-正常；1-已删除 */
     private String deleteFlag;
 

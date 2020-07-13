@@ -100,7 +100,7 @@ public class PulDictServiceImpl implements IPulDictService {
      * @return
      */
     @Override
-    public IPage<List<PulDictDataViewVo>> getDictDataPage(PulDictTypeVo dictVo, Page page) {
+    public IPage<List<PulDictDataViewVo>> getDictDataPage(PulDictDataVo dictVo, Page page) {
         return dictDataMapper.selectDictDataPage(dictVo, page);
     }
 

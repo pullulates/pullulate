@@ -44,7 +44,7 @@ public interface IPulDictService {
      * @param page  分页参数
      * @return
      */
-    IPage<List<PulDictDataViewVo>> getDictDataPage(PulDictTypeVo dictVo, Page page);
+    IPage<List<PulDictDataViewVo>> getDictDataPage(PulDictDataVo dictVo, Page page);
 
     /**
      * 获取建议的排序编号
