@@ -34,4 +34,9 @@ public class ParamConstant {
      * 未删除
      */
     public static final String NORMAL = "0";
+
+    /**
+     * 新窗口打开
+     */
+    public static final String _BLANK = "_blank";
 }

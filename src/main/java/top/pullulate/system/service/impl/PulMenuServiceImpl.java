@@ -167,7 +167,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
                                 KeepAlive.keepAlive(menu.getKeepAlive()),
                                 HiddenHeaderContent.hiddenHeaderContent(menu.getHiddenHeaderContent()),
                                 Show.show(menu.getHidden()),
-                                menu.getTarget()
+                                ParamConstant._BLANK.equals(menu.getTarget()) ? ParamConstant._BLANK : null
                         ),
                         !Show.show(menu.getHideChildrenInMenu())
             );
