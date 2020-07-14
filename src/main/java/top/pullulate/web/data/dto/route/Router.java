@@ -1,4 +1,4 @@
-package top.pullulate.web.data.vo.route;
+package top.pullulate.web.data.dto.route;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class RouterVo {
+public class Router {
 
     /**
      * 路由名称, 必须设置,且不能重名
@@ -45,7 +45,7 @@ public class RouterVo {
     /**
      * 路由元信息（路由附带扩展信息）
      */
-    private MetaVo meta;
+    private Meta meta;
 
     /**
      * 强制菜单显示为Item而不是SubItem(配合 meta.hidden)
@@ -55,12 +55,12 @@ public class RouterVo {
     /**
      * 子路由
      */
-    private List<RouterVo> children;
+    private List<Router> children;
 
-    public RouterVo() {
+    public Router() {
     }
 
-    public RouterVo(String name, String path, Boolean hidden, String redirect, String component, MetaVo meta, Boolean hideChildrenInMenu) {
+    public Router(String name, String path, Boolean hidden, String redirect, String component, Meta meta, Boolean hideChildrenInMenu) {
         this.name = name;
         this.path = path;
         this.hidden = hidden;

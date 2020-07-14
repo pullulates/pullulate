@@ -2,9 +2,10 @@ package top.pullulate.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.pullulate.system.entity.PulMenu;
+import top.pullulate.web.data.dto.tree.Tree;
 import top.pullulate.web.data.viewvo.PulMenuViewVo;
 import top.pullulate.web.data.vo.PulMenuVo;
-import top.pullulate.web.data.vo.route.RouterVo;
+import top.pullulate.web.data.dto.route.Router;
 
 import java.util.List;
 import java.util.Set;
@@ -36,7 +37,7 @@ public interface IPulMenuService extends IService<PulMenu> {
      * @param menus    用户菜单
      * @return  前端路由信息
      */
-    List<RouterVo> getRouters(List<PulMenu> menus);
+    List<Router> getRouters(List<PulMenu> menus);
 
     /**
      * 根据用户菜单获取权限集合
@@ -53,4 +54,11 @@ public interface IPulMenuService extends IService<PulMenu> {
      * @return
      */
     List<PulMenuViewVo> getMenuTreeList(PulMenuVo menuVo);
+
+    /**
+     * 获取菜单下拉选择树
+     *
+     * @return
+     */
+    List<Tree> getMenuTreeSelect();
 }

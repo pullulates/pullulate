@@ -1,4 +1,4 @@
-package top.pullulate.web.data.vo.route;
+package top.pullulate.web.data.dto.route;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class MetaVo {
+public class Meta {
 
     /**
      * 设置该路由在侧边栏和面包屑中展示的名字
@@ -55,10 +55,10 @@ public class MetaVo {
      */
     private String target;
 
-    public MetaVo() {
+    public Meta() {
     }
 
-    public MetaVo(String title, String usTitle, String icon, String[] permission, Boolean keepAlive, Boolean hiddenHeaderContent, Boolean show, String target) {
+    public Meta(String title, String usTitle, String icon, String[] permission, Boolean keepAlive, Boolean hiddenHeaderContent, Boolean show, String target) {
         this.title = title;
         this.usTitle = usTitle;
         this.icon = icon;

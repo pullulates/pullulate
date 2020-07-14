@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import top.pullulate.core.security.service.LoginService;
-import top.pullulate.web.data.dto.P;
+import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.vo.LoginVo;
 
 /**

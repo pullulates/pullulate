@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import top.pullulate.common.constants.CacheConstant;
 import top.pullulate.common.constants.CaptchaConstant;
 import top.pullulate.core.utils.RedisUtils;
-import top.pullulate.web.data.dto.P;
+import top.pullulate.web.data.dto.response.P;
 import java.util.concurrent.TimeUnit;
 
 /**

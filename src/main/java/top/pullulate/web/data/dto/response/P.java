@@ -1,4 +1,4 @@
-package top.pullulate.web.data.dto;
+package top.pullulate.web.data.dto.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

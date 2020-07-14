@@ -5,7 +5,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import top.pullulate.web.data.dto.P;
+import top.pullulate.web.data.dto.response.P;
 
 /**
  * @功能描述:   全局异常处理

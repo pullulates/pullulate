@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.pullulate.system.service.IPulMenuService;
-import top.pullulate.web.data.dto.P;
+import top.pullulate.web.data.dto.response.P;
+import top.pullulate.web.data.dto.tree.Tree;
 import top.pullulate.web.data.viewvo.PulMenuViewVo;
 import top.pullulate.web.data.vo.PulMenuVo;
 
@@ -36,5 +37,16 @@ public class PulMenuCntroller {
     public P getMenuTreeList(PulMenuVo menuVo) {
         List<PulMenuViewVo> menuViewVos = menuService.getMenuTreeList(menuVo);
         return P.data(menuViewVos);
+    }
+
+    /**
+     * 获取菜单下拉选择树
+     *
+     * @return
+     */
+    @GetMapping("/tree-select")
+    public P getMenuTreeSelect() {
+        List<Tree> trees = menuService.getMenuTreeSelect();
+        return P.data(trees);
     }
 }

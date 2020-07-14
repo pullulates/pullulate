@@ -20,7 +20,7 @@ import top.pullulate.system.entity.PulDictType;
 import top.pullulate.system.mapper.PulDictDataMapper;
 import top.pullulate.system.mapper.PulDictTypeMapper;
 import top.pullulate.system.service.IPulDictService;
-import top.pullulate.web.data.dto.P;
+import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.PulDictDataViewVo;
 import top.pullulate.web.data.viewvo.PulDictTypeViewVo;
 import top.pullulate.web.data.vo.PulDictDataVo;

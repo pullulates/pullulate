@@ -7,7 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.system.service.IPulDictService;
-import top.pullulate.web.data.dto.P;
+import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.PulDictDataViewVo;
 import top.pullulate.web.data.viewvo.PulDictTypeViewVo;
 import top.pullulate.web.data.vo.PulDictDataVo;

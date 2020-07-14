@@ -3,8 +3,6 @@ package top.pullulate.system.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
-import com.baomidou.mybatisplus.core.toolkit.BeanUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +18,12 @@ import top.pullulate.core.utils.RedisUtils;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.mapper.PulMenuMapper;
 import top.pullulate.system.service.IPulMenuService;
+import top.pullulate.web.data.dto.tree.Tree;
 import top.pullulate.web.data.viewvo.PulMenuViewVo;
 import top.pullulate.web.data.vo.PulMenuVo;
-import top.pullulate.web.data.vo.route.MetaVo;
-import top.pullulate.web.data.vo.route.RouterVo;
+import top.pullulate.web.data.dto.route.Meta;
+import top.pullulate.web.data.dto.route.Router;
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -67,7 +65,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
      * @return  前端路由信息
      */
     @Override
-    public List<RouterVo> getRouters(List<PulMenu> menus) {
+    public List<Router> getRouters(List<PulMenu> menus) {
         return buildRouters(menus, menus, new HashSet<String>());
     }
 
@@ -95,22 +93,52 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
             Collections.sort(menuListTree);
             return menuListTree;
         }
-        List<PulMenuViewVo> allMenus = redisUtils.getCacheList(CacheConstant.CACHE_MENU_ALL);
-        if (CollectionUtil.isEmpty(allMenus)) {
-            allMenus = list(Wrappers.<PulMenu>lambdaQuery()
-                    .orderByAsc(PulMenu::getMenuType)
-                    .orderByAsc(PulMenu::getOrderNum))
-                    .stream().map(menu-> BeanUtil.toBean(menu, PulMenuViewVo.class))
-                    .collect(Collectors.toList());
-            redisUtils.setCacheList(CacheConstant.CACHE_MENU_ALL, allMenus);
-        }
-        Collections.sort(allMenus);
+        List<PulMenuViewVo> allMenus = getAllMenus();
         Set<String> dupMenuSet = new HashSet<>(allMenus.size());
         List<PulMenuViewVo> tree = buildMenuListTree(allMenus, allMenus, dupMenuSet);
         if (ObjectUtil.isNull(menuVo) && CollectionUtil.isEmpty(menuListTree)) {
             redisUtils.setCacheList(CacheConstant.CACHE_MENU_LIST_TREE, tree);
         }
         return tree;
+    }
+
+    /**
+     * 获取菜单下拉选择树
+     *
+     * @return
+     */
+    @Override
+    public List<Tree> getMenuTreeSelect() {
+        List<PulMenuViewVo> allMenus = getAllMenus();
+        Set<String> dupMenuSet = new HashSet<>(allMenus.size());
+        List<Tree> tree = buildMenuTreeSelect(allMenus, allMenus, dupMenuSet);
+        return tree;
+    }
+
+    /**
+     * 构建菜单下拉选择树
+     *
+     * @param menus 待处理菜单
+     * @param allMenus  所有菜单
+     * @param dupMenuSet    已处理的菜单
+     * @return
+     */
+    private List<Tree> buildMenuTreeSelect(List<PulMenuViewVo> menus, List<PulMenuViewVo> allMenus, Set<String> dupMenuSet) {
+        List<Tree> trees = new ArrayList<>(allMenus.size());
+        menus.forEach(menu -> {
+            if (!dupMenuSet.contains(menu.getPermission())) {
+                dupMenuSet.add(menu.getPermission());
+                List<PulMenuViewVo> children = menus.stream()
+                        .filter(item -> item.getParentId().equals(menu.getMenuId()))
+                        .map(item -> BeanUtil.toBean(item, PulMenuViewVo.class))
+                        .collect(Collectors.toList());
+                Tree tree = new Tree(menu.getTitle(), menu.getMenuId(), menu.getMenuId());
+                tree.setChildren(buildMenuTreeSelect(children, allMenus, dupMenuSet));
+                children.forEach(child -> dupMenuSet.add(child.getPermission()));
+                trees.add(tree);
+            }
+        });
+        return trees;
     }
 
     /**
@@ -147,19 +175,19 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
      * @param dupMenus 重复的菜单key集合
      * @return 路由列表
      */
-    public List<RouterVo> buildRouters(List<PulMenu> menus, List<PulMenu> allMenus, Set<String> dupMenus) {
-        List<RouterVo> routers = new ArrayList<RouterVo>();
+    public List<Router> buildRouters(List<PulMenu> menus, List<PulMenu> allMenus, Set<String> dupMenus) {
+        List<Router> routers = new ArrayList<Router>();
         for (PulMenu menu : menus) {
             if (dupMenus.contains(menu.getName())) {
                 continue;
             }
-            RouterVo router = new RouterVo(
+            Router router = new Router(
                         menu.getName(),
                         menu.getPath(),
                         !Show.show(menu.getHidden()),
                         menu.getRedirect(),
                         menu.getComponent(),
-                        new MetaVo(
+                        new Meta(
                                 menu.getTitle(),
                                 menu.getUsTitle(),
                                 menu.getIcon(),
@@ -179,6 +207,25 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
             routers.add(router);
         }
         return routers;
+    }
+
+    /**
+     * 获取所有菜单信息
+     *
+     * @return
+     */
+    private List<PulMenuViewVo> getAllMenus() {
+        List<PulMenuViewVo> allMenus = redisUtils.getCacheList(CacheConstant.CACHE_MENU_ALL);
+        if (CollectionUtil.isEmpty(allMenus)) {
+            allMenus = list(Wrappers.<PulMenu>lambdaQuery()
+                    .orderByAsc(PulMenu::getMenuType)
+                    .orderByAsc(PulMenu::getOrderNum))
+                    .stream().map(menu-> BeanUtil.toBean(menu, PulMenuViewVo.class))
+                    .collect(Collectors.toList());
+            redisUtils.setCacheList(CacheConstant.CACHE_MENU_ALL, allMenus);
+        }
+        Collections.sort(allMenus);
+        return allMenus;
     }
 
     /**

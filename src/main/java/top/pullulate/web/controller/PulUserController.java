@@ -11,7 +11,7 @@ import top.pullulate.core.security.user.UserInfo;
 import top.pullulate.core.utils.TokeUtils;
 import top.pullulate.system.entity.PulUser;
 import top.pullulate.system.service.IPulUserService;
-import top.pullulate.web.data.dto.P;
+import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.PulUserViewVo;
 import top.pullulate.web.data.vo.PulUserVo;
 

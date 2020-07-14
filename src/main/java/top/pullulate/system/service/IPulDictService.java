@@ -2,7 +2,7 @@ package top.pullulate.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import top.pullulate.web.data.dto.P;
+import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.PulDictDataViewVo;
 import top.pullulate.web.data.viewvo.PulDictTypeViewVo;
 import top.pullulate.web.data.vo.PulDictDataVo;
