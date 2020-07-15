@@ -1,7 +1,8 @@
 package top.pullulate.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -15,7 +16,8 @@ import java.util.List;
  * @GitHub: https://github.com/pullulates
  * @Gitee: https://gitee.com/pullulates
  */
-@Data
+@Getter
+@Setter
 public class PulMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -95,4 +97,29 @@ public class PulMenu implements Serializable {
 
     /** 子菜单 */
     private transient List<PulMenu> children;
+
+    public PulMenu() {
+    }
+
+    public PulMenu(String parentId, String title, String usTitle, String name, String path, String redirect, String component, String keepAlive, String permission, String target, String hidden, String hideChildrenInMenu, String hiddenHeaderContent, String icon, String menuType, Integer orderNum, String remark, String createBy, LocalDateTime createAt) {
+        this.parentId = parentId;
+        this.title = title;
+        this.usTitle = usTitle;
+        this.name = name;
+        this.path = path;
+        this.redirect = redirect;
+        this.component = component;
+        this.keepAlive = keepAlive;
+        this.permission = permission;
+        this.target = target;
+        this.hidden = hidden;
+        this.hideChildrenInMenu = hideChildrenInMenu;
+        this.hiddenHeaderContent = hiddenHeaderContent;
+        this.icon = icon;
+        this.menuType = menuType;
+        this.orderNum = orderNum;
+        this.remark = remark;
+        this.createBy = createBy;
+        this.createAt = createAt;
+    }
 }

@@ -42,6 +42,17 @@ public class P<T> implements Serializable {
     private String uuid;
 
     /**
+     * 根据boolean判定返回结果
+     *
+     * @param result
+     */
+    public static <T> P<T> p(boolean result) {
+        return result ?
+                p(HttpConstant.SUCCESS, HttpConstant.SUCCESS_MSG, null, null, null) :
+                p(HttpConstant.ERROR, HttpConstant.ERROR_MSG, null, null, null);
+    }
+
+    /**
      * 根据数量判定返回结果
      *
      * @param result    0-成功；1-失败

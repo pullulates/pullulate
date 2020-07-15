@@ -21,6 +21,14 @@ public enum MenuType {
         this.label = label;
     }
 
+    public static Boolean directory(String code) {
+        return DIRECTORY.code.equals(code);
+    }
+
+    public static Boolean menu(String code) {
+        return MENU.code.equals(code);
+    }
+
     public static Boolean button(String code) {
         return BUTTON.code.equals(code);
     }

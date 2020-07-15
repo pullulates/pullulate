@@ -21,6 +21,10 @@ public enum KeepAlive {
         this.label = label;
     }
 
+    public String getCode() {
+        return code;
+    }
+
     public static Boolean keepAlive(String code) {
         return ALIVE.code.equals(code);
     }

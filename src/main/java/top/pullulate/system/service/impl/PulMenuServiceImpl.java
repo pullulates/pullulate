@@ -10,19 +10,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import top.pullulate.common.constants.CacheConstant;
 import top.pullulate.common.constants.ParamConstant;
-import top.pullulate.common.enums.HiddenHeaderContent;
-import top.pullulate.common.enums.KeepAlive;
-import top.pullulate.common.enums.MenuType;
-import top.pullulate.common.enums.Show;
+import top.pullulate.common.enums.*;
 import top.pullulate.core.utils.RedisUtils;
+import top.pullulate.core.utils.TokeUtils;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.mapper.PulMenuMapper;
 import top.pullulate.system.service.IPulMenuService;
+import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.dto.tree.Tree;
 import top.pullulate.web.data.viewvo.PulMenuViewVo;
 import top.pullulate.web.data.vo.PulMenuVo;
 import top.pullulate.web.data.dto.route.Meta;
 import top.pullulate.web.data.dto.route.Router;
+
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,8 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
 
     private final RedisUtils redisUtils;
 
+    private final TokeUtils tokeUtils;
+
     /**
      * 根据用户主键查询用户菜单信息
      * 包含了菜单和按钮
@@ -51,10 +54,6 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
      */
     @Override
     public List<PulMenu> getUserMenusByUserId(String userId) {
-        if (userId == null) {
-            log.warn("获取用户菜单信息，用户主键为空");
-            return null;
-        }
         return baseMapper.selectUserMenusByUserId(userId);
     }
 
@@ -113,6 +112,66 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
         Set<String> dupMenuSet = new HashSet<>(allMenus.size());
         List<Tree> tree = buildMenuTreeSelect(allMenus, allMenus, dupMenuSet);
         return tree;
+    }
+
+    /**
+     * 保存路由
+     *
+     * @param menuVo    路由信息
+     * @return
+     */
+    @Override
+    public P saveMenu(PulMenuVo menuVo) {
+        int count = count(Wrappers.<PulMenu>lambdaQuery()
+                .eq(PulMenu::getName, menuVo.getName())
+                .or()
+                .eq(PulMenu::getPermission, menuVo.getPermission()));
+        if (count > 0) {
+            return P.error("路由已存在，请检查路由名称或权限标识");
+        }
+        PulMenu menu;
+        if (MenuType.directory(menuVo.getMenuType())) {
+            menu = new PulMenu(ParamConstant.TOP_MENU_ID, menuVo.getTitle(), menuVo.getUsTitle(), menuVo.getName(), menuVo.getPath(),
+                    menuVo.getRedirect(), menuVo.getComponent(), KeepAlive.UNALIVE.getCode(), menuVo.getPermission(), null,
+                    menuVo.getHidden(), menuVo.getHideChildrenInMenu(), Show.SHOW.getCode(), menuVo.getIcon(), menuVo.getMenuType(),
+                    menuVo.getOrderNum(), menuVo.getRemark(), tokeUtils.getUserName(), LocalDateTime.now());
+        } else {
+            PulMenu parentMenu = getById(menuVo.getParentId());
+            if (ObjectUtil.isNull(parentMenu)) {
+                return P.error("上级路由不存在");
+            }
+            if (DataStatus.disabled(parentMenu.getStatus())) {
+                return P.error("上级路由已被禁用");
+            }
+            if (MenuType.button(menuVo.getMenuType())) {
+                menu = new PulMenu(menuVo.getParentId(), menuVo.getTitle(), menuVo.getUsTitle(), menuVo.getName(), null,
+                        null, null, null, menuVo.getPermission(), null,
+                        Show.HIDE.getCode(), null, null, null, menuVo.getMenuType(),
+                        menuVo.getOrderNum(), menuVo.getRemark(), tokeUtils.getUserName(), LocalDateTime.now());
+            } else {
+                menu = BeanUtil.toBean(menuVo, PulMenu.class);
+                menu.setRedirect(null);
+                menu.setCreateBy(tokeUtils.getUserName());
+                menu.setCreateAt(LocalDateTime.now());
+            }
+        }
+        boolean result = save(menu);
+        if (!result) {
+            return P.error();
+        }
+        refreshMenuCache();
+        return P.success();
+    }
+
+    /**
+     * 修改路由
+     *
+     * @param menuVo    路由信息
+     * @return
+     */
+    @Override
+    public P updateMenu(PulMenuVo menuVo) {
+        return null;
     }
 
     /**
@@ -241,6 +300,26 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
             return menus.stream().filter(menu -> parentMenu.getMenuId().equals(menu.getParentId())).collect(Collectors.toList());
         }
         return null;
+    }
+
+    /**
+     * 刷新缓存
+     */
+    private void refreshMenuCache() {
+        log.info("--->刷新所有路由的缓存");
+        redisUtils.deleteObject(CacheConstant.CACHE_MENU_ALL);
+        List<PulMenuViewVo> allMenus = list(Wrappers.<PulMenu>lambdaQuery()
+                .orderByAsc(PulMenu::getMenuType)
+                .orderByAsc(PulMenu::getOrderNum))
+                .stream().map(menu-> BeanUtil.toBean(menu, PulMenuViewVo.class))
+                .collect(Collectors.toList());
+        redisUtils.setCacheList(CacheConstant.CACHE_MENU_ALL, allMenus);
+
+        log.info("--->刷新路由列表树的缓存");
+        redisUtils.deleteObject(CacheConstant.CACHE_MENU_LIST_TREE);
+        Set<String> dupMenuSet = new HashSet<>(allMenus.size());
+        List<PulMenuViewVo> tree = buildMenuListTree(allMenus, allMenus, dupMenuSet);
+        redisUtils.setCacheList(CacheConstant.CACHE_MENU_LIST_TREE, tree);
     }
 
 }

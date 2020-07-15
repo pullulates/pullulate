@@ -2,6 +2,7 @@ package top.pullulate.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.pullulate.system.entity.PulMenu;
+import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.dto.tree.Tree;
 import top.pullulate.web.data.viewvo.PulMenuViewVo;
 import top.pullulate.web.data.vo.PulMenuVo;
@@ -61,4 +62,20 @@ public interface IPulMenuService extends IService<PulMenu> {
      * @return
      */
     List<Tree> getMenuTreeSelect();
+
+    /**
+     * 保存路由
+     *
+     * @param menuVo    路由信息
+     * @return
+     */
+    P saveMenu(PulMenuVo menuVo);
+
+    /**
+     * 修改路由
+     *
+     * @param menuVo    路由信息
+     * @return
+     */
+    P updateMenu(PulMenuVo menuVo);
 }
