@@ -101,7 +101,9 @@ public class PulMenu implements Serializable {
     public PulMenu() {
     }
 
-    public PulMenu(String parentId, String title, String usTitle, String name, String path, String redirect, String component, String keepAlive, String permission, String target, String hidden, String hideChildrenInMenu, String hiddenHeaderContent, String icon, String menuType, Integer orderNum, String remark, String createBy, LocalDateTime createAt) {
+    public PulMenu(String parentId, String title, String usTitle, String name, String path, String redirect, String component,
+                   String keepAlive, String permission, String target, String hidden, String hideChildrenInMenu, String hiddenHeaderContent,
+                   String icon, String menuType, Integer orderNum, String remark) {
         this.parentId = parentId;
         this.title = title;
         this.usTitle = usTitle;
@@ -119,7 +121,5 @@ public class PulMenu implements Serializable {
         this.menuType = menuType;
         this.orderNum = orderNum;
         this.remark = remark;
-        this.createBy = createBy;
-        this.createAt = createAt;
     }
 }

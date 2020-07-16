@@ -73,4 +73,28 @@ public class PulMenuCntroller {
     public P updateMenu(@RequestBody @Validated PulMenuVo menuVo) {
         return menuService.updateMenu(menuVo);
     }
+
+    /**
+     * 修改路由的状态
+     *
+     * @param menuVo    路由参数
+     * @return
+     */
+    @PatchMapping
+    @OperationRecord(title = "路由管理-修改路由状态")
+    public P updateMenuStatus(@RequestBody PulMenuVo menuVo) {
+        return menuService.updateMenuStatus(menuVo);
+    }
+
+    /**
+     * 删除路由信息
+     *
+     * @param menuId    路由主键
+     * @return
+     */
+    @DeleteMapping
+    @OperationRecord(title = "路由管理-删除路由")
+    public P deleteMenu(String menuId) {
+        return menuService.deleteMenu(menuId);
+    }
 }

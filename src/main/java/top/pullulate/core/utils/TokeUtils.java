@@ -60,7 +60,7 @@ public class TokeUtils {
      * @return  用户名称
      */
     public String getUserName() {
-        return getUserInfo(ServletUtils.getRequest()).getUserId();
+        return getUserInfo(ServletUtils.getRequest()).getUsername();
     }
 
     /**

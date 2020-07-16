@@ -129,32 +129,12 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
         if (count > 0) {
             return P.error("路由已存在，请检查路由名称或权限标识");
         }
-        PulMenu menu;
-        if (MenuType.directory(menuVo.getMenuType())) {
-            menu = new PulMenu(ParamConstant.TOP_MENU_ID, menuVo.getTitle(), menuVo.getUsTitle(), menuVo.getName(), menuVo.getPath(),
-                    menuVo.getRedirect(), menuVo.getComponent(), KeepAlive.UNALIVE.getCode(), menuVo.getPermission(), null,
-                    menuVo.getHidden(), menuVo.getHideChildrenInMenu(), Show.SHOW.getCode(), menuVo.getIcon(), menuVo.getMenuType(),
-                    menuVo.getOrderNum(), menuVo.getRemark(), tokeUtils.getUserName(), LocalDateTime.now());
-        } else {
-            PulMenu parentMenu = getById(menuVo.getParentId());
-            if (ObjectUtil.isNull(parentMenu)) {
-                return P.error("上级路由不存在");
-            }
-            if (DataStatus.disabled(parentMenu.getStatus())) {
-                return P.error("上级路由已被禁用");
-            }
-            if (MenuType.button(menuVo.getMenuType())) {
-                menu = new PulMenu(menuVo.getParentId(), menuVo.getTitle(), menuVo.getUsTitle(), menuVo.getName(), null,
-                        null, null, null, menuVo.getPermission(), null,
-                        Show.HIDE.getCode(), null, null, null, menuVo.getMenuType(),
-                        menuVo.getOrderNum(), menuVo.getRemark(), tokeUtils.getUserName(), LocalDateTime.now());
-            } else {
-                menu = BeanUtil.toBean(menuVo, PulMenu.class);
-                menu.setRedirect(null);
-                menu.setCreateBy(tokeUtils.getUserName());
-                menu.setCreateAt(LocalDateTime.now());
-            }
+        PulMenu menu = buildMenuByMenuType(menuVo);
+        if (ObjectUtil.isNull(menu)) {
+            return P.error("上级菜单不存在或已被禁用！");
         }
+        menu.setCreateBy(tokeUtils.getUserName());
+        menu.setCreateAt(LocalDateTime.now());
         boolean result = save(menu);
         if (!result) {
             return P.error();
@@ -171,7 +151,65 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
      */
     @Override
     public P updateMenu(PulMenuVo menuVo) {
-        return null;
+        int count = count(Wrappers.<PulMenu>lambdaQuery()
+                .ne(PulMenu::getMenuId, menuVo.getMenuId())
+                .and(wrapper -> wrapper
+                        .eq(PulMenu::getName, menuVo.getName())
+                        .or()
+                        .eq(PulMenu::getPermission, menuVo.getPermission())));
+        if (count > 0) {
+            return P.error("路由已存在，请检查路由名称或权限标识");
+        }
+        PulMenu menu = buildMenuByMenuType(menuVo);
+        if (ObjectUtil.isNull(menu)) {
+            return P.error("上级菜单不存在或已被禁用！");
+        }
+        menu.setMenuId(menuVo.getMenuId());
+        menu.setUpdateBy(tokeUtils.getUserName());
+        menu.setUpdateAt(LocalDateTime.now());
+        boolean result = updateById(menu);
+        if (!result) {
+            return P.error();
+        }
+        refreshMenuCache();
+        return P.success();
+    }
+
+    /**
+     * 修改路由的状态
+     *
+     * @param menuVo    路由参数
+     * @return
+     */
+    @Override
+    public P updateMenuStatus(PulMenuVo menuVo) {
+        PulMenu menu = BeanUtil.toBean(menuVo, PulMenu.class);
+        menu.setUpdateBy(tokeUtils.getUserName());
+        menu.setUpdateAt(LocalDateTime.now());
+        boolean result = update(menu, Wrappers.<PulMenu>lambdaUpdate().eq(PulMenu::getMenuId, menu.getMenuId()));
+        if (result) {
+            refreshMenuCache();
+        }
+        return P.p(result);
+    }
+
+    /**
+     * 删除路由信息
+     *
+     * @param menuId    路由主键
+     * @return
+     */
+    @Override
+    public P deleteMenu(String menuId) {
+        int count = count(Wrappers.<PulMenu>lambdaQuery().eq(PulMenu::getParentId, menuId));
+        if (count > 0) {
+            return P.error("存在下级路由，不能直接删除");
+        }
+        boolean result = removeById(menuId);
+        if (result) {
+            refreshMenuCache();
+        }
+        return P.p(result);
     }
 
     /**
@@ -300,6 +338,37 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
             return menus.stream().filter(menu -> parentMenu.getMenuId().equals(menu.getParentId())).collect(Collectors.toList());
         }
         return null;
+    }
+
+    /**
+     * 构建菜单信息
+     *
+     * @param menuVo    菜单数据
+     * @return
+     */
+    private PulMenu buildMenuByMenuType(PulMenuVo menuVo) {
+        PulMenu menu;
+        if (MenuType.directory(menuVo.getMenuType())) {
+            menu = new PulMenu(ParamConstant.TOP_MENU_ID, menuVo.getTitle(), menuVo.getUsTitle(), menuVo.getName(), menuVo.getPath(),
+                    menuVo.getRedirect(), menuVo.getComponent(), KeepAlive.UNALIVE.getCode(), menuVo.getPermission(), null,
+                    menuVo.getHidden(), menuVo.getHideChildrenInMenu(), Show.SHOW.getCode(), menuVo.getIcon(), menuVo.getMenuType(),
+                    menuVo.getOrderNum(), menuVo.getRemark());
+        } else {
+            PulMenu parentMenu = getById(menuVo.getParentId());
+            if (ObjectUtil.isNull(parentMenu) || DataStatus.disabled(parentMenu.getStatus())) {
+                return null;
+            }
+            if (MenuType.button(menuVo.getMenuType())) {
+                menu = new PulMenu(menuVo.getParentId(), menuVo.getTitle(), menuVo.getUsTitle(), menuVo.getName(), null,
+                        null, null, null, menuVo.getPermission(), null,
+                        Show.HIDE.getCode(), null, null, null, menuVo.getMenuType(),
+                        menuVo.getOrderNum(), menuVo.getRemark());
+            } else {
+                menu = BeanUtil.toBean(menuVo, PulMenu.class);
+                menu.setRedirect(null);
+            }
+        }
+        return menu;
     }
 
     /**

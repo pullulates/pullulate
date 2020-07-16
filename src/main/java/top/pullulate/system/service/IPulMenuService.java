@@ -78,4 +78,20 @@ public interface IPulMenuService extends IService<PulMenu> {
      * @return
      */
     P updateMenu(PulMenuVo menuVo);
+
+    /**
+     * 修改路由的状态
+     *
+     * @param menuVo    路由参数
+     * @return
+     */
+    P updateMenuStatus(PulMenuVo menuVo);
+
+    /**
+     * 删除路由信息
+     *
+     * @param menuId    路由主键
+     * @return
+     */
+    P deleteMenu(String menuId);
 }
