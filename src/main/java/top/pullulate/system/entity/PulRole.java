@@ -32,12 +32,6 @@ public class PulRole implements Serializable {
     /** 角色状态 */
     private String status;
 
-    /** 是否拥有全部菜单权限 */
-    private String hasAllMenu;
-
-    /** 是否拥有全部数据权限 */
-    private String hasAllData;
-
     /** 删除标识 */
     private String deleteFlag;
 

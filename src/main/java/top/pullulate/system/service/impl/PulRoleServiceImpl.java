@@ -1,11 +1,15 @@
 package top.pullulate.system.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import top.pullulate.system.entity.PulRole;
 import top.pullulate.system.mapper.PulRoleMapper;
 import top.pullulate.system.service.IPulRoleService;
+import top.pullulate.web.data.viewvo.PulRoleViewVo;
+import top.pullulate.web.data.vo.PulRoleVo;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,5 +37,17 @@ public class PulRoleServiceImpl extends ServiceImpl<PulRoleMapper, PulRole> impl
     public List<PulRole> getUserRolesByUserId(String userId) {
         return baseMapper.selectUserRolesByUserId(userId)
                 .stream().distinct().collect(Collectors.toList());
+    }
+
+    /**
+     * 获取角色分页数据
+     *
+     * @param roleVo    查询参数
+     * @param page  分页参数
+     * @return
+     */
+    @Override
+    public IPage<List<PulRoleViewVo>> getRolePage(PulRoleVo roleVo, Page page) {
+        return baseMapper.getRolePage(roleVo, page);
     }
 }
