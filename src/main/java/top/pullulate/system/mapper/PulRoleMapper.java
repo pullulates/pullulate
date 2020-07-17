@@ -35,5 +35,6 @@ public interface PulRoleMapper extends BaseMapper<PulRole> {
      * @param page  分页参数
      * @return
      */
-    IPage<List<PulRoleViewVo>> getRolePage(@Param("roleVo") PulRoleVo roleVo, Page page);
+    IPage<List<PulRoleViewVo>> selectRolePage(@Param("roleVo") PulRoleVo roleVo, Page page);
+    
 }

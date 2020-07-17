@@ -44,7 +44,7 @@
         where ur.user_id = #{userId} and r.status = '0' and r.delete_flag = '0'
     </select>
 
-    <select id="getRolePage" resultMap="PulRoleViewVoResultMap">
+    <select id="selectRolePage" resultMap="PulRoleViewVoResultMap">
         select
         <include refid="BasicInfoField"></include>
         from pul_role r

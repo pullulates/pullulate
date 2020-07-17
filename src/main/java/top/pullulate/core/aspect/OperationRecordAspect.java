@@ -18,7 +18,7 @@ import top.pullulate.common.constants.HttpConstant;
 import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.core.rabbitmq.producer.RabbitMqOperationRecordProducer;
 import top.pullulate.core.security.user.UserInfo;
-import top.pullulate.core.utils.TokeUtils;
+import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulOperationRecord;
 import top.pullulate.utils.IPUtils;
 import top.pullulate.utils.LocationUtils;
@@ -42,7 +42,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class OperationRecordAspect {
 
-    private final TokeUtils tokeUtils;
+    private final TokenUtils tokenUtils;
 
     private final RabbitMqOperationRecordProducer operationRecordProducer;
 
@@ -81,7 +81,7 @@ public class OperationRecordAspect {
             UserAgent userAgent = UserAgentUtil.parse(ServletUtils.getUserAgent());
             HttpServletRequest request = ServletUtils.getRequest();
             String params = getReqestParams(request, joinPoint);
-            UserInfo userInfo = tokeUtils.getUserInfo(request);
+            UserInfo userInfo = tokenUtils.getUserInfo(request);
             String costText = cost < 3 ? "不足3S" : cost + "S";
             PulOperationRecord operationRecord = new PulOperationRecord(
                     IdUtil.fastSimpleUUID(), title, ServletUtils.getRequest().getRequestURI(),

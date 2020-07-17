@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.pullulate.core.security.user.UserInfo;
-import top.pullulate.core.utils.TokeUtils;
+import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulUser;
 import top.pullulate.system.service.IPulUserService;
 import top.pullulate.web.data.dto.response.P;
@@ -33,7 +33,7 @@ public class PulUserController {
 
     private final IPulUserService userService;
 
-    private final TokeUtils tokeUtils;
+    private final TokenUtils tokenUtils;
 
     /**
      * 获取当前登录用户的用户信息
@@ -43,7 +43,7 @@ public class PulUserController {
      */
     @GetMapping("/get")
     public P getCurrentLoginUserInfo(HttpServletRequest request) {
-        UserInfo userInfo = tokeUtils.getUserInfo(request);
+        UserInfo userInfo = tokenUtils.getUserInfo(request);
         return P.data(userInfo);
     }
 

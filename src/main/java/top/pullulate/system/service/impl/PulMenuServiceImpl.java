@@ -12,7 +12,7 @@ import top.pullulate.common.constants.CacheConstant;
 import top.pullulate.common.constants.ParamConstant;
 import top.pullulate.common.enums.*;
 import top.pullulate.core.utils.RedisUtils;
-import top.pullulate.core.utils.TokeUtils;
+import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.mapper.PulMenuMapper;
 import top.pullulate.system.service.IPulMenuService;
@@ -42,7 +42,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
 
     private final RedisUtils redisUtils;
 
-    private final TokeUtils tokeUtils;
+    private final TokenUtils tokenUtils;
 
     /**
      * 根据用户主键查询用户菜单信息
@@ -133,7 +133,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
         if (ObjectUtil.isNull(menu)) {
             return P.error("上级菜单不存在或已被禁用！");
         }
-        menu.setCreateBy(tokeUtils.getUserName());
+        menu.setCreateBy(tokenUtils.getUserName());
         menu.setCreateAt(LocalDateTime.now());
         boolean result = save(menu);
         if (!result) {
@@ -165,7 +165,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
             return P.error("上级菜单不存在或已被禁用！");
         }
         menu.setMenuId(menuVo.getMenuId());
-        menu.setUpdateBy(tokeUtils.getUserName());
+        menu.setUpdateBy(tokenUtils.getUserName());
         menu.setUpdateAt(LocalDateTime.now());
         boolean result = updateById(menu);
         if (!result) {
@@ -184,7 +184,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
     @Override
     public P updateMenuStatus(PulMenuVo menuVo) {
         PulMenu menu = BeanUtil.toBean(menuVo, PulMenu.class);
-        menu.setUpdateBy(tokeUtils.getUserName());
+        menu.setUpdateBy(tokenUtils.getUserName());
         menu.setUpdateAt(LocalDateTime.now());
         boolean result = update(menu, Wrappers.<PulMenu>lambdaUpdate().eq(PulMenu::getMenuId, menu.getMenuId()));
         if (result) {

@@ -3,6 +3,9 @@ package top.pullulate.web.data.vo;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 /**
  * @功能描述:   角色参数接收类
  * @Author: xuyong
@@ -19,9 +22,13 @@ public class PulRoleVo {
     private String roleId;
 
     /** 角色名称 */
+    @NotBlank(message = "角色名称不能为空")
+    @Size(max = 20, message = "角色名称最多20字")
     private String roleName;
 
     /** 角色标识 */
+    @NotBlank(message = "角色标识不能为空")
+    @Size(max = 20, message = "角色标识最多20字")
     private String roleKey;
 
     /** 角色状态 */
@@ -31,5 +38,6 @@ public class PulRoleVo {
     private String deleteFlag;
 
     /** 备注信息 */
+    @Size(max = 250, message = "备注信息最多250字")
     private String remark;
 }

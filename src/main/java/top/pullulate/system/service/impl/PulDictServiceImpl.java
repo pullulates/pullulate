@@ -14,7 +14,7 @@ import top.pullulate.common.constants.ParamConstant;
 import top.pullulate.common.enums.DictType;
 import top.pullulate.core.security.user.UserInfo;
 import top.pullulate.core.utils.RedisUtils;
-import top.pullulate.core.utils.TokeUtils;
+import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulDictData;
 import top.pullulate.system.entity.PulDictType;
 import top.pullulate.system.mapper.PulDictDataMapper;
@@ -48,7 +48,7 @@ public class PulDictServiceImpl implements IPulDictService {
 
     private final PulDictDataMapper dictDataMapper;
 
-    private final TokeUtils tokeUtils;
+    private final TokenUtils tokenUtils;
 
     private final RedisUtils redisUtils;
 
@@ -138,7 +138,7 @@ public class PulDictServiceImpl implements IPulDictService {
         if (count > 0) {
             return P.error("字典键已经存在");
         }
-        dictType.setCreateBy(tokeUtils.getUserName());
+        dictType.setCreateBy(tokenUtils.getUserName());
         dictType.setCreateAt(LocalDateTime.now());
         return P.p(dictTypeMapper.insert(dictType));
     }
@@ -157,7 +157,7 @@ public class PulDictServiceImpl implements IPulDictService {
         if (ObjectUtil.isNull(check)) {
             return P.error("字典不存在");
         }
-        UserInfo userInfo = tokeUtils.getUserInfo();
+        UserInfo userInfo = tokenUtils.getUserInfo();
         if (DictType.willDefault(check.getWillDefault()) && !userInfo.willSuperman()) {
             return P.error("您不能修改默认字典");
         }
@@ -186,7 +186,7 @@ public class PulDictServiceImpl implements IPulDictService {
         if (ObjectUtil.isNull(checkDictType)) {
             return P.error("字典类别不存在");
         }
-        UserInfo userInfo = tokeUtils.getUserInfo();
+        UserInfo userInfo = tokenUtils.getUserInfo();
         if (DictType.willDefault(checkDictType.getWillDefault()) && !userInfo.willSuperman()) {
             return P.error("您不能修改默认字典");
         }
@@ -215,7 +215,7 @@ public class PulDictServiceImpl implements IPulDictService {
         if (ObjectUtil.isNull(checkDictType)) {
             return P.error("字典类别不存在");
         }
-        UserInfo userInfo = tokeUtils.getUserInfo();
+        UserInfo userInfo = tokenUtils.getUserInfo();
         if (DictType.willDefault(checkDictType.getWillDefault()) && !userInfo.willSuperman()) {
             return P.error("您不能修改默认字典");
         }
@@ -240,7 +240,7 @@ public class PulDictServiceImpl implements IPulDictService {
     @Override
     public P updateDictDataStatus(PulDictDataVo dictDataVo) {
         PulDictData dictData = BeanUtil.toBean(dictDataVo, PulDictData.class);
-        dictData.setUpdateBy(tokeUtils.getUserName());
+        dictData.setUpdateBy(tokenUtils.getUserName());
         dictData.setUpdateAt(LocalDateTime.now());
         return P.p(dictDataMapper.update(dictData, Wrappers.<PulDictData>lambdaUpdate()
                 .eq(PulDictData::getDictDataId, dictData.getDictDataId())));
@@ -266,7 +266,7 @@ public class PulDictServiceImpl implements IPulDictService {
     @Override
     public P updateDictTypeStatus(PulDictTypeVo dictTypeVo) {
         PulDictType dictType = BeanUtil.toBean(dictTypeVo, PulDictType.class);
-        dictType.setUpdateBy(tokeUtils.getUserName());
+        dictType.setUpdateBy(tokenUtils.getUserName());
         dictType.setUpdateAt(LocalDateTime.now());
         return P.p(dictTypeMapper.update(dictType, Wrappers.<PulDictType>lambdaUpdate()
                 .eq(PulDictType::getDictTypeId, dictType.getDictTypeId())));

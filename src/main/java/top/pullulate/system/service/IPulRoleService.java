@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.pullulate.system.entity.PulRole;
+import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.PulRoleViewVo;
 import top.pullulate.web.data.vo.PulRoleVo;
 
@@ -36,4 +37,36 @@ public interface IPulRoleService extends IService<PulRole> {
      * @return
      */
     IPage<List<PulRoleViewVo>> getRolePage(PulRoleVo roleVo, Page page);
+
+    /**
+     * 保存角色信息
+     *
+     * @param roleVo    角色信息
+     * @return
+     */
+    P saveRole(PulRoleVo roleVo);
+
+    /**
+     * 修改角色信息
+     *
+     * @param roleVo    角色信息
+     * @return
+     */
+    P updateRole(PulRoleVo roleVo);
+
+    /**
+     * 修改角色状态
+     *
+     * @param roleVo    角色信息
+     * @return
+     */
+    P updateRoleStatus(PulRoleVo roleVo);
+
+    /**
+     * 删除角色
+     *
+     * @param roleId    角色主键
+     * @return
+     */
+    P deleteRole(String roleId);
 }

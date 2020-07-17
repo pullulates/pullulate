@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @RequiredArgsConstructor
-public class TokeUtils {
+public class TokenUtils {
 
     private final RedisUtils redisUtils;
 

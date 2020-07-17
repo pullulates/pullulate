@@ -3,9 +3,9 @@ package top.pullulate.web.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.system.service.IPulRoleService;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.PulRoleViewVo;
@@ -39,5 +39,53 @@ public class PulRoleController {
     public P getRolePage(PulRoleVo roleVo, Page page) {
         IPage<List<PulRoleViewVo>> roles = roleService.getRolePage(roleVo, page);
         return P.data(roles);
+    }
+
+    /**
+     * 保存角色信息
+     *
+     * @param roleVo    角色信息
+     * @return
+     */
+    @PostMapping
+    @OperationRecord(title = "角色管理-保存角色")
+    public P saveRole(@RequestBody @Validated PulRoleVo roleVo) {
+        return roleService.saveRole(roleVo);
+    }
+
+    /**
+     * 修改角色信息
+     *
+     * @param roleVo    角色信息
+     * @return
+     */
+    @PutMapping
+    @OperationRecord(title = "角色管理-修改角色")
+    public P updateRole(@RequestBody @Validated PulRoleVo roleVo) {
+        return roleService.updateRole(roleVo);
+    }
+
+    /**
+     * 修改角色状态
+     *
+     * @param roleVo    角色信息
+     * @return
+     */
+    @PatchMapping
+    @OperationRecord(title = "角色管理-修改角色状态")
+    public P updateRoleStatus(@RequestBody PulRoleVo roleVo) {
+        return roleService.updateRoleStatus(roleVo);
+    }
+
+    /**
+     * 删除角色
+     *
+     * @param roleId    角色主键
+     * @return
+     */
+    @DeleteMapping
+    @OperationRecord(title = "角色管理-删除角色")
+    public P deleteRole(String roleId) {
+        return roleService.deleteRole(roleId);
     }
 }

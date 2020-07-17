@@ -18,7 +18,7 @@ import top.pullulate.common.enums.OperResult;
 import top.pullulate.core.rabbitmq.producer.RabbitMqLoginRecordProducer;
 import top.pullulate.core.security.user.UserInfo;
 import top.pullulate.core.utils.RedisUtils;
-import top.pullulate.core.utils.TokeUtils;
+import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulDept;
 import top.pullulate.system.entity.PulLoginRecord;
 import top.pullulate.system.entity.PulMenu;
@@ -55,7 +55,7 @@ public class LoginService {
 
     private final RedisUtils redisUtils;
 
-    private final TokeUtils tokeUtils;
+    private final TokenUtils tokenUtils;
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
@@ -142,7 +142,7 @@ public class LoginService {
         userInfo.setRouters(routers);
         userInfo.setPermissions(permissions);
         userInfo.setDicts(dicts);
-        String token = tokeUtils.createToken(userInfo);
+        String token = tokenUtils.createToken(userInfo);
         loginRecord.setResult(OperResult.SUCCESS.getCode());
         loginRecord.setPromtMsg(MessageUtils.get("operate.success"));
         loginRecordProducer.sendLoginInfor(loginRecord);
