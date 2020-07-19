@@ -8,9 +8,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import top.pullulate.common.constants.CacheConstant;
 import top.pullulate.common.constants.ParamConstant;
 import top.pullulate.common.enums.*;
+import top.pullulate.common.service.MenuCacheService;
 import top.pullulate.core.utils.RedisUtils;
 import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulMenu;
@@ -22,7 +22,6 @@ import top.pullulate.web.data.viewvo.PulMenuViewVo;
 import top.pullulate.web.data.vo.PulMenuVo;
 import top.pullulate.web.data.dto.route.Meta;
 import top.pullulate.web.data.dto.route.Router;
-
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,6 +42,8 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
     private final RedisUtils redisUtils;
 
     private final TokenUtils tokenUtils;
+
+    private final MenuCacheService menuCacheService;
 
     /**
      * 根据用户主键查询用户菜单信息
@@ -87,7 +88,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
      */
     @Override
     public List<PulMenuViewVo> getMenuTreeList(PulMenuVo menuVo) {
-        List<PulMenuViewVo> menuListTree = redisUtils.getCacheList(CacheConstant.CACHE_MENU_LIST_TREE);
+        List<PulMenuViewVo> menuListTree = menuCacheService.getMenuListTree();
         if (ObjectUtil.isNull(menuVo) && CollectionUtil.isNotEmpty(menuListTree)) {
             Collections.sort(menuListTree);
             return menuListTree;
@@ -96,7 +97,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
         Set<String> dupMenuSet = new HashSet<>(allMenus.size());
         List<PulMenuViewVo> tree = buildMenuListTree(allMenus, allMenus, dupMenuSet);
         if (ObjectUtil.isNull(menuVo) && CollectionUtil.isEmpty(menuListTree)) {
-            redisUtils.setCacheList(CacheConstant.CACHE_MENU_LIST_TREE, tree);
+            menuCacheService.setMenuListTree(tree);
         }
         return tree;
     }
@@ -312,14 +313,14 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
      * @return
      */
     private List<PulMenuViewVo> getAllMenus() {
-        List<PulMenuViewVo> allMenus = redisUtils.getCacheList(CacheConstant.CACHE_MENU_ALL);
+        List<PulMenuViewVo> allMenus = menuCacheService.getAllMenus();
         if (CollectionUtil.isEmpty(allMenus)) {
             allMenus = list(Wrappers.<PulMenu>lambdaQuery()
                     .orderByAsc(PulMenu::getMenuType)
                     .orderByAsc(PulMenu::getOrderNum))
                     .stream().map(menu-> BeanUtil.toBean(menu, PulMenuViewVo.class))
                     .collect(Collectors.toList());
-            redisUtils.setCacheList(CacheConstant.CACHE_MENU_ALL, allMenus);
+            menuCacheService.setAllMenus(allMenus);
         }
         Collections.sort(allMenus);
         return allMenus;
@@ -375,20 +376,14 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
      * 刷新缓存
      */
     private void refreshMenuCache() {
-        log.info("--->刷新所有路由的缓存");
-        redisUtils.deleteObject(CacheConstant.CACHE_MENU_ALL);
         List<PulMenuViewVo> allMenus = list(Wrappers.<PulMenu>lambdaQuery()
                 .orderByAsc(PulMenu::getMenuType)
                 .orderByAsc(PulMenu::getOrderNum))
                 .stream().map(menu-> BeanUtil.toBean(menu, PulMenuViewVo.class))
                 .collect(Collectors.toList());
-        redisUtils.setCacheList(CacheConstant.CACHE_MENU_ALL, allMenus);
-
-        log.info("--->刷新路由列表树的缓存");
-        redisUtils.deleteObject(CacheConstant.CACHE_MENU_LIST_TREE);
         Set<String> dupMenuSet = new HashSet<>(allMenus.size());
         List<PulMenuViewVo> tree = buildMenuListTree(allMenus, allMenus, dupMenuSet);
-        redisUtils.setCacheList(CacheConstant.CACHE_MENU_LIST_TREE, tree);
+        menuCacheService.refreshMenuCache(allMenus, tree);
     }
 
 }

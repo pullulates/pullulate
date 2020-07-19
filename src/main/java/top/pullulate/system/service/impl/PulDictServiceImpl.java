@@ -9,11 +9,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import top.pullulate.common.constants.CacheConstant;
 import top.pullulate.common.constants.ParamConstant;
 import top.pullulate.common.enums.DictType;
+import top.pullulate.common.service.DictCacheService;
 import top.pullulate.core.security.user.UserInfo;
-import top.pullulate.core.utils.RedisUtils;
 import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulDictData;
 import top.pullulate.system.entity.PulDictType;
@@ -50,7 +49,7 @@ public class PulDictServiceImpl implements IPulDictService {
 
     private final TokenUtils tokenUtils;
 
-    private final RedisUtils redisUtils;
+    private final DictCacheService dictCacheService;
 
     /**
      * 构建前端字典缓存
@@ -59,7 +58,7 @@ public class PulDictServiceImpl implements IPulDictService {
      */
     @Override
     public Map<String, List<PulDictDataViewVo>> buildFrontDictCache() {
-        Map<String, List<PulDictDataViewVo>> map = redisUtils.getCacheMap(CacheConstant.CACHE_DICT_FRONT_KEY);
+        Map<String, List<PulDictDataViewVo>> map = dictCacheService.getFrontDictCache();
         if (CollectionUtil.isNotEmpty(map)) {
             return map;
         }
@@ -76,7 +75,7 @@ public class PulDictServiceImpl implements IPulDictService {
                     .map(dictData -> BeanUtil.toBean(dictData, PulDictDataViewVo.class)).collect(Collectors.toList());
             frontDict.put(dictType.getDictKey(), dictDataViewVos);
         });
-        redisUtils.setCacheMap(CacheConstant.CACHE_DICT_FRONT_KEY, frontDict);
+        dictCacheService.setFrontDictCache(frontDict);
         return frontDict;
     }
 

@@ -10,8 +10,8 @@ import top.pullulate.system.service.IPulRoleService;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.PulRoleViewVo;
 import top.pullulate.web.data.vo.PulRoleVo;
-
 import java.util.List;
+import java.util.Set;
 
 /**
  * @功能描述:   角色前端控制器
@@ -87,5 +87,17 @@ public class PulRoleController {
     @OperationRecord(title = "角色管理-删除角色")
     public P deleteRole(String roleId) {
         return roleService.deleteRole(roleId);
+    }
+
+    /**
+     * 获取角色拥有的菜单主键集合
+     *
+     * @param roleId    角色主键
+     * @return
+     */
+    @GetMapping("/role-menuids")
+    public P getRoleMenus(String roleId) {
+        Set<String> menuIds = roleService.getRoleMenuIds(roleId);
+        return P.data(menuIds);
     }
 }

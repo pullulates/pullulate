@@ -7,8 +7,8 @@ import top.pullulate.system.entity.PulRole;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.PulRoleViewVo;
 import top.pullulate.web.data.vo.PulRoleVo;
-
 import java.util.List;
+import java.util.Set;
 
 /**
  * @功能描述:   角色服务接口
@@ -69,4 +69,12 @@ public interface IPulRoleService extends IService<PulRole> {
      * @return
      */
     P deleteRole(String roleId);
+
+    /**
+     * 获取角色的菜单主键集合
+     *
+     * @param roleId    角色主键
+     * @return
+     */
+    Set<String> getRoleMenuIds(String roleId);
 }
