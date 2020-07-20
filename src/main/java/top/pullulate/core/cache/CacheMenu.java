@@ -10,8 +10,6 @@ import top.pullulate.core.utils.RedisUtils;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.service.IPulMenuService;
 import top.pullulate.web.data.viewvo.PulMenuViewVo;
-import top.pullulate.web.data.vo.PulMenuVo;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.List;
@@ -45,7 +43,7 @@ public class CacheMenu {
                 .collect(Collectors.toList());
         redisUtils.setCacheList(CacheConstant.CACHE_MENU_ALL, pulMenus);
         log.info("--->缓存前端菜单列表树信息");
-        List<PulMenuViewVo> menuListTree = menuService.getMenuTreeList(new PulMenuVo());
+        List<PulMenuViewVo> menuListTree = menuService.getMenuTreeList();
         redisUtils.setCacheList(CacheConstant.CACHE_MENU_LIST_TREE, menuListTree);
         log.info("-----------------------缓存系统菜单信息任务结束-----------------------");
     }

@@ -51,10 +51,9 @@ public interface IPulMenuService extends IService<PulMenu> {
     /**
      * 获取菜单树列表
      *
-     * @param menuVo    查询参数
      * @return
      */
-    List<PulMenuViewVo> getMenuTreeList(PulMenuVo menuVo);
+    List<PulMenuViewVo> getMenuTreeList();
 
     /**
      * 获取菜单下拉选择树
@@ -94,4 +93,11 @@ public interface IPulMenuService extends IService<PulMenu> {
      * @return
      */
     P deleteMenu(String menuId);
+
+    /**
+     * 获取所有父级菜单的主键集合
+     *
+     * @return
+     */
+    Set<String> getParentMenuIds();
 }

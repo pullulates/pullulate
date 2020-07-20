@@ -2,6 +2,8 @@ package top.pullulate.system.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -9,20 +11,22 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.pullulate.common.service.MenuCacheService;
 import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulRole;
 import top.pullulate.system.entity.PulRoleMenu;
 import top.pullulate.system.entity.PulUserRole;
-import top.pullulate.system.mapper.PulMenuMapper;
 import top.pullulate.system.mapper.PulRoleMapper;
 import top.pullulate.system.mapper.PulRoleMenuMapper;
 import top.pullulate.system.mapper.PulUserRoleMapper;
+import top.pullulate.system.service.IPulRoleMenuService;
 import top.pullulate.system.service.IPulRoleService;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.PulRoleViewVo;
+import top.pullulate.web.data.vo.PulRoleMenuVo;
 import top.pullulate.web.data.vo.PulRoleVo;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -43,7 +47,7 @@ public class PulRoleServiceImpl extends ServiceImpl<PulRoleMapper, PulRole> impl
 
     private final PulUserRoleMapper userRoleMapper;
 
-    private final PulRoleMenuMapper roleMenuMapper;
+    private final IPulRoleMenuService roleMenuService;
 
     /**
      * 根据用户主键获取用户角色集合
@@ -147,7 +151,7 @@ public class PulRoleServiceImpl extends ServiceImpl<PulRoleMapper, PulRole> impl
         }
         removeById(roleId);
         // 删除角色已分配的路由信息
-        roleMenuMapper.delete(Wrappers.<PulRoleMenu>lambdaQuery().eq(PulRoleMenu::getRoleId, roleId));
+        roleMenuService.remove(Wrappers.<PulRoleMenu>lambdaQuery().eq(PulRoleMenu::getRoleId, roleId));
         return P.success();
     }
 
@@ -160,11 +164,33 @@ public class PulRoleServiceImpl extends ServiceImpl<PulRoleMapper, PulRole> impl
      */
     @Override
     public Set<String> getRoleMenuIds(String roleId) {
-        Set<String> menuIds = roleMenuMapper.selectList(Wrappers.<PulRoleMenu>lambdaQuery()
+        Set<String> menuIds = roleMenuService.list(Wrappers.<PulRoleMenu>lambdaQuery()
                 .eq(PulRoleMenu::getRoleId, roleId))
                 .stream()
                 .map(roleMenu -> roleMenu.getMenuId())
                 .collect(Collectors.toSet());
         return menuIds;
+    }
+
+    /**
+     * 修改角色菜单信息
+     *
+     * @param roleMenuVo    角色菜单信息
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public P updateRoleMenus(PulRoleMenuVo roleMenuVo) {
+        // 重新分配之前删除已有的角色菜单信息
+        roleMenuService.remove(Wrappers.<PulRoleMenu>lambdaQuery()
+                .eq(PulRoleMenu::getRoleId, roleMenuVo.getRoleId()));
+        // 分配新的角色菜单
+        if (StrUtil.isNotBlank(roleMenuVo.getMenuIds())) {
+            String[] menuIds = Convert.toStrArray(roleMenuVo.getMenuIds());
+            List<PulRoleMenu> roleMenus = new ArrayList<>(menuIds.length);
+            Arrays.stream(menuIds).forEach(menuId -> roleMenus.add(new PulRoleMenu(roleMenuVo.getRoleId(), menuId)));
+            roleMenuService.saveBatch(roleMenus);
+        }
+        return P.success();
     }
 }

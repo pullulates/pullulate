@@ -11,6 +11,7 @@ import top.pullulate.web.data.viewvo.PulMenuViewVo;
 import top.pullulate.web.data.vo.PulMenuVo;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @功能描述:   路由前端控制器
@@ -23,19 +24,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/menus")
 @RequiredArgsConstructor
-public class PulMenuCntroller {
+public class PulMenuController {
 
     private final IPulMenuService menuService;
 
     /**
      * 获取路由树列表
      *
-     * @param menuVo    查询参数
      * @return
      */
     @GetMapping
-    public P getMenuTreeList(PulMenuVo menuVo) {
-        List<PulMenuViewVo> menuViewVos = menuService.getMenuTreeList(menuVo);
+    public P getMenuTreeList() {
+        List<PulMenuViewVo> menuViewVos = menuService.getMenuTreeList();
         return P.data(menuViewVos);
     }
 
@@ -96,5 +96,16 @@ public class PulMenuCntroller {
     @OperationRecord(title = "路由管理-删除路由")
     public P deleteMenu(String menuId) {
         return menuService.deleteMenu(menuId);
+    }
+
+    /**
+     * 获取所有父级菜单的主键集合
+     *
+     * @return
+     */
+    @GetMapping("/parent-menuids")
+    public P getParentMenuIds() {
+        Set<String> parentIds = menuService.getParentMenuIds();
+        return P.data(parentIds);
     }
 }

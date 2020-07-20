@@ -9,6 +9,7 @@ import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.system.service.IPulRoleService;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.PulRoleViewVo;
+import top.pullulate.web.data.vo.PulRoleMenuVo;
 import top.pullulate.web.data.vo.PulRoleVo;
 import java.util.List;
 import java.util.Set;
@@ -99,5 +100,17 @@ public class PulRoleController {
     public P getRoleMenus(String roleId) {
         Set<String> menuIds = roleService.getRoleMenuIds(roleId);
         return P.data(menuIds);
+    }
+
+    /**
+     * 修改角色菜单信息
+     *
+     * @param roleMenuVo    角色菜单信息
+     * @return
+     */
+    @PostMapping("/role-menu")
+    @OperationRecord(title = "角色管理-修改角色菜单")
+    public P updateRoleMenus(@RequestBody @Validated PulRoleMenuVo roleMenuVo) {
+        return roleService.updateRoleMenus(roleMenuVo);
     }
 }

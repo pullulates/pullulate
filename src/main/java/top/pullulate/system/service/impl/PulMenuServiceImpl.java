@@ -83,22 +83,19 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
     /**
      * 获取菜单树列表
      *
-     * @param menuVo    查询参数
      * @return
      */
     @Override
-    public List<PulMenuViewVo> getMenuTreeList(PulMenuVo menuVo) {
+    public List<PulMenuViewVo> getMenuTreeList() {
         List<PulMenuViewVo> menuListTree = menuCacheService.getMenuListTree();
-        if (ObjectUtil.isNull(menuVo) && CollectionUtil.isNotEmpty(menuListTree)) {
+        if (CollectionUtil.isNotEmpty(menuListTree)) {
             Collections.sort(menuListTree);
             return menuListTree;
         }
         List<PulMenuViewVo> allMenus = getAllMenus();
         Set<String> dupMenuSet = new HashSet<>(allMenus.size());
         List<PulMenuViewVo> tree = buildMenuListTree(allMenus, allMenus, dupMenuSet);
-        if (ObjectUtil.isNull(menuVo) && CollectionUtil.isEmpty(menuListTree)) {
-            menuCacheService.setMenuListTree(tree);
-        }
+        menuCacheService.setMenuListTree(tree);
         return tree;
     }
 
@@ -211,6 +208,20 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
             refreshMenuCache();
         }
         return P.p(result);
+    }
+
+    /**
+     * 获取所有父级菜单的主键集合
+     *
+     * @return
+     */
+    @Override
+    public Set<String> getParentMenuIds() {
+        List<PulMenuViewVo> allMenus = getAllMenus();
+        Set<String> parentMenuIds= allMenus.stream()
+                .map(menu -> menu.getParentId())
+                .collect(Collectors.toSet());
+        return parentMenuIds;
     }
 
     /**

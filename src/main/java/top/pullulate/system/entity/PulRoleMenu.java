@@ -1,6 +1,7 @@
 package top.pullulate.system.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -12,7 +13,8 @@ import java.io.Serializable;
  * @GitHub: https://github.com/pullulates
  * @Gitee: https://gitee.com/pullulates
  */
-@Data
+@Getter
+@Setter
 public class PulRoleMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,4 +24,12 @@ public class PulRoleMenu implements Serializable {
 
     /** 菜单主键 */
     private String menuId;
+
+    public PulRoleMenu() {
+    }
+
+    public PulRoleMenu(String roleId, String menuId) {
+        this.roleId = roleId;
+        this.menuId = menuId;
+    }
 }

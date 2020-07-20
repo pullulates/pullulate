@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import top.pullulate.system.entity.PulRole;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.PulRoleViewVo;
+import top.pullulate.web.data.vo.PulRoleMenuVo;
 import top.pullulate.web.data.vo.PulRoleVo;
 import java.util.List;
 import java.util.Set;
@@ -77,4 +78,12 @@ public interface IPulRoleService extends IService<PulRole> {
      * @return
      */
     Set<String> getRoleMenuIds(String roleId);
+
+    /**
+     * 修改角色菜单信息
+     *
+     * @param roleMenuVo    角色菜单信息
+     * @return
+     */
+    P updateRoleMenus(PulRoleMenuVo roleMenuVo);
 }
