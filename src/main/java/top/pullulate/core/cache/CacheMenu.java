@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import top.pullulate.common.constants.CacheConstant;
-import top.pullulate.core.utils.RedisUtils;
+import top.pullulate.common.service.MenuCacheService;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.service.IPulMenuService;
 import top.pullulate.web.data.viewvo.PulMenuViewVo;
@@ -28,7 +27,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CacheMenu {
 
-    private final RedisUtils redisUtils;
+    private final MenuCacheService menuCacheService;
 
     private final IPulMenuService menuService;
 
@@ -41,10 +40,10 @@ public class CacheMenu {
                 .orderByAsc(PulMenu::getOrderNum))
                 .stream().map(menu-> BeanUtil.toBean(menu, PulMenuViewVo.class))
                 .collect(Collectors.toList());
-        redisUtils.setCacheList(CacheConstant.CACHE_MENU_ALL, pulMenus);
+        menuCacheService.setAllMenus(pulMenus);
         log.info("--->缓存前端菜单列表树信息");
         List<PulMenuViewVo> menuListTree = menuService.getMenuTreeList();
-        redisUtils.setCacheList(CacheConstant.CACHE_MENU_LIST_TREE, menuListTree);
+        menuCacheService.setMenuListTree(menuListTree);
         log.info("-----------------------缓存系统菜单信息任务结束-----------------------");
     }
 
@@ -52,9 +51,9 @@ public class CacheMenu {
     public void destroy() {
         log.info("-----------------------启动销毁系统菜单缓存任务-----------------------");
         log.info("--->销毁菜单信息缓存");
-        redisUtils.deleteObject(CacheConstant.CACHE_MENU_ALL);
+        menuCacheService.deleteAllMenus();
         log.info("--->销毁前端菜单列表树信息");
-        redisUtils.deleteObject(CacheConstant.CACHE_MENU_LIST_TREE);
+        menuCacheService.deleteMenuListTree();
         log.info("-----------------------销毁系统菜单缓存任务结束-----------------------");
     }
 

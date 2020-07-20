@@ -2,7 +2,6 @@ package top.pullulate.system.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +10,7 @@ import top.pullulate.common.service.DeptCacheService;
 import top.pullulate.system.entity.PulDept;
 import top.pullulate.system.mapper.PulDeptMapper;
 import top.pullulate.system.service.IPulDeptService;
-import top.pullulate.web.data.dto.tree.Tree;
 import top.pullulate.web.data.viewvo.PulDeptViewVo;
-import top.pullulate.web.data.viewvo.PulMenuViewVo;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -75,8 +71,9 @@ public class PulDeptServiceImpl extends ServiceImpl<PulDeptMapper, PulDept> impl
         }
         List<PulDeptViewVo> allDepts = getAllDepts();
         Set<String> dupMenuSet = new HashSet<>(allDepts.size());
-//        List<Tree> tree = buildDeptTreeList(allDepts, allDepts, dupMenuSet);
-        return null;
+        List<PulDeptViewVo> tree = buildDeptTreeList(allDepts, allDepts, dupMenuSet);
+        deptCacheService.setDeptListTree(tree);
+        return tree;
     }
 
     /**
