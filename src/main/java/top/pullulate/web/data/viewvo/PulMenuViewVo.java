@@ -78,9 +78,9 @@ public class PulMenuViewVo implements Comparable<PulMenuViewVo> {
 
     @Override
     public int compareTo(PulMenuViewVo o) {
-        int i = Integer.valueOf(this.getMenuType()) - Integer.valueOf(o.getMenuType());//先按照年龄排序
+        int i = Integer.valueOf(this.getMenuType()) - Integer.valueOf(o.getMenuType());
         if(i == 0){
-            return this.getOrderNum() - o.getOrderNum();//如果年龄相等了再用分数进行排序
+            return this.getOrderNum() - o.getOrderNum();
         }
         return i;
     }

@@ -1,8 +1,10 @@
 package top.pullulate.web.data.viewvo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @功能描述:   部门视图实体类
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
  * @Gitee: https://gitee.com/pullulates
  */
 @Data
-public class PulDeptViewVo {
+public class PulDeptViewVo implements Comparable<PulDeptViewVo> {
 
     /** 部门主键 */
     private String deptId;
@@ -44,4 +46,12 @@ public class PulDeptViewVo {
 
     /** 创建时间 */
     private LocalDateTime createTime;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private List<PulDeptViewVo> children;
+
+    @Override
+    public int compareTo(PulDeptViewVo o) {
+        return this.getOrderNum() - o.getOrderNum();
+    }
 }

@@ -79,4 +79,14 @@ public class CacheConstant {
      * 菜单列表树缓存键
      */
     public static final String CACHE_MENU_LIST_TREE = "pullulate_menu_list_tree";
+
+    /**
+     * 所有部门缓存键
+     */
+    public static final String CACHE_DEPT_ALL = "pullulate_dept_all";
+
+    /**
+     * 部门列表树缓存键
+     */
+    public static final String CACHE_DEPT_LIST_TREE = "pullulate_dept_list_tree";
 }

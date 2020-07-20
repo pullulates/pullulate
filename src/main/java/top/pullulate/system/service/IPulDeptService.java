@@ -2,6 +2,9 @@ package top.pullulate.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.pullulate.system.entity.PulDept;
+import top.pullulate.web.data.viewvo.PulDeptViewVo;
+
+import java.util.List;
 
 /**
  * @功能描述:   部门服务接口
@@ -21,4 +24,18 @@ public interface IPulDeptService extends IService<PulDept> {
      * @return  所在部门信息
      */
     PulDept getUserDeptByUserId(String userId);
+
+    /**
+     * 获取所有部门信息
+     *
+     * @return
+     */
+    List<PulDeptViewVo> getAllDepts();
+
+    /**
+     * 获取部门树列表
+     *
+     * @return
+     */
+    List<PulDeptViewVo> getDeptTreeList();
 }
