@@ -5,7 +5,7 @@ import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 import top.pullulate.common.constants.RabbitMqConstant;
-import top.pullulate.system.entity.PulLoginRecord;
+import top.pullulate.monitor.entity.PulLoginRecord;
 
 /**
  * @功能描述:   RabbitMq登录日志生产者

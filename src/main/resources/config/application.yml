@@ -62,9 +62,9 @@ mybatis-plus:
     # 日志信息
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   # 配置实体类别名
-  type-aliases-package: top.pullulate.system.entity
+  type-aliases-package: top.pullulate.**.entity
   # 配置xml信息
-  mapper-locations: classpath:/mybatis/mapper/*.xml
+  mapper-locations: classpath:/mybatis/mapper/**/*.xml
 
 # 百度开发者账号配置
 baidu:

@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import top.pullulate.common.constants.CacheConstant;
 import top.pullulate.core.utils.RedisUtils;
-import top.pullulate.web.data.viewvo.PulMenuViewVo;
+import top.pullulate.web.data.viewvo.system.PulMenuViewVo;
 import java.util.List;
 
 /**

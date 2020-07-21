@@ -6,8 +6,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import top.pullulate.common.constants.RabbitMqConstant;
-import top.pullulate.system.entity.PulOperationRecord;
-import top.pullulate.system.service.IPulOperationRecordService;
+import top.pullulate.monitor.entity.PulOperationRecord;
+import top.pullulate.monitor.service.IPulOperationRecordService;
 
 /**
  * @功能描述:   操作日志消息队列消费者类

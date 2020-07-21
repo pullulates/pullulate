@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import top.pullulate.system.entity.PulDept;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.dto.tree.Tree;
-import top.pullulate.web.data.viewvo.PulDeptViewVo;
-import top.pullulate.web.data.vo.PulDeptVo;
+import top.pullulate.web.data.viewvo.system.PulDeptViewVo;
+import top.pullulate.web.data.vo.system.PulDeptVo;
 
 import java.util.List;
 

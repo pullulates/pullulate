@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 import top.pullulate.system.entity.PulUser;
-import top.pullulate.web.data.viewvo.PulUserViewVo;
-import top.pullulate.web.data.vo.PulUserVo;
+import top.pullulate.web.data.viewvo.system.PulUserViewVo;
+import top.pullulate.web.data.vo.system.PulUserVo;
 
 import java.util.List;
 

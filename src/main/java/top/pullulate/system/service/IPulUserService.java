@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.pullulate.system.entity.PulUser;
-import top.pullulate.web.data.viewvo.PulUserViewVo;
-import top.pullulate.web.data.vo.PulUserVo;
+import top.pullulate.web.data.viewvo.system.PulUserViewVo;
+import top.pullulate.web.data.vo.system.PulUserVo;
 
 import java.util.List;
 

@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.pullulate.system.entity.PulRole;
 import top.pullulate.web.data.dto.response.P;
-import top.pullulate.web.data.viewvo.PulRoleViewVo;
-import top.pullulate.web.data.vo.PulRoleMenuVo;
-import top.pullulate.web.data.vo.PulRoleVo;
+import top.pullulate.web.data.viewvo.system.PulRoleViewVo;
+import top.pullulate.web.data.vo.system.PulRoleMenuVo;
+import top.pullulate.web.data.vo.system.PulRoleVo;
 import java.util.List;
 import java.util.Set;
 

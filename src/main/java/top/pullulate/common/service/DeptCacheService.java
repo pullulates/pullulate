@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import top.pullulate.common.constants.CacheConstant;
 import top.pullulate.core.utils.RedisUtils;
 import top.pullulate.web.data.dto.tree.Tree;
-import top.pullulate.web.data.viewvo.PulDeptViewVo;
+import top.pullulate.web.data.viewvo.system.PulDeptViewVo;
 
 import java.util.List;
 

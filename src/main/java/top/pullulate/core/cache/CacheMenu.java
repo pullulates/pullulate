@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import top.pullulate.common.service.MenuCacheService;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.service.IPulMenuService;
-import top.pullulate.web.data.viewvo.PulMenuViewVo;
+import top.pullulate.web.data.viewvo.system.PulMenuViewVo;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.List;

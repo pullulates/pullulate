@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import top.pullulate.common.constants.Constant;
 import top.pullulate.common.service.DeptCacheService;
 import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulDept;
@@ -17,8 +16,8 @@ import top.pullulate.system.mapper.PulUserDeptMapper;
 import top.pullulate.system.service.IPulDeptService;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.dto.tree.Tree;
-import top.pullulate.web.data.viewvo.PulDeptViewVo;
-import top.pullulate.web.data.vo.PulDeptVo;
+import top.pullulate.web.data.viewvo.system.PulDeptViewVo;
+import top.pullulate.web.data.vo.system.PulDeptVo;
 
 import java.time.LocalDateTime;
 import java.util.*;

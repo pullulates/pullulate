@@ -1,7 +1,6 @@
 package top.pullulate.system.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -16,14 +15,13 @@ import top.pullulate.system.entity.PulRole;
 import top.pullulate.system.entity.PulRoleMenu;
 import top.pullulate.system.entity.PulUserRole;
 import top.pullulate.system.mapper.PulRoleMapper;
-import top.pullulate.system.mapper.PulRoleMenuMapper;
 import top.pullulate.system.mapper.PulUserRoleMapper;
 import top.pullulate.system.service.IPulRoleMenuService;
 import top.pullulate.system.service.IPulRoleService;
 import top.pullulate.web.data.dto.response.P;
-import top.pullulate.web.data.viewvo.PulRoleViewVo;
-import top.pullulate.web.data.vo.PulRoleMenuVo;
-import top.pullulate.web.data.vo.PulRoleVo;
+import top.pullulate.web.data.viewvo.system.PulRoleViewVo;
+import top.pullulate.web.data.vo.system.PulRoleMenuVo;
+import top.pullulate.web.data.vo.system.PulRoleVo;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -4,9 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import top.pullulate.system.entity.PulDictData;
-import top.pullulate.web.data.viewvo.PulDictDataViewVo;
-import top.pullulate.web.data.vo.PulDictDataVo;
-import top.pullulate.web.data.vo.PulDictTypeVo;
+import top.pullulate.web.data.viewvo.system.PulDictDataViewVo;
+import top.pullulate.web.data.vo.system.PulDictDataVo;
 
 import java.util.List;
 

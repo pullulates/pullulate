@@ -19,7 +19,7 @@ import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.core.rabbitmq.producer.RabbitMqOperationRecordProducer;
 import top.pullulate.core.security.user.UserInfo;
 import top.pullulate.core.utils.TokenUtils;
-import top.pullulate.system.entity.PulOperationRecord;
+import top.pullulate.monitor.entity.PulOperationRecord;
 import top.pullulate.utils.IPUtils;
 import top.pullulate.utils.LocationUtils;
 import top.pullulate.utils.ServletUtils;

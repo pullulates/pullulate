@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.pullulate.monitor.mapper.PulLoginRecordMapper">
+
+    <resultMap id="BaseResultMap" type="PulLoginRecord">
+        <id column="record_id" property="recordId"/>
+        <result column="user_name" property="userName"/>
+        <result column="ip" property="ip"/>
+        <result column="location" property="location"/>
+        <result column="browser" property="browser"/>
+        <result column="os" property="os"/>
+        <result column="result" property="result"/>
+        <result column="promt_msg" property="promtMsg"/>
+        <result column="login_time" property="loginTime"/>
+    </resultMap>
+
+    <resultMap id="PulLoginRecordViewVoResultMap" type="top.pullulate.web.data.viewvo.monitor.PulLoginRecordViewVo">
+        <id column="record_id" property="recordId"/>
+        <result column="user_name" property="userName"/>
+        <result column="ip" property="ip"/>
+        <result column="location" property="location"/>
+        <result column="browser" property="browser"/>
+        <result column="os" property="os"/>
+        <result column="result" property="result"/>
+        <result column="promt_msg" property="promtMsg"/>
+        <result column="login_time" property="loginTime"/>
+    </resultMap>
+    
+    <sql id="AllInfoField">
+        r.record_id, r.user_name, r.ip, r.location, r.browser, r.os, r.result, r.promt_msg, r.login_time
+    </sql>
+
+    <select id="selectLoginRecordPage" resultMap="PulLoginRecordViewVoResultMap">
+        select
+        <include refid="AllInfoField"></include>
+        from pul_login_record r
+        where
+        <if test="loginRecordVo.userName != null and loginRecordVo.userName != ''">
+            and r.user_name LIKE CONCAT('%',#{loginRecordVo.userName},'%')
+        </if>
+        <if test="loginRecordVo.ip != null and loginRecordVo.ip != ''">
+            and r.ip LIKE CONCAT('%',#{loginRecordVo.ip},'%')
+        </if>
+        <if test="loginRecordVo.browser != null and loginRecordVo.browser != ''">
+            and r.browser LIKE CONCAT('%',#{loginRecordVo.browser},'%')
+        </if>
+        <if test="loginRecordVo.os != null and loginRecordVo.os != ''">
+            and r.os LIKE CONCAT('%',#{loginRecordVo.os},'%')
+        </if>
+        <if test="loginRecordVo.result != null and loginRecordVo.result != ''">
+            and r.result = #{loginRecordVo.result}
+        </if>
+        order by r.login_time desc
+    </select>
+</mapper>

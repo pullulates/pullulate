@@ -7,8 +7,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import top.pullulate.common.constants.RabbitMqConstant;
 import top.pullulate.common.enums.OperResult;
-import top.pullulate.system.entity.PulLoginRecord;
-import top.pullulate.system.service.IPulLoginRecordService;
+import top.pullulate.monitor.entity.PulLoginRecord;
+import top.pullulate.monitor.service.IPulLoginRecordService;
 
 /**
  * @功能描述:   登录日志消息队列消费者类

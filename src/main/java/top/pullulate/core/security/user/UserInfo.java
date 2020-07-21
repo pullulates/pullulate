@@ -12,7 +12,7 @@ import top.pullulate.system.entity.PulDept;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.entity.PulRole;
 import top.pullulate.system.entity.PulUser;
-import top.pullulate.web.data.viewvo.PulDictDataViewVo;
+import top.pullulate.web.data.viewvo.system.PulDictDataViewVo;
 import top.pullulate.web.data.dto.route.Router;
 import java.time.LocalDateTime;
 import java.util.Collection;

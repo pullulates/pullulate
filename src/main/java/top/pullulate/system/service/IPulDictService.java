@@ -3,10 +3,10 @@ package top.pullulate.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import top.pullulate.web.data.dto.response.P;
-import top.pullulate.web.data.viewvo.PulDictDataViewVo;
-import top.pullulate.web.data.viewvo.PulDictTypeViewVo;
-import top.pullulate.web.data.vo.PulDictDataVo;
-import top.pullulate.web.data.vo.PulDictTypeVo;
+import top.pullulate.web.data.viewvo.system.PulDictDataViewVo;
+import top.pullulate.web.data.viewvo.system.PulDictTypeViewVo;
+import top.pullulate.web.data.vo.system.PulDictDataVo;
+import top.pullulate.web.data.vo.system.PulDictTypeVo;
 
 import java.util.List;
 import java.util.Map;
