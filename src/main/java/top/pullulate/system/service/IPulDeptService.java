@@ -2,7 +2,10 @@ package top.pullulate.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.pullulate.system.entity.PulDept;
+import top.pullulate.web.data.dto.response.P;
+import top.pullulate.web.data.dto.tree.Tree;
 import top.pullulate.web.data.viewvo.PulDeptViewVo;
+import top.pullulate.web.data.vo.PulDeptVo;
 
 import java.util.List;
 
@@ -38,4 +41,51 @@ public interface IPulDeptService extends IService<PulDept> {
      * @return
      */
     List<PulDeptViewVo> getDeptTreeList();
+
+    /**
+     * 获取建议的排序编号
+     *
+     * @param deptId  部门主键
+     * @return
+     */
+    int getSuggestOrderNum(String deptId);
+
+    /**
+     * 获取部门选择树
+     *
+     * @return
+     */
+    List<Tree> getTreeSelect();
+
+    /**
+     * 保存部门信息
+     *
+     * @param deptVo    部门信息
+     * @return
+     */
+    P saveDept(PulDeptVo deptVo);
+
+    /**
+     * 修改部门信息
+     *
+     * @param deptVo    部门信息
+     * @return
+     */
+    P updateDept(PulDeptVo deptVo);
+
+    /**
+     * 修改部门状态
+     *
+     * @param deptVo   部门信息
+     * @return
+     */
+    P updateDeptStatus(PulDeptVo deptVo);
+
+    /**
+     * 删除部门
+     *
+     * @param deptId   部门主键
+     * @return
+     */
+    P deleteDept(String deptId);
 }

@@ -32,9 +32,6 @@ public class PulDept implements Serializable {
     /** 父级主键 */
     private String parentId;
 
-    /** 祖级主键 */
-    private String accestorIds;
-
     /** 排序编号 */
     private Integer orderNum;
 
@@ -51,11 +48,11 @@ public class PulDept implements Serializable {
     private String createBy;
 
     /** 创建时间 */
-    private LocalDateTime createTime;
+    private LocalDateTime createAt;
 
     /** 修改人 */
     private String updateBy;
 
     /** 修改时间 */
-    private LocalDateTime updateTime;
+    private LocalDateTime updateAt;
 }

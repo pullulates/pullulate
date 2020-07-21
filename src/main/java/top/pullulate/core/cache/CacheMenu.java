@@ -35,6 +35,7 @@ public class CacheMenu {
     public void init() {
         log.info("-----------------------启动缓存系统菜单信息任务-----------------------");
         log.info("--->缓存所有菜单信息");
+        menuCacheService.deleteAllMenus();
         List<PulMenuViewVo> pulMenus = menuService.list(Wrappers.<PulMenu>lambdaQuery()
                 .orderByAsc(PulMenu::getMenuType)
                 .orderByAsc(PulMenu::getOrderNum))
@@ -42,8 +43,8 @@ public class CacheMenu {
                 .collect(Collectors.toList());
         menuCacheService.setAllMenus(pulMenus);
         log.info("--->缓存前端菜单列表树信息");
-        List<PulMenuViewVo> menuListTree = menuService.getMenuTreeList();
-        menuCacheService.setMenuListTree(menuListTree);
+        menuCacheService.deleteMenuListTree();
+        menuService.getMenuTreeList();
         log.info("-----------------------缓存系统菜单信息任务结束-----------------------");
     }
 

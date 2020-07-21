@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import top.pullulate.common.constants.CacheConstant;
 import top.pullulate.core.utils.RedisUtils;
+import top.pullulate.web.data.dto.tree.Tree;
 import top.pullulate.web.data.viewvo.PulDeptViewVo;
 
 import java.util.List;
@@ -65,4 +66,27 @@ public class DeptCacheService {
     public void deleteDeptListTree() {
         redisUtils.deleteObject(CacheConstant.CACHE_DEPT_LIST_TREE);
     }
+
+    /**
+     * 获取部门树选择的缓存
+     */
+    public List<Tree> getDeptTreeSelect() {
+        List<Tree> tree = redisUtils.getCacheList(CacheConstant.CACHE_DEPT_TREE_SELECT);
+        return tree;
+    }
+
+    /**
+     * 设置部门树选择的缓存
+     */
+    public void setDeptTreeSelect(List<Tree> tree) {
+        redisUtils.setCacheList(CacheConstant.CACHE_DEPT_TREE_SELECT, tree);
+    }
+
+    /**
+     * 删除部门树选择的缓存
+     */
+    public void deleteDeptTreeSelect() {
+        redisUtils.deleteObject(CacheConstant.CACHE_DEPT_TREE_SELECT);
+    }
+
 }

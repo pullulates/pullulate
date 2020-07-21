@@ -10,7 +10,6 @@
         <result column="dept_no" property="deptNo"/>
         <result column="dept_name" property="deptName"/>
         <result column="parent_id" property="parentId"/>
-        <result column="accestor_ids" property="accestorIds"/>
         <result column="order_num" property="orderNum"/>
         <result column="status" property="status"/>
         <result column="delete_flag" property="deleteFlag"/>
@@ -22,11 +21,11 @@
     </resultMap>
     
     <sql id="AllInfoField">
-        d.dept_id, d.dept_no, d.dept_name, d.parent_id, d.accestor_ids, d.order_num, d.status, d.delete_flag, d.remark, d.create_by, d.create_at, d.update_by,d.update_at
+        d.dept_id, d.dept_no, d.dept_name, d.parent_id, d.order_num, d.status, d.delete_flag, d.remark, d.create_by, d.create_at, d.update_by,d.update_at
     </sql>
 
     <sql id="BasicInfoField">
-        d.dept_id, d.dept_no, d.dept_name, d.parent_id, d.accestor_ids, d.order_num, d.status, d.delete_flag
+        d.dept_id, d.dept_no, d.dept_name, d.parent_id, d.order_num, d.status, d.delete_flag
     </sql>
 
     <select id="selectUserDeptByUserId" parameterType="String" resultMap="BaseResultMap">

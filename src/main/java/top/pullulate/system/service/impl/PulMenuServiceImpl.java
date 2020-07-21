@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import top.pullulate.common.constants.ParamConstant;
 import top.pullulate.common.enums.*;
 import top.pullulate.common.service.MenuCacheService;
-import top.pullulate.core.utils.RedisUtils;
 import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.mapper.PulMenuMapper;
@@ -38,8 +37,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> implements IPulMenuService {
-
-    private final RedisUtils redisUtils;
 
     private final TokenUtils tokenUtils;
 
@@ -239,7 +236,6 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
                 dupMenuSet.add(menu.getPermission());
                 List<PulMenuViewVo> children = menus.stream()
                         .filter(item -> item.getParentId().equals(menu.getMenuId()))
-                        .map(item -> BeanUtil.toBean(item, PulMenuViewVo.class))
                         .collect(Collectors.toList());
                 Tree tree = new Tree(menu.getTitle(), menu.getMenuId(), menu.getMenuId());
                 tree.setChildren(buildMenuTreeSelect(children, allMenus, dupMenuSet));

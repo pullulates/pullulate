@@ -89,4 +89,9 @@ public class CacheConstant {
      * 部门列表树缓存键
      */
     public static final String CACHE_DEPT_LIST_TREE = "pullulate_dept_list_tree";
+
+    /**
+     * 部门树选择缓存键
+     */
+    public static final String CACHE_DEPT_TREE_SELECT = "pullulate_dept_tree_select";
 }

@@ -1,7 +1,8 @@
 package top.pullulate.web.data.viewvo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,7 +15,8 @@ import java.util.List;
  * @GitHub: https://github.com/pullulates
  * @Gitee: https://gitee.com/pullulates
  */
-@Data
+@Getter
+@Setter
 public class PulDeptViewVo implements Comparable<PulDeptViewVo> {
 
     /** 部门主键 */
@@ -29,9 +31,6 @@ public class PulDeptViewVo implements Comparable<PulDeptViewVo> {
     /** 父级主键 */
     private String parentId;
 
-    /** 祖级主键 */
-    private String accestorIds;
-
     /** 排序编号 */
     private Integer orderNum;
 
@@ -41,17 +40,32 @@ public class PulDeptViewVo implements Comparable<PulDeptViewVo> {
     /** 备注信息 */
     private String remark;
 
-    /** 创建人 */
-    private String createBy;
-
     /** 创建时间 */
-    private LocalDateTime createTime;
+    private LocalDateTime createAt;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<PulDeptViewVo> children;
 
     @Override
     public int compareTo(PulDeptViewVo o) {
-        return this.getOrderNum() - o.getOrderNum();
+        int result = this.getOrderNum() - o.getOrderNum();
+        if (result == 0) {
+            result = this.getCreateAt().compareTo(o.getCreateAt());
+        }
+        return result;
+    }
+
+    public PulDeptViewVo() {
+    }
+
+    public PulDeptViewVo(String deptId, String deptNo, String deptName, String parentId, Integer orderNum, String status, String remark, LocalDateTime createAt) {
+        this.deptId = deptId;
+        this.deptNo = deptNo;
+        this.deptName = deptName;
+        this.parentId = parentId;
+        this.orderNum = orderNum;
+        this.status = status;
+        this.remark = remark;
+        this.createAt = createAt;
     }
 }
