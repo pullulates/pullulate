@@ -16,9 +16,11 @@
         <result column="birth" property="birth"/>
         <result column="password" property="password"/>
         <result column="lock_flag" property="lockFlag"/>
+        <result column="status" property="status"/>
         <result column="error_login_count" property="errorLoginCount"/>
         <result column="error_login_reason" property="errorLoginReason"/>
         <result column="delete_flag" property="deleteFlag"/>
+        <result column="remark" property="remark"/>
         <result column="create_by" property="createBy"/>
         <result column="create_at" property="createAt"/>
         <result column="update_by" property="updateBy"/>
@@ -35,10 +37,15 @@
         <result column="head_img" property="headImg"/>
         <result column="birth" property="birth"/>
         <result column="lock_flag" property="lockFlag"/>
+        <result column="status" property="status"/>
         <result column="error_login_count" property="errorLoginCount"/>
         <result column="error_login_reason" property="errorLoginReason"/>
+        <result column="remark" property="remark"/>
         <result column="create_by" property="createBy"/>
         <result column="create_at" property="createAt"/>
+        <association property="dept" column="dept" javaType="top.pullulate.web.data.viewvo.system.PulDeptViewVo">
+            <result column="dept_name" property="deptName"/>
+        </association>
         <collection property="roleList" ofType="top.pullulate.web.data.viewvo.system.PulRoleViewVo">
             <result column="role_name" property="roleName"/>
             <result column="role_key" property="roleKey"/>
@@ -46,18 +53,21 @@
     </resultMap>
     
     <sql id="AllInfoField">
-        u.user_id, u.user_name, u.name, u.idcard, u.phone, u.sex, u.head_img, u.birth, u.password, u.lock_flag, u.error_login_count, u.error_login_reason, u.delete_flag, u.create_by, u.create_at, u.update_by,u.update_at
+        u.user_id, u.user_name, u.name, u.idcard, u.phone, u.sex, u.head_img, u.birth, u.password, u.lock_flag, u.status, u.error_login_count,
+        u.error_login_reason, u.delete_flag, u.remark, u.create_by, u.create_at, u.update_by, u.update_at
     </sql>
 
     <sql id="UserPageField">
-        u.user_id, u.user_name, u.name, u.idcard, u.phone, u.sex, u.head_img, u.lock_flag, u.create_at,
-        r.role_name
+        u.user_id, u.user_name, u.name, u.idcard, u.phone, u.sex, u.head_img, u.lock_flag, u.status, u.create_at, u.remark,
+        r.role_name, d.dept_name
     </sql>
 
     <select id="selectUserPage" resultMap="PulUserViewVoResultMap">
         select
         <include refid="UserPageField"></include>
         from pul_user u
+        left join pul_user_dept ud on u.user_id = ud.user_id
+        left join pul_dept d on d.dept_id = ud.dept_id
         left join pul_user_role ur on u.user_id = ur.user_id
         left join pul_role r on r.role_id = ur.role_id
         where

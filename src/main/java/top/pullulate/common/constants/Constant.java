@@ -14,4 +14,9 @@ public class Constant {
      * 超级管理员标识符
      */
     public static final String ROLE_KEY_SUPREMAN = "admin";
+
+    /**
+     * 默认密码
+     */
+    public static final String DEFAULT_PASSWORD = "111111";
 }

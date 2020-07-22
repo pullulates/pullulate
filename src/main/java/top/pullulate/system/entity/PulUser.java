@@ -51,6 +51,9 @@ public class PulUser implements Serializable {
     /** 锁定标识 */
     private String lockFlag;
 
+    /** 状态 */
+    private String status;
+
     /** 错误登录次数 */
     private Integer errorLoginCount;
 
@@ -59,6 +62,9 @@ public class PulUser implements Serializable {
 
     /** 删除标识 */
     private String deleteFlag;
+
+    /** 备注信息 */
+    private String remark;
 
     /** 创建人 */
     private String createBy;

@@ -1,5 +1,7 @@
 package top.pullulate.common.enums;
 
+import cn.hutool.core.util.IdcardUtil;
+
 /**
  * @功能描述: 性别枚举
  * @Author: pullulates
@@ -27,5 +29,10 @@ public enum Sex {
 
     public static Boolean wouldFeMale(String code) {
         return FEMALE.code.equals(code);
+    }
+
+    public static String getSexFromIdcard(String idcard) {
+        String sex = String.valueOf(IdcardUtil.getGenderByIdCard(idcard));
+        return MALE.code.equals(sex) ? FEMALE.code : MALE.code;
     }
 }

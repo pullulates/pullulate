@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.pullulate.system.entity.PulUser;
+import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.system.PulUserViewVo;
 import top.pullulate.web.data.vo.system.PulUserVo;
 
@@ -51,4 +52,36 @@ public interface IPulUserService extends IService<PulUser> {
      * @return  分页数据
      */
     IPage<List<PulUserViewVo>> getUserPage(PulUserVo pulUserVo, Page page);
+
+    /**
+     * 保存用户信息
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    P saveUser(PulUserVo userVo);
+
+    /**
+     * 修改用户信息
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    P updateUser(PulUserVo userVo);
+
+    /**
+     * 修改用户状态
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    P updateUserStatus(PulUserVo userVo);
+
+    /**
+     * 删除用户
+     *
+     * @param userId    用户主键
+     * @return
+     */
+    P deleteUser(String userId);
 }

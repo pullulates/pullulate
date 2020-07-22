@@ -3,10 +3,9 @@ package top.pullulate.web.controller.system;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.core.security.user.UserInfo;
 import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulUser;
@@ -69,5 +68,53 @@ public class PulUserController {
     public P getUserPage(PulUserVo pulUserVo, Page page) {
         IPage<List<PulUserViewVo>> pages = userService.getUserPage(pulUserVo, page);
         return P.data(pages);
+    }
+
+    /**
+     * 保存用户信息
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    @PostMapping
+    @OperationRecord(title = "系统用户-保存用户")
+    public P saveUser(@RequestBody @Validated PulUserVo userVo) {
+        return userService.saveUser(userVo);
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    @PutMapping
+    @OperationRecord(title = "系统用户-修改用户")
+    public P updateUser(@RequestBody @Validated PulUserVo userVo) {
+        return userService.updateUser(userVo);
+    }
+
+    /**
+     * 修改用户状态
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    @PatchMapping
+    @OperationRecord(title = "系统用户-修改用户状态")
+    public P updateUserStatus(@RequestBody PulUserVo userVo) {
+        return userService.updateUserStatus(userVo);
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param userId    用户主键
+     * @return
+     */
+    @DeleteMapping
+    @OperationRecord(title = "系统用户-删除用户")
+    public P deleteUser(String userId) {
+        return userService.deleteUser(userId);
     }
 }

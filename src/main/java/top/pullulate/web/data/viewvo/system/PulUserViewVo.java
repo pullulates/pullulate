@@ -44,11 +44,17 @@ public class PulUserViewVo {
     /** 锁定标识 */
     private String lockFlag;
 
+    /** 状态 */
+    private String status;
+
     /** 错误登录次数 */
     private Integer errorLoginCount;
 
     /** 错误登录原因 */
     private String errorLoginReason;
+
+    /** 备注信息 */
+    private String remark;
 
     /** 创建人 */
     private String createBy;
@@ -57,4 +63,6 @@ public class PulUserViewVo {
     private LocalDateTime createAt;
 
     private List<PulRoleViewVo> roleList;
+
+    private PulDeptViewVo dept;
 }
