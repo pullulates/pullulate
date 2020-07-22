@@ -37,22 +37,23 @@
         select
         <include refid="AllInfoField"></include>
         from pul_login_record r
-        where
-        <if test="loginRecordVo.userName != null and loginRecordVo.userName != ''">
-            and r.user_name LIKE CONCAT('%',#{loginRecordVo.userName},'%')
-        </if>
-        <if test="loginRecordVo.ip != null and loginRecordVo.ip != ''">
-            and r.ip LIKE CONCAT('%',#{loginRecordVo.ip},'%')
-        </if>
-        <if test="loginRecordVo.browser != null and loginRecordVo.browser != ''">
-            and r.browser LIKE CONCAT('%',#{loginRecordVo.browser},'%')
-        </if>
-        <if test="loginRecordVo.os != null and loginRecordVo.os != ''">
-            and r.os LIKE CONCAT('%',#{loginRecordVo.os},'%')
-        </if>
-        <if test="loginRecordVo.result != null and loginRecordVo.result != ''">
-            and r.result = #{loginRecordVo.result}
-        </if>
+        <where>
+            <if test="loginRecordVo.userName != null and loginRecordVo.userName != ''">
+                and r.user_name LIKE CONCAT('%',#{loginRecordVo.userName},'%')
+            </if>
+            <if test="loginRecordVo.ip != null and loginRecordVo.ip != ''">
+                and r.ip LIKE CONCAT('%',#{loginRecordVo.ip},'%')
+            </if>
+            <if test="loginRecordVo.browser != null and loginRecordVo.browser != ''">
+                and r.browser LIKE CONCAT('%',#{loginRecordVo.browser},'%')
+            </if>
+            <if test="loginRecordVo.os != null and loginRecordVo.os != ''">
+                and r.os LIKE CONCAT('%',#{loginRecordVo.os},'%')
+            </if>
+            <if test="loginRecordVo.result != null and loginRecordVo.result != ''">
+                and r.result = #{loginRecordVo.result}
+            </if>
+        </where>
         order by r.login_time desc
     </select>
 </mapper>

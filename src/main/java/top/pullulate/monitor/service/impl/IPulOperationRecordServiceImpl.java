@@ -32,6 +32,6 @@ public class IPulOperationRecordServiceImpl extends ServiceImpl<PulOperationReco
      */
     @Override
     public IPage<List<PulLoginRecordViewVo>> getOperationRecordPage(PulOperationRecordVo operationRecordVo, Page page) {
-        return null;
+        return baseMapper.selectOperationRecordPage(operationRecordVo, page);
     }
 }

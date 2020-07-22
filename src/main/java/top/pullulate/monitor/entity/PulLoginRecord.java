@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * @功能描述:
+ * @功能描述:   登录日志实体类
  * @Author: pullulates
  * @Date: 2020/7/4 0004 10:25
  * @CopyRight: pullulates

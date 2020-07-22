@@ -1,6 +1,7 @@
 package top.pullulate.core.utils;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 import java.util.*;
@@ -19,6 +20,8 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtils {
 
     private final RedisTemplate redisTemplate;
+
+    private final RedisConnectionFactory redisConnectionFactory;
 
     /**
      * 缓存基本的对象，Integer、String、实体类等
@@ -179,5 +182,14 @@ public class RedisUtils {
      */
     public Collection<String> keys(String pattern) {
         return redisTemplate.keys(pattern);
+    }
+
+    /**
+     * 获取redis key的数量
+     *
+     * @return
+     */
+    public long keys() {
+        return redisConnectionFactory.getConnection().dbSize();
     }
 }
