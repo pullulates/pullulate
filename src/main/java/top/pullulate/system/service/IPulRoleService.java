@@ -86,4 +86,11 @@ public interface IPulRoleService extends IService<PulRole> {
      * @return
      */
     P updateRoleMenus(PulRoleMenuVo roleMenuVo);
+
+    /**
+     * 获取角色选择下拉框数据
+     *
+     * @return
+     */
+    List<PulRoleViewVo> getRoleSelect();
 }

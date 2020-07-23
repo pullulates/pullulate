@@ -84,4 +84,20 @@ public interface IPulUserService extends IService<PulUser> {
      * @return
      */
     P deleteUser(String userId);
+
+    /**
+     * 重置密码
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    P resetPassword(PulUserVo userVo);
+
+    /**
+     * 修改密码
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    P updatePassword(PulUserVo userVo);
 }

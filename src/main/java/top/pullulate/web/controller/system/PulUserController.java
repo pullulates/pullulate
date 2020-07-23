@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import top.pullulate.common.validate.*;
 import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.core.security.user.UserInfo;
 import top.pullulate.core.utils.TokenUtils;
@@ -78,7 +79,7 @@ public class PulUserController {
      */
     @PostMapping
     @OperationRecord(title = "系统用户-保存用户")
-    public P saveUser(@RequestBody @Validated PulUserVo userVo) {
+    public P saveUser(@RequestBody @Validated(Save.class) PulUserVo userVo) {
         return userService.saveUser(userVo);
     }
 
@@ -90,7 +91,7 @@ public class PulUserController {
      */
     @PutMapping
     @OperationRecord(title = "系统用户-修改用户")
-    public P updateUser(@RequestBody @Validated PulUserVo userVo) {
+    public P updateUser(@RequestBody @Validated(Update.class) PulUserVo userVo) {
         return userService.updateUser(userVo);
     }
 
@@ -102,7 +103,7 @@ public class PulUserController {
      */
     @PatchMapping
     @OperationRecord(title = "系统用户-修改用户状态")
-    public P updateUserStatus(@RequestBody PulUserVo userVo) {
+    public P updateUserStatus(@RequestBody @Validated(PatchStatus.class) PulUserVo userVo) {
         return userService.updateUserStatus(userVo);
     }
 
@@ -116,5 +117,29 @@ public class PulUserController {
     @OperationRecord(title = "系统用户-删除用户")
     public P deleteUser(String userId) {
         return userService.deleteUser(userId);
+    }
+
+    /**
+     * 重置密码
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    @PatchMapping("/password-reset")
+    @OperationRecord(title = "系统用户-重置密码")
+    public P resetPassword(@RequestBody @Validated(ResetPassword.class) PulUserVo userVo) {
+        return userService.resetPassword(userVo);
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    @PatchMapping("/password")
+    @OperationRecord(title = "系统用户-重置密码")
+    public P updatePassword(@RequestBody @Validated(UpdatePassword.class) PulUserVo userVo) {
+        return userService.updatePassword(userVo);
     }
 }

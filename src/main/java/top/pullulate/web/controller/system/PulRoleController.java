@@ -113,4 +113,15 @@ public class PulRoleController {
     public P updateRoleMenus(@RequestBody @Validated PulRoleMenuVo roleMenuVo) {
         return roleService.updateRoleMenus(roleMenuVo);
     }
+
+    /**
+     * 获取角色选择下拉框数据
+     *
+     * @return
+     */
+    @GetMapping("/select")
+    public P getRoleSelect() {
+        List<PulRoleViewVo> roles = roleService.getRoleSelect();
+        return P.data(roles);
+    }
 }

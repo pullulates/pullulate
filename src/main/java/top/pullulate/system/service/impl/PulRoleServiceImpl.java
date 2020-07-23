@@ -191,4 +191,17 @@ public class PulRoleServiceImpl extends ServiceImpl<PulRoleMapper, PulRole> impl
         }
         return P.success();
     }
+
+    /**
+     * 获取角色选择下拉框数据
+     *
+     * @return
+     */
+    @Override
+    public List<PulRoleViewVo> getRoleSelect() {
+        List<PulRoleViewVo> list = list().stream()
+                .map(item -> BeanUtil.toBean(item, PulRoleViewVo.class))
+                .collect(Collectors.toList());
+        return list;
+    }
 }

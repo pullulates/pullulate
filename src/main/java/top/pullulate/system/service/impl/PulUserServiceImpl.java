@@ -3,6 +3,7 @@ package top.pullulate.system.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdcardUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -14,19 +15,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.pullulate.common.constants.Constant;
+import top.pullulate.common.constants.RSAConstant;
 import top.pullulate.common.enums.Sex;
 import top.pullulate.core.utils.TokenUtils;
+import top.pullulate.system.entity.PulRole;
 import top.pullulate.system.entity.PulUser;
 import top.pullulate.system.entity.PulUserDept;
 import top.pullulate.system.entity.PulUserRole;
 import top.pullulate.system.mapper.PulUserDeptMapper;
 import top.pullulate.system.mapper.PulUserMapper;
 import top.pullulate.system.mapper.PulUserRoleMapper;
+import top.pullulate.system.service.IPulRoleService;
 import top.pullulate.system.service.IPulUserService;
+import top.pullulate.utils.security.RSAUtils;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.system.PulUserViewVo;
 import top.pullulate.web.data.vo.system.PulUserVo;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -49,6 +53,8 @@ public class PulUserServiceImpl extends ServiceImpl<PulUserMapper, PulUser> impl
     private final PulUserRoleMapper userRoleMapper;
 
     private final PulUserDeptMapper userDeptMapper;
+
+    private final IPulRoleService roleService;
 
     /**
      * 根据用户主键查询用户信息
@@ -201,5 +207,66 @@ public class PulUserServiceImpl extends ServiceImpl<PulUserMapper, PulUser> impl
         userRoleMapper.delete(Wrappers.<PulUserRole>lambdaQuery().eq(PulUserRole::getUserId, userId));
         removeById(userId);
         return P.success();
+    }
+
+    /**
+     * 重置密码
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    @Override
+    public P resetPassword(PulUserVo userVo) {
+        PulUser user = getById(userVo.getUserId());
+        if (ObjectUtil.isNull(user)) {
+            return P.error("用户不存在，请刷新页面后重试！");
+        }
+        if (willSuperman(userVo.getUserId())) {
+            return P.error("不可重置管理员的密码！");
+        }
+        user.setPassword(new BCryptPasswordEncoder().encode(Constant.DEFAULT_PASSWORD));
+        user.setUpdateAt(LocalDateTime.now());
+        user.setUpdateBy(tokenUtils.getUserName());
+        return P.p(updateById(user));
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    @Override
+    public P updatePassword(PulUserVo userVo) {
+        PulUser user = getById(userVo.getUserId());
+        if (willSuperman(user.getUserId())) {
+            return P.error("不可修改管理员的密码！");
+        }
+        try {
+            String oldPassword = RSAUtils.decryptByPrivateKey(RSAConstant.PRIVATE_KEY, userVo.getOldPassword());
+            if (!oldPassword.equals(user.getPassword())) {
+                return P.error("原密码错误！");
+            }
+            String password = RSAUtils.decryptByPrivateKey(RSAConstant.PRIVATE_KEY, userVo.getPassword());
+            String encryptPassword = new BCryptPasswordEncoder().encode(password);
+            user.setPassword(encryptPassword);
+        } catch (Exception e) {
+            log.warn("用户：{}修改密码时无法解密，修改失败。异常信息：{}", user.getUserName(), e);
+            return P.error("密码解密失败，请检查密码格式是否正确！");
+        }
+        user.setUpdateAt(LocalDateTime.now());
+        user.setUpdateBy(tokenUtils.getUserName());
+        return P.p(updateById(user));
+    }
+
+    /**
+     * 是否为管理员
+     *
+     * @param userId   用户主键
+     * @return
+     */
+    private boolean willSuperman(String userId) {
+        List<PulRole> roles = roleService.getUserRolesByUserId(userId);
+        return roles.stream().anyMatch(role -> Constant.ROLE_KEY_SUPREMAN.equals(role.getRoleKey()));
     }
 }
