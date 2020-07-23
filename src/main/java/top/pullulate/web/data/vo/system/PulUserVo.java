@@ -54,6 +54,9 @@ public class PulUserVo {
     /** 锁定标识 */
     private String lockFlag;
 
+    /** 状态 */
+    private String status;
+
     /** 错误登录次数 */
     private Integer errorLoginCount;
 
