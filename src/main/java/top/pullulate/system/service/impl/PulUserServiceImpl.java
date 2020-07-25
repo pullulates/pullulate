@@ -1,6 +1,7 @@
 package top.pullulate.system.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdcardUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -22,10 +23,10 @@ import top.pullulate.system.entity.PulRole;
 import top.pullulate.system.entity.PulUser;
 import top.pullulate.system.entity.PulUserDept;
 import top.pullulate.system.entity.PulUserRole;
-import top.pullulate.system.mapper.PulUserDeptMapper;
 import top.pullulate.system.mapper.PulUserMapper;
-import top.pullulate.system.mapper.PulUserRoleMapper;
 import top.pullulate.system.service.IPulRoleService;
+import top.pullulate.system.service.IPulUserDeptService;
+import top.pullulate.system.service.IPulUserRoleService;
 import top.pullulate.system.service.IPulUserService;
 import top.pullulate.utils.security.RSAUtils;
 import top.pullulate.web.data.dto.response.P;
@@ -34,6 +35,7 @@ import top.pullulate.web.data.vo.system.PulUserVo;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @功能描述:   用户服务接口实现类
@@ -50,9 +52,9 @@ public class PulUserServiceImpl extends ServiceImpl<PulUserMapper, PulUser> impl
 
     private final TokenUtils tokenUtils;
 
-    private final PulUserRoleMapper userRoleMapper;
+    private final IPulUserRoleService userRoleService;
 
-    private final PulUserDeptMapper userDeptMapper;
+    private final IPulUserDeptService userDeptService;
 
     private final IPulRoleService roleService;
 
@@ -203,8 +205,8 @@ public class PulUserServiceImpl extends ServiceImpl<PulUserMapper, PulUser> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public P deleteUser(String userId) {
-        userDeptMapper.delete(Wrappers.<PulUserDept>lambdaQuery().eq(PulUserDept::getUserId, userId));
-        userRoleMapper.delete(Wrappers.<PulUserRole>lambdaQuery().eq(PulUserRole::getUserId, userId));
+        userDeptService.remove(Wrappers.<PulUserDept>lambdaQuery().eq(PulUserDept::getUserId, userId));
+        userRoleService.remove(Wrappers.<PulUserRole>lambdaQuery().eq(PulUserRole::getUserId, userId));
         removeById(userId);
         return P.success();
     }
@@ -257,6 +259,40 @@ public class PulUserServiceImpl extends ServiceImpl<PulUserMapper, PulUser> impl
         user.setUpdateAt(LocalDateTime.now());
         user.setUpdateBy(tokenUtils.getUserName());
         return P.p(updateById(user));
+    }
+
+    /**
+     * 权限分配
+     *
+     * @param userVo    分配信息
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public P allocatePermission(PulUserVo userVo) {
+        // 不允许修改超级管理员的角色信息
+        if (willSuperman(userVo.getUserId())) {
+            return P.error("不允许修改超级管理员！");
+        }
+        // 不允许设置其他人为超级管理员
+        List<String> roleIds = Convert.toList(String.class, userVo.getRoleIds());
+        List<PulRole> roles = roleService.listByIds(roleIds);
+        boolean hasSuperman = roles.stream()
+                .anyMatch(role -> Constant.ROLE_KEY_SUPREMAN.equals(role.getRoleKey()));
+        if (hasSuperman) {
+            return P.error("不允许设置其他人为超级管理员！");
+        }
+        // 删除已有的用户角色信息
+        userRoleService.remove(Wrappers.<PulUserRole>lambdaQuery().eq(PulUserRole::getUserId, userVo.getUserId()));
+        // 构建新的用户角色信息并保存
+        List<PulUserRole> userRoles = roleIds.stream()
+                .map(roleId -> new PulUserRole(userVo.getUserId(), roleId))
+                .collect(Collectors.toList());
+        userRoleService.saveBatch(userRoles);
+        // 保存新的部门信息
+        userDeptService.remove(Wrappers.<PulUserDept>lambdaQuery().eq(PulUserDept::getUserId, userVo.getUserId()));
+        userDeptService.save(new PulUserDept(userVo.getUserId(), userVo.getDeptId()));
+        return P.success();
     }
 
     /**

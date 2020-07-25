@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.pullulate.common.validate.*;
+import top.pullulate.common.validate.user.AllocatePermission;
+import top.pullulate.common.validate.user.ResetPassword;
+import top.pullulate.common.validate.user.UpdatePassword;
 import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.core.security.user.UserInfo;
 import top.pullulate.core.utils.TokenUtils;
@@ -142,4 +145,17 @@ public class PulUserController {
     public P updatePassword(@RequestBody @Validated(UpdatePassword.class) PulUserVo userVo) {
         return userService.updatePassword(userVo);
     }
+
+    /**
+     * 权限分配
+     *
+     * @param userVo    分配信息
+     * @return
+     */
+    @PutMapping("/permission")
+    @OperationRecord(title = "系统用户-权限分配")
+    public P allocatePermission(@RequestBody @Validated(AllocatePermission.class) PulUserVo userVo) {
+        return userService.allocatePermission(userVo);
+    }
+
 }

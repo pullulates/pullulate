@@ -100,4 +100,12 @@ public interface IPulUserService extends IService<PulUser> {
      * @return
      */
     P updatePassword(PulUserVo userVo);
+
+    /**
+     * 权限分配
+     *
+     * @param userVo    分配信息
+     * @return
+     */
+    P allocatePermission(PulUserVo userVo);
 }

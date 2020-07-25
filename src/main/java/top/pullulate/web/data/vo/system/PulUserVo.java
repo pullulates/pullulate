@@ -2,6 +2,9 @@ package top.pullulate.web.data.vo.system;
 
 import lombok.Data;
 import top.pullulate.common.validate.*;
+import top.pullulate.common.validate.user.AllocatePermission;
+import top.pullulate.common.validate.user.ResetPassword;
+import top.pullulate.common.validate.user.UpdatePassword;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -21,6 +24,7 @@ public class PulUserVo {
 
     /** 用户主键 */
     @NotBlank(message = "用户标识不能为空", groups = {Update.class, UpdatePassword.class, PatchStatus.class, ResetPassword.class})
+    @Size(max = 32, message = "非法的用户信息", groups = {Update.class, UpdatePassword.class, PatchStatus.class, ResetPassword.class})
     private String userId;
 
     /** 账号名称 */
@@ -83,4 +87,13 @@ public class PulUserVo {
     /** 备注信息 */
     @Size(max = 250, message = "备注信息最多250个字符", groups = {Save.class, Update.class})
     private String remark;
+
+    /** 部门主键 */
+    @NotBlank(message = "请选择部门", groups = {AllocatePermission.class})
+    @Size(max = 32, message = "非法的部门信息", groups = {AllocatePermission.class})
+    private String deptId;
+
+    /** 角色主键集合，逗号拼接 */
+    @NotBlank(message = "请选择角色", groups = {AllocatePermission.class})
+    private String roleIds;
 }

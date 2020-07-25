@@ -1,6 +1,8 @@
 package top.pullulate.system.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -12,7 +14,8 @@ import java.io.Serializable;
  * @GitHub: https://github.com/pullulates
  * @Gitee: https://gitee.com/pullulates
  */
-@Data
+@Getter
+@Setter
 public class PulUserDept implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,4 +25,12 @@ public class PulUserDept implements Serializable {
 
     /** 部门主键 */
     private String deptId;
+
+    public PulUserDept() {
+    }
+
+    public PulUserDept(String userId, String deptId) {
+        this.userId = userId;
+        this.deptId = deptId;
+    }
 }
