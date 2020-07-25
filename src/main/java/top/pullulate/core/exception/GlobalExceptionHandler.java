@@ -1,11 +1,16 @@
 package top.pullulate.core.exception;
 
+import cn.hutool.core.text.StrFormatter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import top.pullulate.web.data.dto.response.P;
+
+import java.util.List;
 
 /**
  * @功能描述:   全局异常处理
@@ -89,5 +94,21 @@ public class GlobalExceptionHandler {
     public P businessExceptionHandler(RedisCacheException e){
         log.error("缓存异常：", e);
         return P.error(e.getMessage());
+    }
+
+    /**
+     * 数据校验异常
+     *
+     * @param e 异常信息
+     * @return  P
+     */
+    @ExceptionHandler(BindException.class)
+    public P bindExceptionHandler(BindException e){
+        List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
+        StringBuilder sb = new StringBuilder();
+        sb.append(StrFormatter.format("数据校验异常，以下为校验提示信息：</br>"));
+        fieldErrors.forEach(fieldError -> sb.append(fieldError.getDefaultMessage()));
+        log.error("数据校验异常：", sb.toString());
+        return P.error(sb.toString());
     }
 }
