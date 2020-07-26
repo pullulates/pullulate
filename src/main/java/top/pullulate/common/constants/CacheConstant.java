@@ -94,4 +94,9 @@ public class CacheConstant {
      * 部门树选择缓存键
      */
     public static final String CACHE_DEPT_TREE_SELECT = "pullulate_dept_tree_select";
+
+    /**
+     * 网站配置缓存键前缀
+     */
+    public static final String CACHE_SITE_CONFIG_PREFFIX = "pullulate_site_config_";
 }

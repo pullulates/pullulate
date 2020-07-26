@@ -33,8 +33,8 @@ public class CacheMenu {
 
     @PostConstruct
     public void init() {
-        log.info("-----------------------启动缓存系统菜单信息任务-----------------------");
-        log.info("--->缓存所有菜单信息");
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 启动缓存系统菜单信息任务");
+        log.info(">>>>>>>>>>>>>>>> 缓存所有菜单信息");
         menuCacheService.deleteAllMenus();
         List<PulMenuViewVo> pulMenus = menuService.list(Wrappers.<PulMenu>lambdaQuery()
                 .orderByAsc(PulMenu::getMenuType)
@@ -42,20 +42,20 @@ public class CacheMenu {
                 .stream().map(menu-> BeanUtil.toBean(menu, PulMenuViewVo.class))
                 .collect(Collectors.toList());
         menuCacheService.setAllMenus(pulMenus);
-        log.info("--->缓存前端菜单列表树信息");
+        log.info(">>>>>>>>>>>>>>>> 缓存前端菜单列表树信息");
         menuCacheService.deleteMenuListTree();
         menuService.getMenuTreeList();
-        log.info("-----------------------缓存系统菜单信息任务结束-----------------------");
+        log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 缓存系统菜单信息任务结束");
     }
 
     @PreDestroy
     public void destroy() {
-        log.info("-----------------------启动销毁系统菜单缓存任务-----------------------");
-        log.info("--->销毁菜单信息缓存");
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 启动销毁系统菜单缓存任务");
+        log.info(">>>>>>>>>>>>>>>> 销毁菜单信息缓存");
         menuCacheService.deleteAllMenus();
-        log.info("--->销毁前端菜单列表树信息");
+        log.info(">>>>>>>>>>>>>>>> 销毁前端菜单列表树信息");
         menuCacheService.deleteMenuListTree();
-        log.info("-----------------------销毁系统菜单缓存任务结束-----------------------");
+        log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 销毁系统菜单缓存任务结束");
     }
 
 }

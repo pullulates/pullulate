@@ -27,30 +27,30 @@ public class CacheDept {
 
     @PostConstruct
     public void init() {
-        log.info("-----------------------启动缓存部门信息任务-----------------------");
-        log.info("--->销毁部门缓存信息");
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 启动缓存部门信息任务");
+        log.info(">>>>>>>>>>>>>>>> 销毁部门缓存信息");
         deptCacheService.deleteAllDepts();
         deptCacheService.deleteDeptListTree();
         deptCacheService.deleteDeptTreeSelect();
-        log.info("--->缓存所有部门信息");
+        log.info(">>>>>>>>>>>>>>>> 缓存所有部门信息");
         deptService.getAllDepts();
-        log.info("--->缓存前端部门列表树信息");
+        log.info(">>>>>>>>>>>>>>>> 缓存前端部门列表树信息");
         deptService.getDeptTreeList();
-        log.info("--->缓存前端部门选择树信息");
+        log.info(">>>>>>>>>>>>>>>> 缓存前端部门选择树信息");
         deptService.getTreeSelect();
-        log.info("-----------------------缓存系统部门任务结束-----------------------");
+        log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 缓存系统部门任务结束");
     }
 
     @PreDestroy
     public void destroy() {
-        log.info("-----------------------启动销毁部门缓存任务-----------------------");
-        log.info("--->销毁部门信息缓存");
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 启动销毁部门缓存任务");
+        log.info(">>>>>>>>>>>>>>>> 销毁部门信息缓存");
         deptCacheService.deleteAllDepts();
-        log.info("--->销毁前端部门列表树信息");
+        log.info(">>>>>>>>>>>>>>>> 销毁前端部门列表树信息");
         deptCacheService.deleteDeptListTree();
-        log.info("--->销毁前端部门选择树信息");
+        log.info(">>>>>>>>>>>>>>>> 销毁前端部门选择树信息");
         deptCacheService.deleteDeptTreeSelect();
-        log.info("-----------------------销毁部门缓存任务结束-----------------------");
+        log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 销毁部门缓存任务结束");
     }
 
 }
