@@ -26,6 +26,7 @@ import top.pullulate.utils.ServletUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 /**
@@ -59,7 +60,7 @@ public class OperationRecordAspect {
         } catch (Throwable throwable) {
             log.error("记录AOP日志发生异常", throwable);
         }
-        int cost = LocalDateTime.now().compareTo(begin);
+        long cost = Duration.between(begin, LocalDateTime.now()).toMillis();
         buildOperationRecord(joinPoint, cost, result);
         return result;
     }
@@ -70,7 +71,7 @@ public class OperationRecordAspect {
      * @param joinPoint
      * @param cost
      */
-    public void buildOperationRecord(ProceedingJoinPoint joinPoint, int cost, Object result) {
+    public void buildOperationRecord(ProceedingJoinPoint joinPoint, long cost, Object result) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         OperationRecord recordAnnotation = method.getAnnotation(OperationRecord.class);
@@ -82,7 +83,7 @@ public class OperationRecordAspect {
             HttpServletRequest request = ServletUtils.getRequest();
             String params = getReqestParams(request, joinPoint);
             UserInfo userInfo = tokenUtils.getUserInfo(request);
-            String costText = cost < 3 ? "不足3S" : cost + "S";
+            String costText = cost + "ms";
             PulOperationRecord operationRecord = new PulOperationRecord(
                     IdUtil.fastSimpleUUID(), title, ServletUtils.getRequest().getRequestURI(),
                     ip, location, userAgent.getBrowser().getName(), userAgent.getOs().getName(),
