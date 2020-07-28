@@ -185,11 +185,34 @@ public class RedisUtils {
     }
 
     /**
+     * 根据key前缀批量获取缓存数据
+     *
+     * @param keys  key前缀集合
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> getCacheListByPreffixKey(Collection<String> keys) {
+        List<T> list = redisTemplate.opsForValue().multiGet(keys);
+        return list;
+    }
+
+    /**
      * 获取redis key的数量
      *
      * @return
      */
     public long keys() {
         return redisConnectionFactory.getConnection().dbSize();
+    }
+
+    /**
+     * 获取已使用内存大小
+     *
+     * @return
+     */
+    public String getUsedMemoryInfo() {
+        Properties properties = redisConnectionFactory.getConnection().info();
+        String usedMemory = (String) properties.get("used_memory");
+        return usedMemory;
     }
 }

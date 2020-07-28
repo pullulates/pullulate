@@ -32,4 +32,15 @@ public class RedisController {
         long keys = redisUtils.keys();
         return P.data(keys);
     }
+
+    /**
+     * 获取已使用内存
+     *
+     * @return
+     */
+    @GetMapping("/used-memory")
+    public P getUsedMemoryInfo() {
+        String usedMemory = redisUtils.getUsedMemoryInfo();
+        return P.data(usedMemory);
+    }
 }
