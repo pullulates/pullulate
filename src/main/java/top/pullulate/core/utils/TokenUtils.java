@@ -173,7 +173,13 @@ public class TokenUtils {
                 .getBody();
     }
 
-    private String getTokenKey(String uuid) {
+    /**
+     * 获取缓存用户信息的key
+     *
+     * @param uuid  token
+     * @return
+     */
+    public String getTokenKey(String uuid) {
         return CacheConstant.CACHE_USER_INFO_PREFFIX + uuid;
     }
 
