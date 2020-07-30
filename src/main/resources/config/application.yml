@@ -70,3 +70,9 @@ mybatis-plus:
 baidu:
   name: pullulates
   ak: 5U7mhhfsTS1Ha8Y651OyBlvNcBZ0XgGG
+
+# 高德开发者账号配置
+gaode:
+  name: pullulate
+  key: ffbc230213efaaccbea80d47e0b818ee
+  districtUrl: https://restapi.amap.com/v3/config/district?key=
