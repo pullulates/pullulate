@@ -32,9 +32,16 @@ public interface IPulDistrictService extends IService<PulDistrict> {
     List<PulDistrictsViewVo> getAllDistricts();
 
     /**
-     * 同步地区数据
+     * 同步省级地区数据
      *
      * @return
      */
-    P syncDistricts();
+    P syncProvinceDistricts();
+
+    /**
+     * 同步省级以下地区数据
+     *
+     * @return
+     */
+    P syncProvinceChildrenDistricts(PulDistrict district);
 }

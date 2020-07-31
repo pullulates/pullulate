@@ -41,9 +41,9 @@ public class DistrictUtils {
      *
      * @return
      */
-    public List<PulDistrict> getALLDistrictInfo() {
-        log.info(">>>>>>>>>>>>>>>>>>>>>>>> 请求高德平台获取地区信息");
-        String result = HttpUtil.get(districtUrl + key + "&subdistrict=3", timeOut);
+    public List<PulDistrict> getProvinceDistrictInfo() {
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>> 请求高德平台获取省级地区信息");
+        String result = HttpUtil.get(districtUrl + key + "&subdistrict=1", timeOut);
         if (StrUtil.isBlank(result)) {
             log.info("<<<<<<<<<<<<<<<<<<<<<<<< 高德平台未响应数据或请求超时，请求结束");
             return null;
@@ -67,6 +67,9 @@ public class DistrictUtils {
             district.setDistrictId(IdUtil.fastSimpleUUID());
             district.setParentId(parentId);
             district.setCreateAt(now);
+            if ("[]".equals(district.getCitycode())) {
+                district.setCitycode(null);
+            }
             if (CollectionUtil.isNotEmpty(district.getDistricts())) {
                 List<PulDistrict> children = buildDistricts(district.getDistricts(), district.getDistrictId());
                 district.setDistricts(children);

@@ -1,10 +1,8 @@
 package top.pullulate.web.controller.system;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import top.pullulate.system.entity.PulDistrict;
 import top.pullulate.system.service.IPulDistrictService;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.system.PulDistrictsViewVo;
@@ -38,12 +36,22 @@ public class PulDistrictController {
     }
 
     /**
-     * 同步地区数据
+     * 同步省级地区数据
      *
      * @return
      */
-    @PostMapping("/sync")
+    @PostMapping("/sync-province")
     public P syncDistricts() {
-        return districtService.syncDistricts();
+        return districtService.syncProvinceDistricts();
+    }
+
+    /**
+     * 同步省级以下地区数据
+     *
+     * @return
+     */
+    @PostMapping("/sync-province-children")
+    public P syncProvinceChildrenDistricts(@RequestBody PulDistrict district) {
+        return districtService.syncProvinceChildrenDistricts(district);
     }
 }

@@ -72,21 +72,39 @@ public class PulDistrictServiceImpl extends ServiceImpl<PulDistrictMapper, PulDi
     }
 
     /**
-     * 同步地区数据
+     * 同步省级地区数据
      *
      * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public P syncDistricts() {
-        List<PulDistrict> districts = districtUtils.getALLDistrictInfo();
+    public P syncProvinceDistricts() {
+        List<PulDistrict> districts = districtUtils.getProvinceDistrictInfo();
         if (CollectionUtil.isEmpty(districts)) {
-            return P.error("同步地区数据失败");
+            return P.error("同步省级地区数据失败");
         }
         remove(Wrappers.lambdaQuery());
         saveGaodeDistrict(districts);
         refreshCache();
         return P.success();
+    }
+
+    /**
+     * 同步省级以下地区数据
+     *
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public P syncProvinceChildrenDistricts(PulDistrict district) {
+        PulDistrict pulDistrict = getById(district.getDistrictId());
+        removeById(district);
+        
+        return null;
+    }
+
+    private void recursiveDelete(String d) {
+
     }
 
     /**
