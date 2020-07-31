@@ -19,4 +19,9 @@ public class Constant {
      * 默认密码
      */
     public static final String DEFAULT_PASSWORD = "111111";
+
+    /**
+     * 层级数据顶级数据上级主键
+     */
+    public static final String LEVEL_DATA_PARENT_ID = "0";
 }

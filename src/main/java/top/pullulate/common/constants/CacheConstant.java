@@ -99,4 +99,14 @@ public class CacheConstant {
      * 网站配置缓存键前缀
      */
     public static final String CACHE_SITE_CONFIG_PREFFIX = "pullulate_site_config_";
+
+    /**
+     * 所有地区缓存键
+     */
+    public static final String CACHE_DISTRICT_ALL = "pullulate_district_all";
+
+    /**
+     * 地区列表树缓存键
+     */
+    public static final String CACHE_DISTRICT_LIST_TREE = "pullulate_district_list_tree";
 }
