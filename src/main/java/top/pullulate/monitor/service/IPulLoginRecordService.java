@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.pullulate.monitor.entity.PulLoginRecord;
+import top.pullulate.web.data.viewvo.CommonStatisticsViewVo;
 import top.pullulate.web.data.viewvo.monitor.PulLoginRecordViewVo;
 import top.pullulate.web.data.vo.monitor.PulLoginRecordVo;
+import top.pullulate.web.data.vo.statistics.CommonStatisticsQueryVo;
 
 import java.util.List;
 
@@ -27,4 +29,11 @@ public interface IPulLoginRecordService extends IService<PulLoginRecord> {
      * @return
      */
     IPage<List<PulLoginRecordViewVo>> getLoginRecordPage(PulLoginRecordVo loginRecordVo, Page page);
+
+    /**
+     * 获取用户访问统计数据
+     *
+     * @return
+     */
+    List<CommonStatisticsViewVo> getUserAccessStatistics(CommonStatisticsQueryVo queryVo);
 }
