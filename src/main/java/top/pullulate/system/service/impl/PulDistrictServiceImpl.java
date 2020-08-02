@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.pullulate.common.constants.Constant;
 import top.pullulate.common.service.DistrictCacheService;
 import top.pullulate.system.entity.PulDistrict;
 import top.pullulate.system.mapper.PulDistrictMapper;
@@ -97,14 +96,16 @@ public class PulDistrictServiceImpl extends ServiceImpl<PulDistrictMapper, PulDi
     @Override
     @Transactional(rollbackFor = Exception.class)
     public P syncProvinceChildrenDistricts(PulDistrict district) {
-        PulDistrict pulDistrict = getById(district.getDistrictId());
-        removeById(district);
-        
-        return null;
-    }
-
-    private void recursiveDelete(String d) {
-
+        List<PulDistrict> districts = districtUtils.getProvinceChildrenDistrictInfo(district.getName(), district.getDistrictId());
+        if (CollectionUtil.isEmpty(districts)) {
+            return P.error("同步省级以下地区数据失败");
+        }
+        remove(Wrappers.<PulDistrict>lambdaQuery()
+                .ne(PulDistrict::getDistrictId, district.getDistrictId())
+                .likeLeft(PulDistrict::getParentId, district.getAdcode().substring(0, 2)));
+        saveGaodeDistrict(districts);
+        refreshCache();
+        return P.success();
     }
 
     /**
@@ -114,9 +115,8 @@ public class PulDistrictServiceImpl extends ServiceImpl<PulDistrictMapper, PulDi
      */
     private void saveGaodeDistrict(List<PulDistrict> districts) {
         districts.forEach(district -> {
-            if (Constant.LEVEL_DATA_PARENT_ID.equals(district.getDistrictId())) {
-                save(district);
-            }
+            // 注释以下代码表示只保存子级数据，如请求省级数据忽略国家级数据，请求省级以下数据忽略省级数据
+            // save(district);
             if (CollectionUtil.isNotEmpty(district.getDistricts())) {
                 saveBatch(district.getDistricts());
                 saveGaodeDistrict(district.getDistricts());
