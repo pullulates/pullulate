@@ -37,7 +37,7 @@ public class DistrictUtils {
     private int timeOut = 10000;
 
     /**
-     * 获取所有的地区信息
+     * 获取升级地区信息
      *
      * @return
      */
@@ -53,6 +53,31 @@ public class DistrictUtils {
         if (json.getStr("status").equals("1")) {
             JSONArray jsonArray = json.getJSONArray("districts");
             List<PulDistrict> districts = buildDistricts(jsonArray.toList(PulDistrict.class), Constant.LEVEL_DATA_PARENT_ID);
+            log.info("<<<<<<<<<<<<<<<<<<<<<<<< 成功处理响应数据，请求结束");
+            return districts;
+        } else {
+            log.info("<<<<<<<<<<<<<<<<<<<<<<<< 未获取到响应数据，请求结束");
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * 获取省级以下地区信息
+     *
+     * @return
+     */
+    public List<PulDistrict> getProvinceChildrenDistrictInfo(String keywords, String parentId) {
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>> 请求高德平台获取省级以下地区信息");
+        String result = HttpUtil.get(districtUrl + key + "&subdistrict=3&keywords=" + keywords, timeOut);
+        if (StrUtil.isBlank(result)) {
+            log.info("<<<<<<<<<<<<<<<<<<<<<<<< 高德平台未响应数据或请求超时，请求结束");
+            return null;
+        }
+        JSONObject json = JSONUtil.parseObj(result);
+        log.info("高德平台响应状态码：{}，响应消息：{}", json.getStr("status"), json.getStr("info"));
+        if (json.getStr("status").equals("1")) {
+            JSONArray jsonArray = json.getJSONArray("districts");
+            List<PulDistrict> districts = buildDistricts(jsonArray.toList(PulDistrict.class), parentId);
             log.info("<<<<<<<<<<<<<<<<<<<<<<<< 成功处理响应数据，请求结束");
             return districts;
         } else {
