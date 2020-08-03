@@ -62,7 +62,7 @@ public class PulDistrictServiceImpl extends ServiceImpl<PulDistrictMapper, PulDi
     public List<PulDistrictsViewVo> getAllDistricts() {
         List<PulDistrictsViewVo> districtsViewVos = districtCacheService.getAllDistricts();
         if (CollectionUtil.isEmpty(districtsViewVos)) {
-            districtsViewVos = list(Wrappers.<PulDistrict>lambdaQuery().orderByAsc(PulDistrict::getAdcode))
+            districtsViewVos = list(Wrappers.<PulDistrict>lambdaQuery().orderByAsc(PulDistrict::getAdcode).orderByAsc(PulDistrict::getCreateAt))
                     .stream().map(district -> BeanUtil.toBean(district, PulDistrictsViewVo.class))
                     .collect(Collectors.toList());
             districtCacheService.setAllDistricts(districtsViewVos);
@@ -83,7 +83,7 @@ public class PulDistrictServiceImpl extends ServiceImpl<PulDistrictMapper, PulDi
             return P.error("同步省级地区数据失败");
         }
         remove(Wrappers.lambdaQuery());
-        saveGaodeDistrict(districts);
+        saveBatch(districts);
         refreshCache();
         return P.success();
     }
@@ -102,7 +102,8 @@ public class PulDistrictServiceImpl extends ServiceImpl<PulDistrictMapper, PulDi
         }
         remove(Wrappers.<PulDistrict>lambdaQuery()
                 .ne(PulDistrict::getDistrictId, district.getDistrictId())
-                .likeLeft(PulDistrict::getParentId, district.getAdcode().substring(0, 2)));
+                .likeLeft(PulDistrict::getAdcode, district.getAdcode().substring(0, 2)));
+        saveBatch(districts);
         saveGaodeDistrict(districts);
         refreshCache();
         return P.success();
@@ -111,12 +112,10 @@ public class PulDistrictServiceImpl extends ServiceImpl<PulDistrictMapper, PulDi
     /**
      * 保存高德的地区数据
      *
-     * @param districts
+     * @param districts             地区集合
      */
     private void saveGaodeDistrict(List<PulDistrict> districts) {
         districts.forEach(district -> {
-            // 注释以下代码表示只保存子级数据，如请求省级数据忽略国家级数据，请求省级以下数据忽略省级数据
-            // save(district);
             if (CollectionUtil.isNotEmpty(district.getDistricts())) {
                 saveBatch(district.getDistricts());
                 saveGaodeDistrict(district.getDistricts());
@@ -136,6 +135,7 @@ public class PulDistrictServiceImpl extends ServiceImpl<PulDistrictMapper, PulDi
         List<PulDistrictsViewVo> list = new ArrayList<>(districts.size());
         districts.forEach(district -> {
             if (!dupDistrictSet.contains(district.getDistrictId())) {
+                dupDistrictSet.add(district.getDistrictId());
                 List<PulDistrictsViewVo> children = allDistricts.stream()
                         .filter(item -> item.getParentId().equals(district.getDistrictId()))
                         .collect(Collectors.toList());
