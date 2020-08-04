@@ -2,6 +2,7 @@ package top.pullulate.web.controller.system;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.system.entity.PulDistrict;
 import top.pullulate.system.service.IPulDistrictService;
 import top.pullulate.web.data.dto.response.P;
@@ -41,6 +42,7 @@ public class PulDistrictController {
      * @return
      */
     @PostMapping("/sync-province")
+    @OperationRecord(title = "地区管理-同步省级数据")
     public P syncDistricts() {
         return districtService.syncProvinceDistricts();
     }
@@ -51,6 +53,7 @@ public class PulDistrictController {
      * @return
      */
     @PostMapping("/sync-province-children")
+    @OperationRecord(title = "地区管理-同步省级以下数据")
     public P syncProvinceChildrenDistricts(@RequestBody PulDistrict district) {
         return districtService.syncProvinceChildrenDistricts(district);
     }
