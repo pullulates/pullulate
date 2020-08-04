@@ -84,7 +84,8 @@ public class PulDistrictServiceImpl extends ServiceImpl<PulDistrictMapper, PulDi
         }
         remove(Wrappers.lambdaQuery());
         saveBatch(districts);
-        refreshCache();
+        districtCacheService.deleteAllDistricts();
+        districtCacheService.deleteDistrictTreeList();
         return P.success();
     }
 
@@ -105,7 +106,9 @@ public class PulDistrictServiceImpl extends ServiceImpl<PulDistrictMapper, PulDi
                 .likeLeft(PulDistrict::getAdcode, district.getAdcode().substring(0, 2)));
         saveBatch(districts);
         saveGaodeDistrict(districts);
-        refreshCache();
+
+        districtCacheService.deleteAllDistricts();
+        districtCacheService.deleteDistrictTreeList();
         return P.success();
     }
 
@@ -145,17 +148,5 @@ public class PulDistrictServiceImpl extends ServiceImpl<PulDistrictMapper, PulDi
             }
         });
         return list;
-    }
-
-    /**
-     * 刷新缓存
-     */
-    private void refreshCache() {
-        districtCacheService.deleteAllDistricts();
-        districtCacheService.deleteDistrictTreeList();
-        synchronized (this) {
-            getAllDistricts();
-            getDisctrictTreeList();
-        }
     }
 }
