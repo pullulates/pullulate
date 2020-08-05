@@ -62,7 +62,8 @@ public class PulLoginRecordServiceImpl extends ServiceImpl<PulLoginRecordMapper,
             int ipTotal = count(Wrappers.<PulLoginRecord>lambdaQuery()
                     .eq(PulLoginRecord::getLoginTime, localDate.atStartOfDay())
                     .groupBy(PulLoginRecord::getIp));
-            CommonStatisticsViewVo totalResult = new CommonStatisticsViewVo("total", localDate.toString(), total);
+            CommonStatisticsViewVo totalResult = new CommonStatisticsViewVo("total", localDate.toString(),
+                    total);
             CommonStatisticsViewVo ipResult = new CommonStatisticsViewVo("ip", localDate.toString(), ipTotal);
             results.add(totalResult);
             results.add(ipResult);

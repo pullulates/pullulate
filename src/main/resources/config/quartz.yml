@@ -1,0 +1,24 @@
+org:
+  quartz:
+    scheduler:
+      instanceId: AUTO
+      instanceName: PullulateSchedule
+      rmi:
+        export: false
+        proxy: false
+      wrapJobExecutionInUserTransaction: false
+    # 如何存储任务和触发器等信息
+    jobStore:
+      class: org.quartz.impl.jdbcjobstore.JobStoreTX
+      isClustered: false
+      driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+      tablePrefix: qrtz_
+      dataSource: quartzDataSource
+    #数据源配置
+    dataSource:
+      quartzDataSource:
+        driver: com.mysql.cj.jdbc.Driver
+        URL: jdbc:mysql://106.55.165.80:3306/pullulates?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        user: root
+        password: pullulates123456
+        maxConnections: 10
