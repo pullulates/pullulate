@@ -2,6 +2,7 @@ package top.pullulate.monitor.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.pullulate.monitor.entity.PulJob;
+import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.monitor.PulJobViewVo;
 import top.pullulate.web.data.vo.monitor.PulJobVo;
 
@@ -24,4 +25,20 @@ public interface IPulJobService extends IService<PulJob> {
      * @return
      */
     List<PulJobViewVo> getJobList(PulJobVo jobVo);
+
+    /**
+     * 保存定时任务
+     *
+     * @param jobVo 任务参数
+     * @return
+     */
+    P saveJob(PulJobVo jobVo);
+
+    /**
+     * 修改定时任务
+     *
+     * @param jobVo 任务参数
+     * @return
+     */
+    P updateJob(PulJobVo jobVo);
 }
