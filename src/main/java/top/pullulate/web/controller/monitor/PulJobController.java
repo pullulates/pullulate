@@ -1,9 +1,9 @@
 package top.pullulate.web.controller.monitor;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.monitor.service.IPulJobService;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.monitor.PulJobViewVo;
@@ -36,5 +36,29 @@ public class PulJobController {
     public P getJobList(PulJobVo jobVo) {
         List<PulJobViewVo> jobs = jobService.getJobList(jobVo);
         return P.data(jobs);
+    }
+
+    /**
+     * 保存定时任务
+     *
+     * @param jobVo 任务参数
+     * @return
+     */
+    @PostMapping
+    @OperationRecord(title = "定时任务-保存任务")
+    public P saveJob(@RequestBody @Validated PulJobVo jobVo) {
+        return jobService.saveJob(jobVo);
+    }
+
+    /**
+     * 修改定时任务
+     *
+     * @param jobVo 任务参数
+     * @return
+     */
+    @PutMapping
+    @OperationRecord(title = "定时任务-修改任务")
+    public P updateJob(@RequestBody @Validated PulJobVo jobVo) {
+        return jobService.updateJob(jobVo);
     }
 }

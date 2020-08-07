@@ -36,7 +36,7 @@ public class QuartzService {
             scheduler.start();
             //构建job信息
             JobDetail jobDetail = null;
-            Class clazz = Class.forName("top.pullulates.tool.quartz.job." + job.getInvokeTarget());
+            Class clazz = Class.forName(job.getInvokeTarget());
             BaseJob baseJob = (BaseJob)clazz.newInstance();
             jobDetail = JobBuilder.newJob(baseJob.getClass()).withIdentity(job.getName(), job.getGroupName()).build();
             //表达式调度构建器(即任务执行的时间)
