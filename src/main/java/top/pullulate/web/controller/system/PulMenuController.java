@@ -17,9 +17,9 @@ import java.util.Set;
  * @功能描述:   路由前端控制器
  * @Author: xuyong
  * @Date: 2020/7/9 8:19
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @RestController
 @RequestMapping("/system/menus")

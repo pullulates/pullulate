@@ -6,9 +6,9 @@ import java.lang.annotation.*;
  * @功能描述:   操作日志注解
  * @Author: xuyong
  * @Date: 2020/7/4 17:29
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

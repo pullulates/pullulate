@@ -7,9 +7,9 @@ import top.pullulate.system.entity.PulUserRole;
  * @功能描述:   用户角色数据层
  * @Author: xuyong
  * @Date: 2020/7/17 13:10
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public interface PulUserRoleMapper extends BaseMapper<PulUserRole> {
 }

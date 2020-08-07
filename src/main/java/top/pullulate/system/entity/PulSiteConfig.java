@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
  * @功能描述:   网站配置实体类
  * @Author: xuyong
  * @Date: 2020/7/26 20:06
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Data
 public class PulSiteConfig implements Serializable {

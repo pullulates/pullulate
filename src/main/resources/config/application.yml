@@ -17,7 +17,7 @@ spring:
   redis:
     host: 106.55.165.80
     port: 63790
-    password: pullulates123456
+    password: pullulate123456
     timeout: 10s
     lettuce:
       pool:
@@ -68,7 +68,7 @@ mybatis-plus:
 
 # 百度开发者账号配置
 baidu:
-  name: pullulates
+  name: pullulate
   ak: 5U7mhhfsTS1Ha8Y651OyBlvNcBZ0XgGG
 
 # 高德开发者账号配置

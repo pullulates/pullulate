@@ -8,11 +8,11 @@ import java.util.Locale;
 
 /**
  * @功能描述:   国际化配置
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/6/13 0013 11:20
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Configuration
 public class LocaleConfiguration {

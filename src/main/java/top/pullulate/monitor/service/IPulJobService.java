@@ -12,9 +12,9 @@ import java.util.List;
  * @功能描述:   定时任务服务接口
  * @Author: xuyong
  * @Date: 2020/8/4 23:11
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public interface IPulJobService extends IService<PulJob> {
 
@@ -41,4 +41,12 @@ public interface IPulJobService extends IService<PulJob> {
      * @return
      */
     P updateJob(PulJobVo jobVo);
+
+    /**
+     * 执行定时任务
+     *
+     * @param jobVo 任务参数
+     * @return
+     */
+    P executeJob(PulJobVo jobVo);
 }

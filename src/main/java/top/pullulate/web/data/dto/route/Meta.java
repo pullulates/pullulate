@@ -7,9 +7,9 @@ import lombok.Setter;
  * @功能描述: 路由显示信息
  * @Author: xuyong
  * @Date: 2020/6/18 17:12
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Setter
 @Getter

@@ -18,9 +18,9 @@ import java.util.Set;
  * @功能描述:   角色前端控制器
  * @Author: xuyong
  * @Date: 2020/7/16 15:17
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @RestController
 @RequestMapping("/system/roles")

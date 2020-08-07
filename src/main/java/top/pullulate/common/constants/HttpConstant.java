@@ -2,11 +2,11 @@ package top.pullulate.common.constants;
 
 /**
  * @功能描述: 请求相关信息常量
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/6/10 0010 11:46
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public class HttpConstant {
 

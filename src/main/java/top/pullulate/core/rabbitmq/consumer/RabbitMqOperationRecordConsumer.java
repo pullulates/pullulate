@@ -11,11 +11,11 @@ import top.pullulate.monitor.service.IPulOperationRecordService;
 
 /**
  * @功能描述:   操作日志消息队列消费者类
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/7/4 0004 10:35
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Slf4j
 @Component

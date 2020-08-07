@@ -6,9 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.pullulate.common.validate.*;
-import top.pullulate.common.validate.user.AllocatePermission;
-import top.pullulate.common.validate.user.ResetPassword;
-import top.pullulate.common.validate.user.UpdatePassword;
+import top.pullulate.common.validate.system.User;
 import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.core.security.user.UserInfo;
 import top.pullulate.core.utils.TokenUtils;
@@ -17,17 +15,16 @@ import top.pullulate.system.service.IPulUserService;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.system.PulUserViewVo;
 import top.pullulate.web.data.vo.system.PulUserVo;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
  * @功能描述:   用户前端控制器
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/6/12 0012 19:06
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @RestController
 @RequestMapping("/system/users")
@@ -82,7 +79,7 @@ public class PulUserController {
      */
     @PostMapping
     @OperationRecord(title = "系统用户-保存用户")
-    public P saveUser(@RequestBody @Validated(Save.class) PulUserVo userVo) {
+    public P saveUser(@RequestBody @Validated(Common.Save.class) PulUserVo userVo) {
         return userService.saveUser(userVo);
     }
 
@@ -94,7 +91,7 @@ public class PulUserController {
      */
     @PutMapping
     @OperationRecord(title = "系统用户-修改用户")
-    public P updateUser(@RequestBody @Validated(Update.class) PulUserVo userVo) {
+    public P updateUser(@RequestBody @Validated(Common.Update.class) PulUserVo userVo) {
         return userService.updateUser(userVo);
     }
 
@@ -106,7 +103,7 @@ public class PulUserController {
      */
     @PatchMapping
     @OperationRecord(title = "系统用户-修改用户状态")
-    public P updateUserStatus(@RequestBody @Validated(PatchStatus.class) PulUserVo userVo) {
+    public P updateUserStatus(@RequestBody @Validated(Common.PatchStatus.class) PulUserVo userVo) {
         return userService.updateUserStatus(userVo);
     }
 
@@ -130,7 +127,7 @@ public class PulUserController {
      */
     @PatchMapping("/password-reset")
     @OperationRecord(title = "系统用户-重置密码")
-    public P resetPassword(@RequestBody @Validated(ResetPassword.class) PulUserVo userVo) {
+    public P resetPassword(@RequestBody @Validated(User.ResetPassword.class) PulUserVo userVo) {
         return userService.resetPassword(userVo);
     }
 
@@ -142,7 +139,7 @@ public class PulUserController {
      */
     @PatchMapping("/password")
     @OperationRecord(title = "系统用户-重置密码")
-    public P updatePassword(@RequestBody @Validated(UpdatePassword.class) PulUserVo userVo) {
+    public P updatePassword(@RequestBody @Validated(User.UpdatePassword.class) PulUserVo userVo) {
         return userService.updatePassword(userVo);
     }
 
@@ -154,7 +151,7 @@ public class PulUserController {
      */
     @PutMapping("/permission")
     @OperationRecord(title = "系统用户-权限分配")
-    public P allocatePermission(@RequestBody @Validated(AllocatePermission.class) PulUserVo userVo) {
+    public P allocatePermission(@RequestBody @Validated(User.Allocate.class) PulUserVo userVo) {
         return userService.allocatePermission(userVo);
     }
 

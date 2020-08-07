@@ -8,9 +8,9 @@ import java.util.List;
  * @功能描述:   菜单视图展现类
  * @Author: xuyong
  * @Date: 2020/7/9 8:27
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Data
 public class PulMenuViewVo implements Comparable<PulMenuViewVo> {

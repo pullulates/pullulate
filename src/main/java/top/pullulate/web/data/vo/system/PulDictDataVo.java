@@ -5,11 +5,11 @@ import javax.validation.constraints.*;
 
 /**
  * @功能描述:   字典数据参数接收类
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/7/6 0006 20:34
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Data
 public class PulDictDataVo {

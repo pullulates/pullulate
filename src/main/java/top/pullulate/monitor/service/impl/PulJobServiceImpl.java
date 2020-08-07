@@ -1,6 +1,7 @@
 package top.pullulate.monitor.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +22,9 @@ import java.util.stream.Collectors;
  * @功能描述:
  * @Author: xuyong
  * @Date: 2020/8/4 23:12
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Service
 @RequiredArgsConstructor
@@ -86,5 +87,21 @@ public class PulJobServiceImpl extends ServiceImpl<PulJobMapper, PulJob> impleme
         job.setUpdateAt(LocalDateTime.now());
         job.setUpdateBy(tokenUtils.getUserName());
         return P.p(updateById(job));
+    }
+
+    /**
+     * 执行定时任务
+     *
+     * @param jobVo 任务参数
+     * @return
+     */
+    @Override
+    public P executeJob(PulJobVo jobVo) {
+        PulJob job = getById(jobVo.getJobId());
+        if (ObjectUtil.isNull(job)) {
+            return P.error("定时任务不存在！");
+        }
+        quartzService.excuteAtOnce(job);
+        return P.success();
     }
 }

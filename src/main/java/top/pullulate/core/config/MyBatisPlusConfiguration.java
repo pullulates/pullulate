@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @功能描述:   mybatis plus信息配置
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/6/13 0013 10:28
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Configuration
 @MapperScan("top.pullulate.**.mapper")

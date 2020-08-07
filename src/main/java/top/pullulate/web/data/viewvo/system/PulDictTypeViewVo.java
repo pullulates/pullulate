@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
  * @功能描述:   字典类别视图类
  * @Author: xuyong
  * @Date: 2020/7/2 16:14
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Data
 public class PulDictTypeViewVo {

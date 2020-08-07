@@ -2,11 +2,11 @@ package top.pullulate.core.exception;
 
 /**
  * @功能描述:   工具类异常
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/6/10 0010 11:20
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public class UtilException extends RuntimeException{
 

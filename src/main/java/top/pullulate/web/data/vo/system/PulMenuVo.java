@@ -8,9 +8,9 @@ import javax.validation.constraints.*;
  * @功能描述:   菜单参数接收类
  * @Author: xuyong
  * @Date: 2020/7/9 8:25
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Data
 public class PulMenuVo {

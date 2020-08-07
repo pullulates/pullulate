@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
  * @功能描述:   定时任务工厂配置
  * @Author: xuyong
  * @Date: 2020/8/4 21:48
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Component
 @RequiredArgsConstructor

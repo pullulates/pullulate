@@ -15,9 +15,9 @@ import java.util.Set;
  * @功能描述:   菜单服务接口
  * @Author: xuyong
  * @Date: 2020/6/15 12:42
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  * @Company: 合肥瑞智电力电子有限公司
  */
 public interface IPulMenuService extends IService<PulMenu> {

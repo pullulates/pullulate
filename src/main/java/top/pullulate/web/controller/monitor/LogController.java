@@ -20,9 +20,9 @@ import java.util.List;
  * @功能描述:   系统日志前端控制器
  * @Author: xuyong
  * @Date: 2020/7/21 16:37
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @RestController
 @RequiredArgsConstructor

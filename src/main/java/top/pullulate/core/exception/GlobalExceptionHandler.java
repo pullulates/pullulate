@@ -16,9 +16,9 @@ import java.util.List;
  * @功能描述:   全局异常处理
  * @Author: xuyong
  * @Date: 2020/6/16 10:49
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Slf4j
 @RestControllerAdvice

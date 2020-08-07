@@ -14,9 +14,9 @@ import java.io.IOException;
  * @功能描述:   定时任务配置类
  * @Author: xuyong
  * @Date: 2020/8/4 21:45
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Configuration
 @RequiredArgsConstructor

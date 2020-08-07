@@ -11,9 +11,9 @@ import top.pullulate.web.data.dto.response.P;
  * @功能描述:   redis监控前端控制器
  * @Author: xuyong
  * @Date: 2020/7/22 13:20
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @RestController
 @RequiredArgsConstructor

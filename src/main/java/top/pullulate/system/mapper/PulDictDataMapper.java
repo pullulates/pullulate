@@ -13,9 +13,9 @@ import java.util.List;
  * @功能描述:   字典数据数据层
  * @Author: xuyong
  * @Date: 2020/7/2 16:03
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public interface PulDictDataMapper extends BaseMapper<PulDictData> {
 

@@ -12,9 +12,9 @@ import javax.annotation.PreDestroy;
  * @功能描述:   项目启动时，缓存部门信息
  * @Author: xuyong
  * @Date: 2020/7/9 15:38
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Slf4j
 @Component

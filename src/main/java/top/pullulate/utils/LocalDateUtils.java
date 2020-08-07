@@ -10,9 +10,9 @@ import java.util.stream.Stream;
  * @功能描述:   LocalDate工具类
  * @Author: xuyong
  * @Date: 2020/8/1 22:56
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public class LocalDateUtils {
 

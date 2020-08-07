@@ -10,9 +10,9 @@ import top.pullulate.system.service.IPulUserRoleService;
  * @功能描述:   用户角色服务接口实现类
  * @Author: xuyong
  * @Date: 2020/7/25 21:54
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Service
 public class PulUserRoleServiceImpl extends ServiceImpl<PulUserRoleMapper, PulUserRole> implements IPulUserRoleService {

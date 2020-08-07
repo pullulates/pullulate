@@ -12,11 +12,11 @@ import java.util.List;
 
 /**
  * @功能描述:   用户服务接口
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/6/12 0012 19:12
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public interface IPulUserService extends IService<PulUser> {
 

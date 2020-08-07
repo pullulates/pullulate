@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
  * @功能描述:   角色视图实体类
  * @Author: xuyong
  * @Date: 2020/6/29 13:13
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Data
 public class PulRoleViewVo {

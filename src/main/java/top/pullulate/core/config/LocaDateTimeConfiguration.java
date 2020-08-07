@@ -18,9 +18,9 @@ import java.time.format.DateTimeFormatter;
  * @功能描述:   java 8 时间类序列化规则定义
  * @Author: xuyong
  * @Date: 2020/6/18 14:25
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public class LocaDateTimeConfiguration extends SimpleModule {
 

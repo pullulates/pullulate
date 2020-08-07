@@ -14,9 +14,9 @@ import java.util.List;
  * @功能描述:   登录日志数据层
  * @Author: xuyong
  * @Date: 2020/6/18 10:34
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public interface PulLoginRecordMapper extends BaseMapper<PulLoginRecord> {
 

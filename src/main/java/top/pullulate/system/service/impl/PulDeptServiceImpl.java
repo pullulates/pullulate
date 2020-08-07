@@ -27,9 +27,9 @@ import java.util.stream.Collectors;
  * @功能描述:   部门服务接口实现类
  * @Author: xuyong
  * @Date: 2020/6/18 10:33
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Slf4j
 @Service

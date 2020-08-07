@@ -4,9 +4,9 @@ package top.pullulate.core.exception;
  * @功能描述:   定时任务异常
  * @Author: xuyong
  * @Date: 2020/8/4 22:38
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public class QuartzJobException extends RuntimeException{
 

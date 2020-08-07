@@ -10,11 +10,11 @@ import top.pullulate.common.constants.RabbitMqConstant;
 
 /**
  * @功能描述:   登录日志记录队列类
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/7/3 0003 21:08
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Configuration
 public class RabbitMqLoginRecordQueue {

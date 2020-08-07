@@ -7,11 +7,11 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * @功能描述:   登录参数接收类
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/6/13 0013 10:46
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Getter
 @Setter

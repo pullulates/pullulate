@@ -17,11 +17,11 @@ import top.pullulate.core.security.service.UserDetailService;
 
 /**
  * @功能描述:   spring security信息配置
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/6/10 0010 11:57
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)

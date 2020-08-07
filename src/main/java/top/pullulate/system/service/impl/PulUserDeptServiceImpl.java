@@ -10,9 +10,9 @@ import top.pullulate.system.service.IPulUserDeptService;
  * @功能描述:   用户部门服务接口实现类
  * @Author: xuyong
  * @Date: 2020/7/25 21:47
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Service
 public class PulUserDeptServiceImpl extends ServiceImpl<PulUserDeptMapper, PulUserDept> implements IPulUserDeptService {

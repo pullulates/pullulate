@@ -9,9 +9,9 @@ import java.util.List;
  * @功能描述:   菜单数据层
  * @Author: xuyong
  * @Date: 2020/6/15 12:44
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  * @Company: 合肥瑞智电力电子有限公司
  */
 public interface PulMenuMapper extends BaseMapper<PulMenu> {

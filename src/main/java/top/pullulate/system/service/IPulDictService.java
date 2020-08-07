@@ -15,9 +15,9 @@ import java.util.Map;
  * @功能描述:   数据字典服务接口
  * @Author: xuyong
  * @Date: 2020/7/2 16:06
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public interface IPulDictService {
 

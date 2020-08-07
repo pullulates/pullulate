@@ -6,11 +6,11 @@ import top.pullulate.core.security.user.UserInfo;
 
 /**
  * @功能描述: security安全工具类
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/6/10 0010 13:03
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public class SecurityUtils {
 

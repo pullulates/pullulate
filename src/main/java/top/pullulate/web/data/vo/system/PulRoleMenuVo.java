@@ -9,9 +9,9 @@ import javax.validation.constraints.Size;
  * @功能描述:   角色菜单参数接收类
  * @Author: xuyong
  * @Date: 2020/7/20 8:18
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Data
 public class PulRoleMenuVo {

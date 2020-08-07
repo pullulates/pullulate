@@ -8,9 +8,9 @@ import java.time.LocalDate;
  * @功能描述:   通用的统计查询参数接收类
  * @Author: xuyong
  * @Date: 2020/8/1 22:33
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Data
 public class CommonStatisticsQueryVo {

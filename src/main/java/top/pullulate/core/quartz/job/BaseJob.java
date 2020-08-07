@@ -8,9 +8,9 @@ import org.quartz.JobExecutionException;
  * @功能描述:   定时任务调度基础接口
  * @Author: xuyong
  * @Date: 2020/8/4 21:52
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public interface BaseJob extends Job {
 

@@ -10,11 +10,11 @@ import java.util.List;
 
 /**
  * @功能描述:   菜单实体类
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/6/13 0013 9:59
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Getter
 @Setter

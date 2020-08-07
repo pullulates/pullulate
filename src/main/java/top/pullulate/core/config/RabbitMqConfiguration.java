@@ -23,11 +23,11 @@ import org.springframework.core.env.Environment;
  * Producer:消息生产者,就是投递消息的程序.
  * Consumer:消息消费者,就是接受消息的程序.
  * Channel:消息通道,在客户端的每个连接里,可建立多个channel.
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/7/3 0003 20:34
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Slf4j
 @Configuration

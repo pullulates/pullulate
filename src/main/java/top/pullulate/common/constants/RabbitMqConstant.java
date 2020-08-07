@@ -2,11 +2,11 @@ package top.pullulate.common.constants;
 
 /**
  * @功能描述:   RabbitMq常量类
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/7/3 0003 21:33
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public class RabbitMqConstant {
 

@@ -16,9 +16,9 @@ import java.util.List;
  * @功能描述:   操作日志服务接口实现类
  * @Author: xuyong
  * @Date: 2020/7/4 17:27
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @Service
 public class IPulOperationRecordServiceImpl extends ServiceImpl<PulOperationRecordMapper, PulOperationRecord> implements IPulOperationRecordService {

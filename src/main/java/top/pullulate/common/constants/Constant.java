@@ -4,9 +4,9 @@ package top.pullulate.common.constants;
  * @功能描述: 系统常量定义类
  * @Author: xuyong
  * @Date: 2020/7/6 15:23
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 public class Constant {
 

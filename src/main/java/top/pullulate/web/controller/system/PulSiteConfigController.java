@@ -14,9 +14,9 @@ import java.util.List;
  * @功能描述:   网站配置前端控制器
  * @Author: xuyong
  * @Date: 2020/7/26 20:11
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @RestController
 @RequiredArgsConstructor

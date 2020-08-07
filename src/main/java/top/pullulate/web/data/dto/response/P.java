@@ -10,11 +10,11 @@ import java.io.Serializable;
 
 /**
  * @功能描述:   返回数据封装
- * @Author: pullulates
+ * @Author: pullulate
  * @Date: 2020/6/10 0010 11:36
- * @CopyRight: pullulates
- * @GitHub: https://github.com/pullulates
- * @Gitee: https://gitee.com/pullulates
+ * @CopyRight: pullulate
+ * @GitHub: https://github.com/pullulate
+ * @Gitee: https://gitee.com/pullulate
  */
 @NoArgsConstructor
 public class P<T> implements Serializable {
