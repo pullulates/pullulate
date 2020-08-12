@@ -232,14 +232,15 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
     private List<Tree> buildMenuTreeSelect(List<PulMenuViewVo> menus, List<PulMenuViewVo> allMenus, Set<String> dupMenuSet) {
         List<Tree> trees = new ArrayList<>(allMenus.size());
         menus.forEach(menu -> {
-            if (!dupMenuSet.contains(menu.getPermission())) {
-                dupMenuSet.add(menu.getPermission());
-                List<PulMenuViewVo> children = menus.stream()
+            if (!dupMenuSet.contains(menu.getMenuId
+                    ())) {
+                dupMenuSet.add(menu.getMenuId());
+                List<PulMenuViewVo> children = allMenus.stream()
                         .filter(item -> item.getParentId().equals(menu.getMenuId()))
                         .collect(Collectors.toList());
                 Tree tree = new Tree(menu.getTitle(), menu.getMenuId(), menu.getMenuId());
                 tree.setChildren(buildMenuTreeSelect(children, allMenus, dupMenuSet));
-                children.forEach(child -> dupMenuSet.add(child.getPermission()));
+                children.forEach(child -> dupMenuSet.add(child.getMenuId()));
                 trees.add(tree);
             }
         });
@@ -257,15 +258,15 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
     private List<PulMenuViewVo> buildMenuListTree(List<PulMenuViewVo> menus, List<PulMenuViewVo> allMenus, Set<String> dupMenuSet) {
         List<PulMenuViewVo> menuViewVos = new ArrayList<>(allMenus.size());
         menus.forEach(menu -> {
-            if (!dupMenuSet.contains(menu.getPermission())) {
-                dupMenuSet.add(menu.getPermission());
-                List<PulMenuViewVo> children = menus.stream()
+            if (!dupMenuSet.contains(menu.getMenuId())) {
+                dupMenuSet.add(menu.getMenuId());
+                List<PulMenuViewVo> children = allMenus.stream()
                         .filter(item -> item.getParentId().equals(menu.getMenuId()))
                         .map(item -> BeanUtil.toBean(item, PulMenuViewVo.class))
                         .collect(Collectors.toList());
                 PulMenuViewVo pulMenuViewVo = BeanUtil.toBean(menu, PulMenuViewVo.class);
                 pulMenuViewVo.setChildren(buildMenuListTree(children, allMenus, dupMenuSet));
-                children.forEach(child -> dupMenuSet.add(child.getPermission()));
+                children.forEach(child -> dupMenuSet.add(child.getMenuId()));
                 menuViewVos.add(pulMenuViewVo);
             }
         });
