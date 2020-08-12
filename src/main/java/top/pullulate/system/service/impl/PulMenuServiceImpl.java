@@ -232,8 +232,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
     private List<Tree> buildMenuTreeSelect(List<PulMenuViewVo> menus, List<PulMenuViewVo> allMenus, Set<String> dupMenuSet) {
         List<Tree> trees = new ArrayList<>(allMenus.size());
         menus.forEach(menu -> {
-            if (!dupMenuSet.contains(menu.getMenuId
-                    ())) {
+            if (!dupMenuSet.contains(menu.getMenuId())) {
                 dupMenuSet.add(menu.getMenuId());
                 List<PulMenuViewVo> children = allMenus.stream()
                         .filter(item -> item.getParentId().equals(menu.getMenuId()))
