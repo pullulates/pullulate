@@ -75,4 +75,41 @@ public class PulJobController {
     public P executeJob(@RequestBody @Validated(value = Job.excute.class) PulJobVo jobVo) {
         return jobService.executeJob(jobVo);
     }
+
+    /**
+     * 暂停定时任务
+     *
+     * @param jobVo 任务参数
+     * @return
+     */
+    @PatchMapping("/pause")
+    @OperationRecord(title = "定时任务-暂停任务")
+    public P pauseJob(@RequestBody @Validated(value = Common.PatchStatus.class) PulJobVo jobVo) {
+        return jobService.pauseJob(jobVo);
+    }
+
+    /**
+     * 恢复定时任务
+     *
+     * @param jobVo 任务参数
+     * @return
+     */
+    @PatchMapping("/resume")
+    @OperationRecord(title = "定时任务-恢复任务")
+    public P resumeJob(@RequestBody @Validated(value = Common.PatchStatus.class) PulJobVo jobVo) {
+        return jobService.resumeJob(jobVo);
+    }
+
+    /**
+     * 删除定时任务
+     *
+     * @param jobId 定时任务主键
+     * @return
+     */
+    @DeleteMapping
+    @OperationRecord(title = "定时任务-删除任务")
+    public P deleteJob(String jobId) {
+        return jobService.deleteJob(jobId);
+    }
+
 }

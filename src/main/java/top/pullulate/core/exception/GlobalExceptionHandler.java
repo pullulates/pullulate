@@ -67,7 +67,7 @@ public class GlobalExceptionHandler {
      * @return  P
      */
     @ExceptionHandler(UtilException.class)
-    public P utiExceptionHandler(UtilException e){
+    public P utilExceptionHandler(UtilException e){
         log.error("使用工具类时发生异常：", e);
         return P.error("exception.util.error");
     }
@@ -85,14 +85,26 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 通用的业务异常
+     * 缓存异常
      *
      * @param e 异常信息
      * @return  P
      */
     @ExceptionHandler(RedisCacheException.class)
-    public P businessExceptionHandler(RedisCacheException e){
+    public P redisCacheExceptionHandler(RedisCacheException e){
         log.error("缓存异常：", e);
+        return P.error(e.getMessage());
+    }
+
+    /**
+     * 定时任务异常
+     *
+     * @param e 异常信息
+     * @return  P
+     */
+    @ExceptionHandler(QuartzJobException.class)
+    public P quartzJobExceptionHandler(QuartzJobException e){
+        log.error("定时任务异常：", e);
         return P.error(e.getMessage());
     }
 

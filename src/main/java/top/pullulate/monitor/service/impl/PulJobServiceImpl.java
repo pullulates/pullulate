@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import top.pullulate.core.quartz.service.QuartzService;
 import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.monitor.entity.PulJob;
@@ -102,6 +103,64 @@ public class PulJobServiceImpl extends ServiceImpl<PulJobMapper, PulJob> impleme
             return P.error("定时任务不存在！");
         }
         quartzService.excuteAtOnce(job);
+        return P.success();
+    }
+
+    /**
+     * 暂停定时任务
+     *
+     * @param jobVo 任务参数
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public P pauseJob(PulJobVo jobVo) {
+        PulJob job = getById(jobVo.getJobId());
+        if (ObjectUtil.isNull(job)) {
+            return P.error("定时任务不存在！");
+        }
+        job.setStatus(jobVo.getStatus());
+        job.setUpdateAt(LocalDateTime.now());
+        job.setUpdateBy(tokenUtils.getUserName());
+        updateById(job);
+        quartzService.pauseJob(job);
+        return P.success();
+    }
+
+    /**
+     * 恢复定时任务
+     *
+     * @param jobVo 任务参数
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public P resumeJob(PulJobVo jobVo) {
+        PulJob job = getById(jobVo.getJobId());
+        if (ObjectUtil.isNull(job)) {
+            return P.error("定时任务不存在！");
+        }
+        job.setStatus(jobVo.getStatus());
+        job.setUpdateAt(LocalDateTime.now());
+        job.setUpdateBy(tokenUtils.getUserName());
+        updateById(job);
+        quartzService.resumeJob(job);
+        return P.success();
+    }
+
+    /**
+     * 删除定时任务
+     *
+     * @param jobId 定时任务主键
+     * @return
+     */
+    @Override
+    public P deleteJob(String jobId) {
+        PulJob job = getById(jobId);
+        if (ObjectUtil.isNull(job)) {
+            return P.error("定时任务不存在！");
+        }
+        removeById(jobId);
         return P.success();
     }
 }

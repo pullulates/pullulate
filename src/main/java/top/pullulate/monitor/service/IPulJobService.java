@@ -49,4 +49,28 @@ public interface IPulJobService extends IService<PulJob> {
      * @return
      */
     P executeJob(PulJobVo jobVo);
+
+    /**
+     * 暂停定时任务
+     *
+     * @param jobVo 任务参数
+     * @return
+     */
+    P pauseJob(PulJobVo jobVo);
+
+    /**
+     * 恢复定时任务
+     *
+     * @param jobVo 任务参数
+     * @return
+     */
+    P resumeJob(PulJobVo jobVo);
+
+    /**
+     * 删除定时任务
+     *
+     * @param jobId 定时任务主键
+     * @return
+     */
+    P deleteJob(String jobId);
 }

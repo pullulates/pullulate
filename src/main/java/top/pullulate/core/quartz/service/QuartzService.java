@@ -47,7 +47,7 @@ public class QuartzService {
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (Exception e) {
             log.error("创建定时任务失败： ", e);
-            throw new QuartzJobException(e);
+            throw new QuartzJobException(e.getMessage());
         }
 
     }
@@ -79,7 +79,7 @@ public class QuartzService {
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (Exception e) {
             log.error("创建定时任务失败：", e);
-            throw new QuartzJobException(e);
+            throw new QuartzJobException(e.getMessage());
         }
     }
 
@@ -94,7 +94,7 @@ public class QuartzService {
             scheduler.pauseJob(JobKey.jobKey(job.getName(), job.getGroupName()));
         } catch (SchedulerException e) {
             log.error("暂停定时任务失败：", e);
-            throw new QuartzJobException(e);
+            throw new QuartzJobException(e.getMessage());
         }
     }
 
@@ -109,7 +109,7 @@ public class QuartzService {
             scheduler.resumeJob(JobKey.jobKey(job.getName(), job.getGroupName()));
         } catch (SchedulerException e) {
             log.error("恢复定时任务失败：", e);
-            throw new QuartzJobException(e);
+            throw new QuartzJobException(e.getMessage());
         }
     }
 
@@ -132,7 +132,7 @@ public class QuartzService {
             scheduler.rescheduleJob(triggerKey, trigger);
         } catch (SchedulerException e) {
             log.error("修改定时任务失败：", e);
-            throw new QuartzJobException(e);
+            throw new QuartzJobException(e.getMessage());
         }
     }
 
@@ -159,7 +159,7 @@ public class QuartzService {
             scheduler.rescheduleJob(triggerKey, trigger);
         } catch (SchedulerException e) {
             log.error("更新定时任务失败：", e);
-            throw new QuartzJobException(e);
+            throw new QuartzJobException(e.getMessage());
         }
     }
 
@@ -181,7 +181,7 @@ public class QuartzService {
             scheduler.rescheduleJob(triggerKey, trigger);
         } catch (SchedulerException e) {
             log.error("更新定时任务失败：", e);
-            throw new QuartzJobException(e);
+            throw new QuartzJobException(e.getMessage());
         }
     }
 
@@ -199,7 +199,7 @@ public class QuartzService {
             scheduler.deleteJob(JobKey.jobKey(job.getName(), job.getGroupName()));
         } catch (SchedulerException e) {
             log.error("删除定时任务失败：", e);
-            throw new QuartzJobException(e);
+            throw new QuartzJobException(e.getMessage());
         }
     }
 
@@ -213,7 +213,7 @@ public class QuartzService {
             scheduler.start();
         } catch (Exception e) {
             log.error("启动定时任务失败：", e);
-            throw new QuartzJobException(e);
+            throw new QuartzJobException(e.getMessage());
         }
     }
 
@@ -228,7 +228,7 @@ public class QuartzService {
             }
         } catch (Exception e) {
             log.error("关闭定时任务失败：", e);
-            throw new QuartzJobException(e);
+            throw new QuartzJobException(e.getMessage());
         }
     }
 
@@ -242,7 +242,7 @@ public class QuartzService {
             scheduler.triggerJob(JobKey.jobKey(job.getName(), job.getGroupName()));
         } catch (SchedulerException e) {
             log.error("执行定时任务失败：", e);
-            throw new QuartzJobException(e);
+            throw new QuartzJobException(e.getMessage());
         }
     }
 
@@ -277,7 +277,7 @@ public class QuartzService {
             return jobList;
         } catch (SchedulerException e) {
             log.error("获取所有任务失败：", e);
-            throw new QuartzJobException(e);
+            throw new QuartzJobException(e.getMessage());
         }
     }
 }

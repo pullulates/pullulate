@@ -2,6 +2,7 @@ package top.pullulate.core.aspect;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import cn.hutool.json.JSONUtil;
@@ -15,6 +16,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
 import top.pullulate.common.constants.HttpConstant;
+import top.pullulate.common.enums.HasOccurException;
 import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.core.rabbitmq.producer.RabbitMqOperationRecordProducer;
 import top.pullulate.core.security.user.UserInfo;
@@ -55,13 +57,14 @@ public class OperationRecordAspect {
     public Object around(ProceedingJoinPoint joinPoint) {
         LocalDateTime begin = LocalDateTime.now();
         Object result = null;
+        String exceptionInfo = null;
         try {
             result = joinPoint.proceed();
         } catch (Throwable throwable) {
-            log.error("记录AOP日志发生异常", throwable);
+            exceptionInfo = throwable.getMessage();
         }
         long cost = Duration.between(begin, LocalDateTime.now()).toMillis();
-        buildOperationRecord(joinPoint, cost, result);
+        buildOperationRecord(joinPoint, cost, result, exceptionInfo);
         return result;
     }
 
@@ -71,7 +74,7 @@ public class OperationRecordAspect {
      * @param joinPoint
      * @param cost
      */
-    public void buildOperationRecord(ProceedingJoinPoint joinPoint, long cost, Object result) {
+    public void buildOperationRecord(ProceedingJoinPoint joinPoint, long cost, Object result, String exceptionInfo) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         OperationRecord recordAnnotation = method.getAnnotation(OperationRecord.class);
@@ -87,7 +90,8 @@ public class OperationRecordAspect {
             PulOperationRecord operationRecord = new PulOperationRecord(
                     IdUtil.fastSimpleUUID(), title, ServletUtils.getRequest().getRequestURI(),
                     ip, location, userAgent.getBrowser().getName(), userAgent.getOs().getName(),
-                    params, JSONUtil.toJsonStr(result), "0", null, userInfo.getUserId(), userInfo.getUsername(),
+                    params, JSONUtil.toJsonStr(result), StrUtil.isBlank(exceptionInfo) ? HasOccurException.NORMAL.getCode() : HasOccurException.OCCURED.getCode(),
+                    exceptionInfo, userInfo.getUserId(), userInfo.getUsername(),
                     userInfo.getDept().getDeptId(), userInfo.getDept().getDeptName(), LocalDateTime.now(), costText);
             operationRecordProducer.sendOperationInfor(operationRecord);
         }
