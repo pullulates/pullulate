@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @功能描述:   权限控制异常
+ * @功能描述:   权限控制异常, 由于全局异常处理，这里不会触发
  * @Author: pullulate
  * @Date: 2020/6/12 0012 23:39
  * @CopyRight: pullulate

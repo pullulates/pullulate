@@ -1,10 +1,12 @@
 package top.pullulate.core.security.user;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import top.pullulate.common.constants.Constant;
 import top.pullulate.common.enums.LockFlag;
@@ -19,6 +21,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -87,7 +90,9 @@ public class UserInfo implements UserDetails {
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return CollectionUtil.isEmpty(permissions) ? null : permissions.stream()
+                .map(perm -> new SimpleGrantedAuthority(perm))
+                .collect(Collectors.toList());
     }
 
     @JsonIgnore

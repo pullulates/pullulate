@@ -3,6 +3,7 @@ package top.pullulate.web.controller.system;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.pullulate.common.validate.*;
@@ -66,6 +67,7 @@ public class PulUserController {
      * @return
      */
     @GetMapping
+    @PreAuthorize("hasAuthority('system.user.query')")
     public P getUserPage(PulUserVo pulUserVo, Page page) {
         IPage<List<PulUserViewVo>> pages = userService.getUserPage(pulUserVo, page);
         return P.data(pages);
@@ -79,6 +81,7 @@ public class PulUserController {
      */
     @PostMapping
     @OperationRecord(title = "系统用户-保存用户")
+    @PreAuthorize("hasAuthority('system.user.save')")
     public P saveUser(@RequestBody @Validated(Common.Save.class) PulUserVo userVo) {
         return userService.saveUser(userVo);
     }
@@ -91,6 +94,7 @@ public class PulUserController {
      */
     @PutMapping
     @OperationRecord(title = "系统用户-修改用户")
+    @PreAuthorize("hasAuthority('system.user.edit')")
     public P updateUser(@RequestBody @Validated(Common.Update.class) PulUserVo userVo) {
         return userService.updateUser(userVo);
     }
@@ -103,6 +107,7 @@ public class PulUserController {
      */
     @PatchMapping
     @OperationRecord(title = "系统用户-修改用户状态")
+    @PreAuthorize("hasAuthority('system.user.patch')")
     public P updateUserStatus(@RequestBody @Validated(Common.PatchStatus.class) PulUserVo userVo) {
         return userService.updateUserStatus(userVo);
     }
@@ -115,6 +120,7 @@ public class PulUserController {
      */
     @DeleteMapping
     @OperationRecord(title = "系统用户-删除用户")
+    @PreAuthorize("hasAuthority('system.user.del')")
     public P deleteUser(String userId) {
         return userService.deleteUser(userId);
     }
@@ -127,6 +133,7 @@ public class PulUserController {
      */
     @PatchMapping("/password-reset")
     @OperationRecord(title = "系统用户-重置密码")
+    @PreAuthorize("hasAuthority('system.user.password.reset')")
     public P resetPassword(@RequestBody @Validated(User.ResetPassword.class) PulUserVo userVo) {
         return userService.resetPassword(userVo);
     }
@@ -138,7 +145,8 @@ public class PulUserController {
      * @return
      */
     @PatchMapping("/password")
-    @OperationRecord(title = "系统用户-重置密码")
+    @OperationRecord(title = "系统用户-修改密码")
+    @PreAuthorize("hasAuthority('system.user.password.edit')")
     public P updatePassword(@RequestBody @Validated(User.UpdatePassword.class) PulUserVo userVo) {
         return userService.updatePassword(userVo);
     }
@@ -151,6 +159,7 @@ public class PulUserController {
      */
     @PutMapping("/permission")
     @OperationRecord(title = "系统用户-权限分配")
+    @PreAuthorize("hasAuthority('system.user.allocate')")
     public P allocatePermission(@RequestBody @Validated(User.Allocate.class) PulUserVo userVo) {
         return userService.allocatePermission(userVo);
     }

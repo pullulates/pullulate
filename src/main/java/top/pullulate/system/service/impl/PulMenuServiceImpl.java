@@ -63,7 +63,10 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
      */
     @Override
     public List<Router> getRouters(List<PulMenu> menus) {
-        return buildRouters(menus, menus, new HashSet<String>());
+        List<PulMenu> filterMenus = menus.stream()
+                .filter(menu -> !MenuType.button(menu.getMenuType()))
+                .collect(Collectors.toList());
+        return buildRouters(filterMenus, filterMenus, new HashSet<>());
     }
 
     /**

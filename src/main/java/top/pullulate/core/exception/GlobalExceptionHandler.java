@@ -2,6 +2,7 @@ package top.pullulate.core.exception;
 
 import cn.hutool.core.text.StrFormatter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.validation.BindException;
@@ -34,6 +35,18 @@ public class GlobalExceptionHandler {
     public P unDeclaredExceptionHandler(Throwable e){
         log.error("发生未知异常：", e);
         return P.error("exception.undeclared.error");
+    }
+
+    /**
+     * 系统未声明异常处理
+     *
+     * @param e 异常信息
+     * @return  P
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public P unDeclaredExceptionHandler(AccessDeniedException e){
+        log.error("用户权限控制异常：", e);
+        return P.error(e.getMessage());
     }
 
     /**
