@@ -3,6 +3,7 @@ package top.pullulate.web.controller.system;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.pullulate.core.annotations.OperationRecord;
@@ -37,6 +38,7 @@ public class PulRoleController {
      * @return
      */
     @GetMapping
+    @PreAuthorize("hasAuthority('system.role.query')")
     public P getRolePage(PulRoleVo roleVo, Page page) {
         IPage<List<PulRoleViewVo>> roles = roleService.getRolePage(roleVo, page);
         return P.data(roles);
@@ -50,6 +52,7 @@ public class PulRoleController {
      */
     @PostMapping
     @OperationRecord(title = "角色管理-保存角色")
+    @PreAuthorize("hasAuthority('system.role.save')")
     public P saveRole(@RequestBody @Validated PulRoleVo roleVo) {
         return roleService.saveRole(roleVo);
     }
@@ -62,6 +65,7 @@ public class PulRoleController {
      */
     @PutMapping
     @OperationRecord(title = "角色管理-修改角色")
+    @PreAuthorize("hasAuthority('system.role.edit')")
     public P updateRole(@RequestBody @Validated PulRoleVo roleVo) {
         return roleService.updateRole(roleVo);
     }
@@ -74,6 +78,7 @@ public class PulRoleController {
      */
     @PatchMapping
     @OperationRecord(title = "角色管理-修改角色状态")
+    @PreAuthorize("hasAuthority('system.role.patch')")
     public P updateRoleStatus(@RequestBody PulRoleVo roleVo) {
         return roleService.updateRoleStatus(roleVo);
     }
@@ -86,6 +91,7 @@ public class PulRoleController {
      */
     @DeleteMapping
     @OperationRecord(title = "角色管理-删除角色")
+    @PreAuthorize("hasAuthority('system.role.del')")
     public P deleteRole(String roleId) {
         return roleService.deleteRole(roleId);
     }
@@ -110,6 +116,7 @@ public class PulRoleController {
      */
     @PostMapping("/role-menu")
     @OperationRecord(title = "角色管理-修改角色菜单")
+    @PreAuthorize("hasAuthority('system.role.allocate.perm')")
     public P updateRoleMenus(@RequestBody @Validated PulRoleMenuVo roleMenuVo) {
         return roleService.updateRoleMenus(roleMenuVo);
     }

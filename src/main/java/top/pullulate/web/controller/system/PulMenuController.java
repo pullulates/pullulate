@@ -1,6 +1,7 @@
 package top.pullulate.web.controller.system;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.pullulate.core.annotations.OperationRecord;
@@ -34,6 +35,7 @@ public class PulMenuController {
      * @return
      */
     @GetMapping
+    @PreAuthorize("hasAuthority('system.menu.query')")
     public P getMenuTreeList() {
         List<PulMenuViewVo> menuViewVos = menuService.getMenuTreeList();
         return P.data(menuViewVos);
@@ -58,6 +60,7 @@ public class PulMenuController {
      */
     @PostMapping
     @OperationRecord(title = "路由管理-保存路由")
+    @PreAuthorize("hasAuthority('system.menu.save')")
     public P saveMenu(@RequestBody @Validated PulMenuVo menuVo) {
         return menuService.saveMenu(menuVo);
     }
@@ -70,6 +73,7 @@ public class PulMenuController {
      */
     @PutMapping
     @OperationRecord(title = "路由管理-修改路由")
+    @PreAuthorize("hasAuthority('system.menu.edit')")
     public P updateMenu(@RequestBody @Validated PulMenuVo menuVo) {
         return menuService.updateMenu(menuVo);
     }
@@ -82,6 +86,7 @@ public class PulMenuController {
      */
     @PatchMapping
     @OperationRecord(title = "路由管理-修改路由状态")
+    @PreAuthorize("hasAuthority('system.menu.patch')")
     public P updateMenuStatus(@RequestBody PulMenuVo menuVo) {
         return menuService.updateMenuStatus(menuVo);
     }
@@ -94,6 +99,7 @@ public class PulMenuController {
      */
     @DeleteMapping
     @OperationRecord(title = "路由管理-删除路由")
+    @PreAuthorize("hasAuthority('system.menu.del')")
     public P deleteMenu(String menuId) {
         return menuService.deleteMenu(menuId);
     }
