@@ -1,6 +1,7 @@
 package top.pullulate.web.controller.monitor;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.pullulate.common.validate.Common;
@@ -35,6 +36,7 @@ public class PulJobController {
      * @return
      */
     @GetMapping
+    @PreAuthorize("hasAuthority('monitor.job.query')")
     public P getJobList(PulJobVo jobVo) {
         List<PulJobViewVo> jobs = jobService.getJobList(jobVo);
         return P.data(jobs);
@@ -48,6 +50,7 @@ public class PulJobController {
      */
     @PostMapping
     @OperationRecord(title = "定时任务-保存任务")
+    @PreAuthorize("hasAuthority('monitor.job.save')")
     public P saveJob(@RequestBody @Validated(value = Common.Save.class) PulJobVo jobVo) {
         return jobService.saveJob(jobVo);
     }
@@ -60,6 +63,7 @@ public class PulJobController {
      */
     @PutMapping
     @OperationRecord(title = "定时任务-修改任务")
+    @PreAuthorize("hasAuthority('monitor.job.edit')")
     public P updateJob(@RequestBody @Validated(value = Common.Update.class) PulJobVo jobVo) {
         return jobService.updateJob(jobVo);
     }
@@ -72,6 +76,7 @@ public class PulJobController {
      */
     @PostMapping("/execute")
     @OperationRecord(title = "定时任务-执行任务")
+    @PreAuthorize("hasAuthority('monitor.job.execute')")
     public P executeJob(@RequestBody @Validated(value = Job.excute.class) PulJobVo jobVo) {
         return jobService.executeJob(jobVo);
     }
@@ -84,6 +89,7 @@ public class PulJobController {
      */
     @PatchMapping("/pause")
     @OperationRecord(title = "定时任务-暂停任务")
+    @PreAuthorize("hasAuthority('monitor.job.patch')")
     public P pauseJob(@RequestBody @Validated(value = Common.PatchStatus.class) PulJobVo jobVo) {
         return jobService.pauseJob(jobVo);
     }
@@ -96,6 +102,7 @@ public class PulJobController {
      */
     @PatchMapping("/resume")
     @OperationRecord(title = "定时任务-恢复任务")
+    @PreAuthorize("hasAuthority('monitor.job.patch')")
     public P resumeJob(@RequestBody @Validated(value = Common.PatchStatus.class) PulJobVo jobVo) {
         return jobService.resumeJob(jobVo);
     }
@@ -108,6 +115,7 @@ public class PulJobController {
      */
     @DeleteMapping
     @OperationRecord(title = "定时任务-删除任务")
+    @PreAuthorize("hasAuthority('monitor.job.del')")
     public P deleteJob(String jobId) {
         return jobService.deleteJob(jobId);
     }
