@@ -3,6 +3,7 @@ package top.pullulate.web.controller.system;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.pullulate.core.annotations.OperationRecord;
@@ -37,6 +38,7 @@ public class PulDictController {
      * @return
      */
     @GetMapping("/types")
+    @PreAuthorize("hasAuthority('system.dict.query')")
     public P getDictTypePage(PulDictTypeVo dictVo, Page page) {
         IPage<List<PulDictTypeViewVo>> pages = dictService.getDictTypePage(dictVo, page);
         return P.data(pages);
@@ -50,6 +52,7 @@ public class PulDictController {
      * @return
      */
     @GetMapping("/datas")
+    @PreAuthorize("hasAuthority('system.dict.query')")
     public P getDictDataPage(PulDictDataVo dictVo, Page page) {
         IPage<List<PulDictDataViewVo>> pages = dictService.getDictDataPage(dictVo, page);
         return P.data(pages);
@@ -76,6 +79,7 @@ public class PulDictController {
      */
     @PostMapping("/types")
     @OperationRecord(title = "数据字典-保存字典分类")
+    @PreAuthorize("hasAuthority('system.dict.save')")
     public P saveDictType(@Validated @RequestBody PulDictTypeVo dictTypeVo) {
         return dictService.saveDictType(dictTypeVo);
     }
@@ -88,6 +92,7 @@ public class PulDictController {
      */
     @PutMapping("/types")
     @OperationRecord(title = "数据字典-修改字典分类")
+    @PreAuthorize("hasAuthority('system.dict.edit')")
     public P updateDictType(@Validated @RequestBody PulDictTypeVo dictTypeVo) {
         return dictService.updateDictType(dictTypeVo);
     }
@@ -100,6 +105,7 @@ public class PulDictController {
      */
     @PostMapping("/datas")
     @OperationRecord(title = "数据字典-保存字典数据")
+    @PreAuthorize("hasAuthority('system.dict.save')")
     public P saveDictData(@Validated @RequestBody PulDictDataVo dictDataVo) {
         return dictService.saveDictData(dictDataVo);
     }
@@ -112,6 +118,7 @@ public class PulDictController {
      */
     @PutMapping("/datas")
     @OperationRecord(title = "数据字典-修改字典数据")
+    @PreAuthorize("hasAuthority('system.dict.edit')")
     public P updateDictData(@Validated @RequestBody PulDictDataVo dictDataVo) {
         return dictService.updateDictData(dictDataVo);
     }
@@ -124,6 +131,7 @@ public class PulDictController {
      */
     @PatchMapping("/types")
     @OperationRecord(title = "数据字典-修改字典类别状态")
+    @PreAuthorize("hasAuthority('system.dict.patch')")
     public P updateDictTypeStatus(@RequestBody PulDictTypeVo dictTypeVo) {
         return  dictService.updateDictTypeStatus(dictTypeVo);
     }
@@ -136,6 +144,7 @@ public class PulDictController {
      */
     @DeleteMapping("/types")
     @OperationRecord(title = "数据字典-删除字典类别")
+    @PreAuthorize("hasAuthority('system.dict.del')")
     public P deleteDictType(String dictTypeId) {
         return dictService.deleteDictType(dictTypeId);
     }
@@ -148,6 +157,7 @@ public class PulDictController {
      */
     @PatchMapping("/datas")
     @OperationRecord(title = "数据字典-修改字典数据状态")
+    @PreAuthorize("hasAuthority('system.dict.patch')")
     public P updateDictDataStatus(@RequestBody PulDictDataVo dictDataVo) {
         return  dictService.updateDictDataStatus(dictDataVo);
     }
@@ -160,6 +170,7 @@ public class PulDictController {
      */
     @DeleteMapping("/datas")
     @OperationRecord(title = "数据字典-删除字典数据")
+    @PreAuthorize("hasAuthority('system.dict.del')")
     public P deleteDictData(String dictDataId) {
         return dictService.deleteDictData(dictDataId);
     }

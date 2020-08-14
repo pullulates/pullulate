@@ -1,6 +1,7 @@
 package top.pullulate.web.controller.system;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.pullulate.core.annotations.OperationRecord;
@@ -33,6 +34,7 @@ public class PulDeptController {
      * @return
      */
     @GetMapping
+    @PreAuthorize("hasAuthority('system.dept.query')")
     public P getDeptTreeList() {
         List<PulDeptViewVo> depts = deptService.getDeptTreeList();
         return P.data(depts);
@@ -69,6 +71,7 @@ public class PulDeptController {
      */
     @PostMapping
     @OperationRecord(title = "部门机构-保存部门信息")
+    @PreAuthorize("hasAuthority('system.dept.save')")
     public  P saveDept(@RequestBody @Validated PulDeptVo deptVo) {
         return deptService.saveDept(deptVo);
     }
@@ -81,6 +84,7 @@ public class PulDeptController {
      */
     @PutMapping
     @OperationRecord(title = "部门机构-修改部门信息")
+    @PreAuthorize("hasAuthority('system.dept.edit')")
     public P updateDept(@RequestBody @Validated PulDeptVo deptVo) {
         return deptService.updateDept(deptVo);
     }
@@ -93,6 +97,7 @@ public class PulDeptController {
      */
     @PatchMapping
     @OperationRecord(title = "部门机构-修改部门状态")
+    @PreAuthorize("hasAuthority('system.dept.patch')")
     public P updateDeptStatus(@RequestBody PulDeptVo deptVo) {
         return deptService.updateDeptStatus(deptVo);
     }
@@ -105,6 +110,7 @@ public class PulDeptController {
      */
     @DeleteMapping
     @OperationRecord(title = "部门机构-删除部门信息")
+    @PreAuthorize("hasAuthority('system.dept.del')")
     public P deleteDept(String deptId) {
         return deptService.deleteDept(deptId);
     }

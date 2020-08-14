@@ -1,6 +1,7 @@
 package top.pullulate.web.controller.system;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.system.entity.PulDistrict;
@@ -31,6 +32,7 @@ public class PulDistrictController {
      * @return
      */
     @GetMapping
+    @PreAuthorize("hasAuthority('system.districts.query')")
     public P getDisctrictTreeList() {
         List<PulDistrictsViewVo> districts = districtService.getDisctrictTreeList();
         return P.data(districts);
@@ -43,6 +45,7 @@ public class PulDistrictController {
      */
     @PostMapping("/sync-province")
     @OperationRecord(title = "地区管理-同步省级数据")
+    @PreAuthorize("hasAuthority('system.districts.sync')")
     public P syncDistricts() {
         return districtService.syncProvinceDistricts();
     }
@@ -54,6 +57,7 @@ public class PulDistrictController {
      */
     @PostMapping("/sync-province-children")
     @OperationRecord(title = "地区管理-同步省级以下数据")
+    @PreAuthorize("hasAuthority('system.districts.sync')")
     public P syncProvinceChildrenDistricts(@RequestBody PulDistrict district) {
         return districtService.syncProvinceChildrenDistricts(district);
     }

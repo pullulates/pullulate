@@ -2,6 +2,7 @@ package top.pullulate.web.controller.monitor;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,7 @@ public class OnlineController {
      * @return
      */
     @GetMapping("/users")
+    @PreAuthorize("hasAuthority('monitor.online.user.query')")
     public P getOnlineUsers(String userName) {
         Collection<String> keys = redisUtils.keys(CacheConstant.CACHE_USER_INFO_PREFFIX + "*");
         List<UserInfo> userInfos = redisUtils.getCacheListByPreffixKey(keys);
@@ -59,6 +61,7 @@ public class OnlineController {
      * @return
      */
     @DeleteMapping("/users")
+    @PreAuthorize("hasAuthority('monitor.online.user.del')")
     @OperationRecord(title = "在线用户-强制下线")
     public P kickedOut(String token) {
         String curToken = tokenUtils.getUserInfo().getToken();
