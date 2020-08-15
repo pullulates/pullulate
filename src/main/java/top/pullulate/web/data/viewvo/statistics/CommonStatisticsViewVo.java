@@ -1,4 +1,4 @@
-package top.pullulate.web.data.viewvo;
+package top.pullulate.web.data.viewvo.statistics;
 
 import lombok.Getter;
 import lombok.Setter;

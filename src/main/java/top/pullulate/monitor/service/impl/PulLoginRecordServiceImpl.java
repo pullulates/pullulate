@@ -10,8 +10,8 @@ import top.pullulate.monitor.entity.PulLoginRecord;
 import top.pullulate.monitor.mapper.PulLoginRecordMapper;
 import top.pullulate.monitor.service.IPulLoginRecordService;
 import top.pullulate.utils.LocalDateUtils;
-import top.pullulate.web.data.viewvo.CommonStatisticsViewVo;
 import top.pullulate.web.data.viewvo.monitor.PulLoginRecordViewVo;
+import top.pullulate.web.data.viewvo.statistics.VisitStatisticsViewVo;
 import top.pullulate.web.data.vo.monitor.PulLoginRecordVo;
 import top.pullulate.web.data.vo.statistics.CommonStatisticsQueryVo;
 
@@ -48,25 +48,22 @@ public class PulLoginRecordServiceImpl extends ServiceImpl<PulLoginRecordMapper,
      * @return
      */
     @Override
-    public List<CommonStatisticsViewVo> getUserAccessStatistics(CommonStatisticsQueryVo queryVo) {
+    public List<VisitStatisticsViewVo> getUserAccessStatistics(CommonStatisticsQueryVo queryVo) {
         List<LocalDate> rangeDate;
         if (ObjectUtil.isNull(queryVo.getStartDate())) {
             rangeDate = LocalDateUtils.getRecentSevenLocalDate();
         } else {
             rangeDate = LocalDateUtils.getLocaDatesBetweenDate(queryVo.getStartDate(), queryVo.getEndDate());
         }
-        List<CommonStatisticsViewVo> results = new ArrayList<>(rangeDate.size()*2);
+        List<VisitStatisticsViewVo> results = new ArrayList<>(rangeDate.size());
         rangeDate.forEach(localDate -> {
             int total = count(Wrappers.<PulLoginRecord>lambdaQuery()
                     .eq(PulLoginRecord::getLoginTime, localDate.atStartOfDay()));
-            int ipTotal = count(Wrappers.<PulLoginRecord>lambdaQuery()
+            int ip = count(Wrappers.<PulLoginRecord>lambdaQuery()
                     .eq(PulLoginRecord::getLoginTime, localDate.atStartOfDay())
                     .groupBy(PulLoginRecord::getIp));
-            CommonStatisticsViewVo totalResult = new CommonStatisticsViewVo("total", localDate.toString(),
-                    total);
-            CommonStatisticsViewVo ipResult = new CommonStatisticsViewVo("ip", localDate.toString(), ipTotal);
-            results.add(totalResult);
-            results.add(ipResult);
+            VisitStatisticsViewVo visit = new VisitStatisticsViewVo(localDate.toString(), total, ip);
+            results.add(visit);
         });
         return results;
     }

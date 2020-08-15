@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.pullulate.monitor.service.IPulLoginRecordService;
 import top.pullulate.web.data.dto.response.P;
-import top.pullulate.web.data.viewvo.CommonStatisticsViewVo;
+import top.pullulate.web.data.viewvo.statistics.VisitStatisticsViewVo;
 import top.pullulate.web.data.vo.statistics.CommonStatisticsQueryVo;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public class AccessStatisticsController {
      */
     @GetMapping("/users")
     public P getUserAccessStatistics(CommonStatisticsQueryVo queryVo) {
-        List<CommonStatisticsViewVo> result = loginRecordService.getUserAccessStatistics(queryVo);
+        List<VisitStatisticsViewVo> result = loginRecordService.getUserAccessStatistics(queryVo);
         return P.data(result);
     }
 }
