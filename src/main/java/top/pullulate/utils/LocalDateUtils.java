@@ -24,7 +24,7 @@ public class LocalDateUtils {
     public static List<String> getRecentSevenDate() {
         List<String> list = new ArrayList<>();
         LocalDate start = LocalDate.now().minusDays(7);
-        Stream.iterate(start, d -> d.plusDays(1)).limit(8).forEach(f -> {
+        Stream.iterate(start, d -> d.plusDays(1)).limit(7).forEach(f -> {
             list.add(f.toString());
         });
         return list;
@@ -37,7 +37,7 @@ public class LocalDateUtils {
     public static List<LocalDate> getRecentSevenLocalDate() {
         List<LocalDate> list = new ArrayList<>();
         LocalDate start = LocalDate.now().minusDays(7);
-        Stream.iterate(start, d -> d.plusDays(1)).limit(8).forEach(f -> {
+        Stream.iterate(start, d -> d.plusDays(1)).limit(7).forEach(f -> {
             list.add(f);
         });
         return list;

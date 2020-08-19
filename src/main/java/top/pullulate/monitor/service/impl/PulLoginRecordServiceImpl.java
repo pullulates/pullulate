@@ -58,9 +58,9 @@ public class PulLoginRecordServiceImpl extends ServiceImpl<PulLoginRecordMapper,
         List<VisitStatisticsViewVo> results = new ArrayList<>(rangeDate.size());
         rangeDate.forEach(localDate -> {
             int total = count(Wrappers.<PulLoginRecord>lambdaQuery()
-                    .eq(PulLoginRecord::getLoginTime, localDate.atStartOfDay()));
+                    .apply("date_format(login_time, '%Y-%m-%d')={0}",localDate.toString()));
             int ip = count(Wrappers.<PulLoginRecord>lambdaQuery()
-                    .eq(PulLoginRecord::getLoginTime, localDate.atStartOfDay())
+                    .apply("date_format(login_time, '%Y-%m-%d')={0}", localDate.toString())
                     .groupBy(PulLoginRecord::getIp));
             VisitStatisticsViewVo visit = new VisitStatisticsViewVo(localDate.toString(), total, ip);
             results.add(visit);

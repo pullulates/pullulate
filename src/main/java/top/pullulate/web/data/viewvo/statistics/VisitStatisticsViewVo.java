@@ -16,7 +16,7 @@ import lombok.Setter;
 public class VisitStatisticsViewVo {
 
     /** 统计类别，如统计日期 */
-    private String type;
+    private String types;
 
     /** 总数量 */
     private int total;
@@ -24,8 +24,8 @@ public class VisitStatisticsViewVo {
     /** ip数量 */
     private int ip;
 
-    public VisitStatisticsViewVo(String type, int total, int ip) {
-        this.type = type;
+    public VisitStatisticsViewVo(String types, int total, int ip) {
+        this.types = types;
         this.total = total;
         this.ip = ip;
     }
