@@ -119,6 +119,18 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * sql注入异常
+     *
+     * @param e 异常信息
+     * @return  P
+     */
+    @ExceptionHandler(SqlInjectException.class)
+    public P sqlInjectExceptionHandler(SqlInjectException e){
+        log.error("sql注入异常：", e);
+        return P.error(e.getMessage());
+    }
+
+    /**
      * 数据校验异常
      *
      * @param e 异常信息

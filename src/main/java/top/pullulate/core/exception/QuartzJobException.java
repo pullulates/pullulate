@@ -8,7 +8,7 @@ package top.pullulate.core.exception;
  * @GitHub: https://github.com/pullulate
  * @Gitee: https://gitee.com/pullulate
  */
-public class QuartzJobException extends RuntimeException{
+public class QuartzJobException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
