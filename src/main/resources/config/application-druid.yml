@@ -6,6 +6,7 @@ spring:
       primary: master
       # 设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候回抛出异常,不启动会使用默认数据源.
       strict: false
+      # 数据源信息使用mybatis plus官方提供的加密方式
       datasource:
         master:
           url: mpw:mHD72O8K4lVRygXEwLa1gMRM8ouDlltaZK1D+5KHraf9jbV0kNjG9ZWk0+9Bmh5Jrda7h60jJ/JfmIV0wM5JG2CAVHcEks0nYXRpX8sV4ydRCLRujAd6Rbj2eH8RkEceuAVwYEckRcyN6RDUTGA0eQ==

@@ -2,7 +2,7 @@ org:
   quartz:
     scheduler:
       instanceId: AUTO
-      instanceName: pullulatechedule
+      instanceName: pullulateschedule
       rmi:
         export: false
         proxy: false
@@ -18,7 +18,7 @@ org:
     dataSource:
       quartzDataSource:
         driver: com.mysql.cj.jdbc.Driver
-        URL: jdbc:mysql://106.55.165.80:3306/pullulate?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-        user: root
-        password: pullulate123456
+        URL: mpw:mHD72O8K4lVRygXEwLa1gMRM8ouDlltaZK1D+5KHraf9jbV0kNjG9ZWk0+9Bmh5Jrda7h60jJ/JfmIV0wM5JG2CAVHcEks0nYXRpX8sV4ydRCLRujAd6Rbj2eH8RkEceuAVwYEckRcyN6RDUTGA0eQ==
+        user: mpw:Ck3z6mj73rZsoe5HZXe6Sw==
+        password: mpw:Oyp8+1/4QCgCQIkCWBPm3l7FCPzc8e/4ziO+ZoWGLl8=
         maxConnections: 10

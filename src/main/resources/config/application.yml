@@ -15,9 +15,9 @@ spring:
     basename: static/i18n/messages
     encoding: UTF-8
   redis:
-    host: 106.55.165.80
+    host: mpw:7aNhjYryr1lNv1LTpXlbsw==
     port: 63790
-    password: pullulates123456
+    password: mpw:Oyp8+1/4QCgCQIkCWBPm3l7FCPzc8e/4ziO+ZoWGLl8=
     timeout: 10s
     lettuce:
       pool:
@@ -25,10 +25,10 @@ spring:
         max-idle: 8
         max-wait: -1ms
   rabbitmq:
-    host: 106.55.165.80
+    host: mpw:7aNhjYryr1lNv1LTpXlbsw==
     port: 5672
-    username: pullulate
-    password: pullulate123456
+    username: mpw:7K5Y8Fa8553zAmOGsEXI7Q==
+    password: mpw:85dAFGfDJnsPOUq+IiNTIA==
     listener:
       simple:
         # 并发消费者的初始化值
@@ -65,11 +65,11 @@ mybatis-plus:
 
 # 百度开发者账号配置
 baidu:
-  name: pullulate
-  ak: 5U7mhhfsTS1Ha8Y651OyBlvNcBZ0XgGG
+  name: mpw:7K5Y8Fa8553zAmOGsEXI7Q==
+  ak: mpw:vPsL8t0CX/CFdqqEDnzy6hBHiYViJ+3JnhTeNCxU8lTfj8F7JBa/c5A1NATgFCKq
 
 # 高德开发者账号配置
 gaode:
-  name: pullulate
-  key: ffbc230213efaaccbea80d47e0b818ee
+  name: mpw:7K5Y8Fa8553zAmOGsEXI7Q==
+  key: mpw:DeSUhZB6jMUChyC/ZWOIsc0tdkBzZdAtoqnTNReVFa30l9TqAByOk9s+QmTLchwU
   districtUrl: https://restapi.amap.com/v3/config/district?key=

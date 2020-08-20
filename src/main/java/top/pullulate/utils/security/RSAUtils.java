@@ -24,12 +24,10 @@ public class RSAUtils {
 
     public static void main(String[] args) {
         log.info("AES.generateRandomKey()：{}", AES.generateRandomKey());
-        String url = AES.encrypt("", "");
-        String username = AES.encrypt("", "");
-        String password = AES.encrypt("", "");
+        String url = AES.encrypt("pullulate", "53c338fb709e9906");
+        String username = AES.encrypt("ffbc230213efaaccbea80d47e0b818ee", "53c338fb709e9906");
         log.info("url：{}", url);
         log.info("username：{}", username);
-        log.info("password：{}", password);
         log.info("密钥原文：{}", "pullulate");
         log.info("密钥密文：{}", Base64.encode("pullulate"));
         log.info("密钥解密：{}", Base64.decodeStr(Base64.encode("pullulate")));
