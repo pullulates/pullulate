@@ -14,10 +14,8 @@ import top.pullulate.system.service.IPulDistrictService;
 import top.pullulate.utils.DistrictUtils;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.system.PulDistrictsViewVo;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
