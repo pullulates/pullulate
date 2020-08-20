@@ -32,7 +32,7 @@ public class PulDistrictController {
      * @return
      */
     @GetMapping
-    @PreAuthorize("hasAuthority('system.districts.query')")
+    @PreAuthorize("hasAuthority('system.district.query')")
     public P getDisctrictTreeList() {
         List<PulDistrictsViewVo> districts = districtService.getDisctrictTreeList();
         return P.data(districts);
@@ -45,7 +45,7 @@ public class PulDistrictController {
      */
     @PostMapping("/sync-province")
     @OperationRecord(title = "地区管理-同步省级数据")
-    @PreAuthorize("hasAuthority('system.districts.sync')")
+    @PreAuthorize("hasAuthority('system.district.sync')")
     public P syncDistricts() {
         return districtService.syncProvinceDistricts();
     }
@@ -57,7 +57,7 @@ public class PulDistrictController {
      */
     @PostMapping("/sync-province-children")
     @OperationRecord(title = "地区管理-同步省级以下数据")
-    @PreAuthorize("hasAuthority('system.districts.sync')")
+    @PreAuthorize("hasAuthority('system.district.sync')")
     public P syncProvinceChildrenDistricts(@RequestBody PulDistrict district) {
         return districtService.syncProvinceChildrenDistricts(district);
     }
