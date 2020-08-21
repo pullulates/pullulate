@@ -2,7 +2,8 @@
 SQLyog Ultimate v12.08 (64 bit)
 MySQL - 5.6.48 : Database - pullulates
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -105,7 +106,7 @@ CREATE TABLE `QRTZ_JOB_DETAILS` (
 
 /*Data for the table `QRTZ_JOB_DETAILS` */
 
-insert  into `QRTZ_JOB_DETAILS`(`sched_name`,`job_name`,`job_group`,`description`,`job_class_name`,`is_durable`,`is_nonconcurrent`,`is_update_data`,`requests_recovery`,`job_data`) values ('SchedulerFactory','测试任务','测试',NULL,'top.pullulate.core.quartz.job.PullulateJob','0','0','0','0','��\0sr\0org.quartz.JobDataMap���迩��\0\0xr\0&org.quartz.utils.StringKeyDirtyFlagMap�����](\0Z\0allowsTransientDataxr\0org.quartz.utils.DirtyFlagMap�.�(v\n�\0Z\0dirtyL\0mapt\0Ljava/util/Map;xp\0sr\0java.util.HashMap���`�\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0\0x\0');
+insert  into `QRTZ_JOB_DETAILS`(`sched_name`,`job_name`,`job_group`,`description`,`job_class_name`,`is_durable`,`is_nonconcurrent`,`is_update_data`,`requests_recovery`,`job_data`) values ('SchedulerFactory','测试任务','测试',NULL,'top.pullulate.core.quartz.job.PullulateJob','0','0','0','0','��\0sr\0org.quartz.JobDataMap���迩��\0\0xr\0&org.quartz.utils.StringKeyDirtyFlagMap�����](\0Z\0allowsTransientDataxr\0org.quartz.utils.DirtyFlagMap�.�(v\n�\0Z\0dirtyL\0mapt\0Ljava/util/Map;xp\0sr\0java.util.HashMap���`�\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0\0x\0');
 
 /*Table structure for table `QRTZ_LOCKS` */
 
@@ -538,9 +539,6 @@ CREATE TABLE `pul_site_config` (
   UNIQUE KEY `UK_CONFIG_KEY` (`config_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='网站配置';
 
-/*Data for the table `pul_site_config` */
-
-insert  into `pul_site_config`(`config_id`,`config_name`,`config_key`,`config_value`,`remark`,`update_at`,`update_by`) values ('100000000','网站名称','config.site.name','PULLULATE','网站名称','2020-07-26 20:16:09','admin'),('100000001','版权信息','config.site.copyright','2020 PULLULATE','版权信息','2020-07-26 20:17:44','admin'),('100000002','备案号','config.site.registration.no','皖ICP备20011895号-1','备案号','2020-07-26 20:20:04','admin'),('100000003','网站logo','config.site.logo','defaults','网站logo','2020-07-26 20:20:30','admin');
 
 /*Table structure for table `pul_sms_captcha_record` */
 
@@ -575,10 +573,6 @@ CREATE TABLE `pul_sms_config` (
   `remark` varchar(250) CHARACTER SET utf8 DEFAULT '' COMMENT '备注信息',
   PRIMARY KEY (`config_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='短信配置';
-
-/*Data for the table `pul_sms_config` */
-
-insert  into `pul_sms_config`(`config_id`,`app_id`,`secret_id`,`secret_key`,`remark`) values ('100000000','1254171765','AKIDziAQPvN9NJVQ8ZHD9xWnnW2ydCdpMaAW','RejdIhqiO0SgogHaO2PZTw95nJzlJaZd','腾讯API密钥');
 
 /*Table structure for table `pul_sms_template` */
 
