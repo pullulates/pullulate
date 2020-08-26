@@ -4,6 +4,7 @@ target/
 !**/src/main/**
 !**/src/test/**
 encrypt.txt
+src/main/java/top/pullulate/core/mybatisplus/CodeGeneration.java
 
 ### STS ###
 .apt_generated
