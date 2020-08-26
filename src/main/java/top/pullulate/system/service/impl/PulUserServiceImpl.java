@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import top.pullulate.common.constants.Constant;
 import top.pullulate.common.constants.RSAConstant;
 import top.pullulate.common.enums.Sex;
-import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulRole;
 import top.pullulate.system.entity.PulUser;
 import top.pullulate.system.entity.PulUserDept;
@@ -33,7 +32,6 @@ import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.system.PulUserViewVo;
 import top.pullulate.web.data.vo.system.PulUserVo;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,8 +47,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PulUserServiceImpl extends ServiceImpl<PulUserMapper, PulUser> implements IPulUserService {
-
-    private final TokenUtils tokenUtils;
 
     private final IPulUserRoleService userRoleService;
 
@@ -144,8 +140,6 @@ public class PulUserServiceImpl extends ServiceImpl<PulUserMapper, PulUser> impl
         user.setBirth(birth);
         user.setSex(sex);
         user.setPassword(new BCryptPasswordEncoder().encode(Constant.DEFAULT_PASSWORD));
-        user.setCreateAt(LocalDateTime.now());
-        user.setCreateBy(tokenUtils.getUserName());
         return P.p(save(user));
     }
 
@@ -178,8 +172,6 @@ public class PulUserServiceImpl extends ServiceImpl<PulUserMapper, PulUser> impl
         String sex = Sex.getSexFromIdcard(user.getIdcard());
         user.setBirth(birth);
         user.setSex(sex);
-        user.setUpdateAt(LocalDateTime.now());
-        user.setUpdateBy(tokenUtils.getUserName());
         return P.p(updateById(user));
     }
 
@@ -227,8 +219,6 @@ public class PulUserServiceImpl extends ServiceImpl<PulUserMapper, PulUser> impl
             return P.error("不可重置管理员的密码！");
         }
         user.setPassword(new BCryptPasswordEncoder().encode(Constant.DEFAULT_PASSWORD));
-        user.setUpdateAt(LocalDateTime.now());
-        user.setUpdateBy(tokenUtils.getUserName());
         return P.p(updateById(user));
     }
 
@@ -256,8 +246,6 @@ public class PulUserServiceImpl extends ServiceImpl<PulUserMapper, PulUser> impl
             log.warn("用户：{}修改密码时无法解密，修改失败。异常信息：{}", user.getUserName(), e);
             return P.error("密码解密失败，请检查密码格式是否正确！");
         }
-        user.setUpdateAt(LocalDateTime.now());
-        user.setUpdateBy(tokenUtils.getUserName());
         return P.p(updateById(user));
     }
 

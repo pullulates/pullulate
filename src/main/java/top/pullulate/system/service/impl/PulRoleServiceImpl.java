@@ -10,7 +10,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulRole;
 import top.pullulate.system.entity.PulRoleMenu;
 import top.pullulate.system.entity.PulUserRole;
@@ -22,7 +21,6 @@ import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.system.PulRoleViewVo;
 import top.pullulate.web.data.vo.system.PulRoleMenuVo;
 import top.pullulate.web.data.vo.system.PulRoleVo;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,8 +38,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PulRoleServiceImpl extends ServiceImpl<PulRoleMapper, PulRole> implements IPulRoleService {
-
-    private final TokenUtils tokenUtils;
 
     private final PulUserRoleMapper userRoleMapper;
 
@@ -88,8 +84,6 @@ public class PulRoleServiceImpl extends ServiceImpl<PulRoleMapper, PulRole> impl
             return P.error("角色信息已存在!");
         }
         PulRole role = BeanUtil.toBean(roleVo, PulRole.class);
-        role.setCreateAt(LocalDateTime.now());
-        role.setCreateBy(tokenUtils.getUserName());
         boolean result = save(role);
         return result ? P.success() : P.error();
     }
@@ -113,8 +107,6 @@ public class PulRoleServiceImpl extends ServiceImpl<PulRoleMapper, PulRole> impl
             return P.error("角色信息已存在!");
         }
         PulRole role = BeanUtil.toBean(roleVo, PulRole.class);
-        role.setUpdateAt(LocalDateTime.now());
-        role.setUpdateBy(tokenUtils.getUserName());
         boolean result = updateById(role);
         return result ? P.success() : P.error();
     }
@@ -128,8 +120,6 @@ public class PulRoleServiceImpl extends ServiceImpl<PulRoleMapper, PulRole> impl
     @Override
     public P updateRoleStatus(PulRoleVo roleVo) {
         PulRole role = BeanUtil.toBean(roleVo, PulRole.class);
-        role.setUpdateAt(LocalDateTime.now());
-        role.setUpdateBy(tokenUtils.getUserName());
         boolean result = update(role, Wrappers.<PulRole>lambdaUpdate().eq(PulRole::getRoleId, role.getRoleId()));
         return result ? P.success() : P.error();
     }

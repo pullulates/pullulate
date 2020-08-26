@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import top.pullulate.common.service.DeptCacheService;
-import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulDept;
 import top.pullulate.system.entity.PulUserDept;
 import top.pullulate.system.mapper.PulDeptMapper;
@@ -18,8 +17,6 @@ import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.dto.tree.Tree;
 import top.pullulate.web.data.viewvo.system.PulDeptViewVo;
 import top.pullulate.web.data.vo.system.PulDeptVo;
-
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,8 +34,6 @@ import java.util.stream.Collectors;
 public class PulDeptServiceImpl extends ServiceImpl<PulDeptMapper, PulDept> implements IPulDeptService {
 
     private final DeptCacheService deptCacheService;
-
-    private final TokenUtils tokenUtils;
 
     private final PulUserDeptMapper userDeptMapper;
 
@@ -136,8 +131,6 @@ public class PulDeptServiceImpl extends ServiceImpl<PulDeptMapper, PulDept> impl
         if (count > 0) {
             return P.error("部门信息已存在，请检查部门编号或部门名称是否重复！");
         }
-        dept.setCreateBy(tokenUtils.getUserName());
-        dept.setCreateAt(LocalDateTime.now());
         boolean result = save(dept);
         if (result) {
             refreshCache();
@@ -164,8 +157,6 @@ public class PulDeptServiceImpl extends ServiceImpl<PulDeptMapper, PulDept> impl
         if (count > 0) {
             return P.error("部门信息已存在，请检查部门编号或部门名称是否重复！");
         }
-        dept.setUpdateBy(tokenUtils.getUserName());
-        dept.setUpdateAt(LocalDateTime.now());
         boolean result = updateById(dept);
         if (result) {
             refreshCache();
@@ -182,8 +173,6 @@ public class PulDeptServiceImpl extends ServiceImpl<PulDeptMapper, PulDept> impl
     @Override
     public P updateDeptStatus(PulDeptVo deptVo) {
         PulDept dept = BeanUtil.toBean(deptVo, PulDept.class);
-        dept.setUpdateAt(LocalDateTime.now());
-        dept.setUpdateBy(tokenUtils.getUserName());
         boolean result = update(dept, Wrappers.<PulDept>lambdaUpdate().eq(PulDept::getDeptId, deptVo.getDeptId()));
         if (result) {
             refreshCache();

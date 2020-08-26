@@ -24,7 +24,6 @@ import top.pullulate.web.data.viewvo.system.PulDictDataViewVo;
 import top.pullulate.web.data.viewvo.system.PulDictTypeViewVo;
 import top.pullulate.web.data.vo.system.PulDictDataVo;
 import top.pullulate.web.data.vo.system.PulDictTypeVo;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -137,8 +136,6 @@ public class PulDictServiceImpl implements IPulDictService {
         if (count > 0) {
             return P.error("字典键已经存在");
         }
-        dictType.setCreateBy(tokenUtils.getUserName());
-        dictType.setCreateAt(LocalDateTime.now());
         return P.p(dictTypeMapper.insert(dictType));
     }
 
@@ -166,8 +163,6 @@ public class PulDictServiceImpl implements IPulDictService {
         if (count > 0) {
             return P.error("字典键已经存在");
         }
-        dictType.setUpdateBy(userInfo.getUsername());
-        dictType.setUpdateAt(LocalDateTime.now());
         return P.p(dictTypeMapper.updateById(dictType));
     }
 
@@ -195,8 +190,6 @@ public class PulDictServiceImpl implements IPulDictService {
         if (count > 0) {
             return P.error("字典值已经存在");
         }
-        dictData.setCreateBy(userInfo.getUsername());
-        dictData.setCreateAt(LocalDateTime.now());
         return P.p(dictDataMapper.insert(dictData));
     }
 
@@ -225,8 +218,6 @@ public class PulDictServiceImpl implements IPulDictService {
         if (count > 0) {
             return P.error("字典值已经存在");
         }
-        dictData.setUpdateBy(userInfo.getUsername());
-        dictData.setUpdateAt(LocalDateTime.now());
         return P.p(dictDataMapper.updateById(dictData));
     }
 
@@ -239,8 +230,6 @@ public class PulDictServiceImpl implements IPulDictService {
     @Override
     public P updateDictDataStatus(PulDictDataVo dictDataVo) {
         PulDictData dictData = BeanUtil.toBean(dictDataVo, PulDictData.class);
-        dictData.setUpdateBy(tokenUtils.getUserName());
-        dictData.setUpdateAt(LocalDateTime.now());
         return P.p(dictDataMapper.update(dictData, Wrappers.<PulDictData>lambdaUpdate()
                 .eq(PulDictData::getDictDataId, dictData.getDictDataId())));
     }
@@ -265,8 +254,6 @@ public class PulDictServiceImpl implements IPulDictService {
     @Override
     public P updateDictTypeStatus(PulDictTypeVo dictTypeVo) {
         PulDictType dictType = BeanUtil.toBean(dictTypeVo, PulDictType.class);
-        dictType.setUpdateBy(tokenUtils.getUserName());
-        dictType.setUpdateAt(LocalDateTime.now());
         return P.p(dictTypeMapper.update(dictType, Wrappers.<PulDictType>lambdaUpdate()
                 .eq(PulDictType::getDictTypeId, dictType.getDictTypeId())));
     }

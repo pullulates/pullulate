@@ -1,5 +1,7 @@
 package top.pullulate.system.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -36,8 +38,10 @@ public class PulSiteConfig implements Serializable {
     private String remark;
 
     /** 更新人 */
+    @TableField(fill = FieldFill.UPDATE)
     private String updateBy;
 
     /** 更新时间 */
+    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateAt;
 }

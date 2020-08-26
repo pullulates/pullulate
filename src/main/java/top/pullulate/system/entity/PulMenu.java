@@ -1,5 +1,7 @@
 package top.pullulate.system.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.Setter;
@@ -84,15 +86,19 @@ public class PulMenu implements Serializable {
     private String remark;
 
     /** 创建人 */
+    @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
     /** 创建时间 */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createAt;
 
     /** 更新人 */
+    @TableField(fill = FieldFill.UPDATE)
     private String updateBy;
 
     /** 更新时间 */
+    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateAt;
 
     /** 子菜单 */

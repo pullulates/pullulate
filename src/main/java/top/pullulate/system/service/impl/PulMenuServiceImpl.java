@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import top.pullulate.common.constants.ParamConstant;
 import top.pullulate.common.enums.*;
 import top.pullulate.common.service.MenuCacheService;
-import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.system.entity.PulMenu;
 import top.pullulate.system.mapper.PulMenuMapper;
 import top.pullulate.system.service.IPulMenuService;
@@ -21,7 +20,6 @@ import top.pullulate.web.data.viewvo.system.PulMenuViewVo;
 import top.pullulate.web.data.vo.system.PulMenuVo;
 import top.pullulate.web.data.dto.route.Meta;
 import top.pullulate.web.data.dto.route.Router;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,8 +35,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> implements IPulMenuService {
-
-    private final TokenUtils tokenUtils;
 
     private final MenuCacheService menuCacheService;
 
@@ -131,8 +127,6 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
         if (ObjectUtil.isNull(menu)) {
             return P.error("上级菜单不存在或已被禁用！");
         }
-        menu.setCreateBy(tokenUtils.getUserName());
-        menu.setCreateAt(LocalDateTime.now());
         boolean result = save(menu);
         if (!result) {
             return P.error();
@@ -163,8 +157,6 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
             return P.error("上级菜单不存在或已被禁用！");
         }
         menu.setMenuId(menuVo.getMenuId());
-        menu.setUpdateBy(tokenUtils.getUserName());
-        menu.setUpdateAt(LocalDateTime.now());
         boolean result = updateById(menu);
         if (!result) {
             return P.error();
@@ -182,8 +174,6 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
     @Override
     public P updateMenuStatus(PulMenuVo menuVo) {
         PulMenu menu = BeanUtil.toBean(menuVo, PulMenu.class);
-        menu.setUpdateBy(tokenUtils.getUserName());
-        menu.setUpdateAt(LocalDateTime.now());
         boolean result = update(menu, Wrappers.<PulMenu>lambdaUpdate().eq(PulMenu::getMenuId, menu.getMenuId()));
         if (result) {
             refreshMenuCache();
