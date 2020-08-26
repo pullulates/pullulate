@@ -1,6 +1,8 @@
 package top.pullulate.web.data.viewvo.system;
 
 import lombok.Data;
+import top.pullulate.common.enums.SensitiveType;
+import top.pullulate.core.annotations.Desensitization;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,12 +26,15 @@ public class PulUserViewVo {
     private String userName;
 
     /** 姓名 */
+    @Desensitization(type = SensitiveType.NAME)
     private String name;
 
     /** 证件号码 */
+    @Desensitization(type = SensitiveType.IDCARD)
     private String idcard;
 
     /** 手机号码 */
+    @Desensitization(type = SensitiveType.MOBILE)
     private String phone;
 
     /** 性别 */
