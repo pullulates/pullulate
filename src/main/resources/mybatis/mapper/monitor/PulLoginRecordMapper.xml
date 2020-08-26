@@ -56,4 +56,8 @@
         </where>
         order by r.login_time desc
     </select>
+
+    <select id="selectIpCountByDate" resultType="int">
+        select count(distinct ip) from pul_login_record where date_format(login_time, '%Y-%m-%d') = #{localDate}
+    </select>
 </mapper>

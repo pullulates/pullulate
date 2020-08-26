@@ -28,4 +28,12 @@ public interface PulLoginRecordMapper extends BaseMapper<PulLoginRecord> {
      * @return
      */
     IPage<List<PulLoginRecordViewVo>> selectLoginRecordPage(@Param("loginRecordVo") PulLoginRecordVo loginRecordVo, Page page);
+
+    /**
+     * 根据日期获取ip数量
+     *
+     * @param localDate
+     * @return
+     */
+    int selectIpCountByDate(String localDate);
 }
