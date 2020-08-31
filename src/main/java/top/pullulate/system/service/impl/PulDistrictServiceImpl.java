@@ -48,6 +48,7 @@ public class PulDistrictServiceImpl extends ServiceImpl<PulDistrictMapper, PulDi
             districtsViewVos = buildDistrictTreeList(allDistricts, allDistricts, dupDistrictSet);
             districtCacheService.setDistrictTreeList(districtsViewVos);
         }
+        Collections.sort(districtsViewVos);
         return districtsViewVos;
     }
 

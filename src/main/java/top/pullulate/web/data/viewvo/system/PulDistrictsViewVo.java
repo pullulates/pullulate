@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class PulDistrictsViewVo {
+public class PulDistrictsViewVo implements Comparable<PulDistrictsViewVo> {
 
     /** 地区主键 */
     private String districtId;
@@ -48,4 +48,10 @@ public class PulDistrictsViewVo {
     /** 下级行政区列表 */
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private transient List<PulDistrictsViewVo> children;
+
+    @Override
+    public int compareTo(PulDistrictsViewVo o) {
+        int i = Integer.valueOf(this.getAdcode()) - Integer.valueOf(o.getAdcode());
+        return i;
+    }
 }
