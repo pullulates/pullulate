@@ -55,6 +55,7 @@ public class PulUserController {
      * @return  用户信息
      */
     @GetMapping("/info/{userId}")
+    @PreAuthorize("hasAuthority('system.user.query')")
     public P getUserInfoByUserId(@PathVariable("userId") String userId) {
         PulUser pulUser = userService.getUserInfoByUserId(userId);
         return P.data(pulUser);
