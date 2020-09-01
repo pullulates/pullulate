@@ -8,14 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.pullulate.core.quartz.service.QuartzService;
-import top.pullulate.core.utils.TokenUtils;
 import top.pullulate.monitor.entity.PulJob;
 import top.pullulate.monitor.mapper.PulJobMapper;
 import top.pullulate.monitor.service.IPulJobService;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.monitor.PulJobViewVo;
 import top.pullulate.web.data.vo.monitor.PulJobVo;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,8 +30,6 @@ import java.util.stream.Collectors;
 public class PulJobServiceImpl extends ServiceImpl<PulJobMapper, PulJob> implements IPulJobService {
 
     private final QuartzService quartzService;
-
-    private final TokenUtils tokenUtils;
 
     /**
      * 获取定时任务列表数据
@@ -64,8 +60,6 @@ public class PulJobServiceImpl extends ServiceImpl<PulJobMapper, PulJob> impleme
         }
         quartzService.deleteJob(job);
         quartzService.addJob(job);
-        job.setCreateAt(LocalDateTime.now());
-        job.setCreateBy(tokenUtils.getUserName());
         return P.p(save(job));
     }
 
@@ -85,8 +79,6 @@ public class PulJobServiceImpl extends ServiceImpl<PulJobMapper, PulJob> impleme
             return P.error("定时任务已存在!");
         }
         quartzService.updateJob(job);
-        job.setUpdateAt(LocalDateTime.now());
-        job.setUpdateBy(tokenUtils.getUserName());
         return P.p(updateById(job));
     }
 
@@ -120,8 +112,6 @@ public class PulJobServiceImpl extends ServiceImpl<PulJobMapper, PulJob> impleme
             return P.error("定时任务不存在！");
         }
         job.setStatus(jobVo.getStatus());
-        job.setUpdateAt(LocalDateTime.now());
-        job.setUpdateBy(tokenUtils.getUserName());
         updateById(job);
         quartzService.pauseJob(job);
         return P.success();
@@ -141,8 +131,6 @@ public class PulJobServiceImpl extends ServiceImpl<PulJobMapper, PulJob> impleme
             return P.error("定时任务不存在！");
         }
         job.setStatus(jobVo.getStatus());
-        job.setUpdateAt(LocalDateTime.now());
-        job.setUpdateBy(tokenUtils.getUserName());
         updateById(job);
         quartzService.resumeJob(job);
         return P.success();

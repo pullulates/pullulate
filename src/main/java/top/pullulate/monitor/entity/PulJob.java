@@ -1,5 +1,7 @@
 package top.pullulate.monitor.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,14 +49,18 @@ public class PulJob implements Serializable {
     private String remark;
 
     /** 创建人 */
+    @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
     /** 创建时间 */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createAt;
 
     /** 修改人 */
+    @TableField(fill = FieldFill.UPDATE)
     private String updateBy;
 
     /** 修改时间 */
+    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateAt;
 }
