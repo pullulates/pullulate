@@ -2,4 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.pullulate.wechat.mapper.WechatOfficialAccountMapper">
 
+    <resultMap id="WechatOfficialAccountViewVoResultMap" type="top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountViewVo">
+        <id column="woa_id" property="woaId"/>
+        <result column="name" property="name"/>
+        <result column="woa_type" property="woaType"/>
+        <result column="certification_result" property="certificationResult"/>
+        <result column="original_id" property="originalId"/>
+        <result column="app_id" property="appId"/>
+        <result column="app_secret" property="appSecret"/>
+        <result column="token" property="token"/>
+        <result column="encrypt_key" property="encryptKey"/>
+        <result column="subject_name" property="subjectName"/>
+        <result column="subject_type" property="subjectType"/>
+        <result column="remark" property="remark"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_at" property="createAt"/>
+    </resultMap>
+
+    <select id="selectOfficialAccountPage" resultMap="WechatOfficialAccountViewVoResultMap">
+        select woa_id, name, woa_type, certification_result, original_id, app_id, app_secret,
+        token, encrypt_key, subject_name, subject_type, remark, create_by, create_at
+        from wechat_official_account
+        order by create_at desc
+    </select>
 </mapper>

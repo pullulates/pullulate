@@ -1,7 +1,13 @@
 package top.pullulate.wechat.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountViewVo;
+import top.pullulate.web.data.vo.wechat.WechatOfficialAccountVo;
 import top.pullulate.wechat.entity.WechatOfficialAccount;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * @功能描述:   微信公众号数据层
@@ -13,4 +19,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface WechatOfficialAccountMapper extends BaseMapper<WechatOfficialAccount> {
 
+    /**
+     * 获取公众号的分页数据
+     *
+     * @param officialAccountVo 查询参数
+     * @param page  分页参数
+     * @return
+     */
+    IPage<List<WechatOfficialAccountViewVo>> selectOfficialAccountPage(WechatOfficialAccountVo officialAccountVo, Page page);
 }
