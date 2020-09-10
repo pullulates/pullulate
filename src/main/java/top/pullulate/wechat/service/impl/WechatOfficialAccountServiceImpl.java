@@ -82,4 +82,15 @@ public class WechatOfficialAccountServiceImpl extends ServiceImpl<WechatOfficial
         WechatOfficialAccount officialAccount = BeanUtil.toBean(officialAccountVo, WechatOfficialAccount.class);
         return P.p(updateById(officialAccount));
     }
+
+    /**
+     * 删除我的微信公众号信息
+     *
+     * @param woaId 微信公众号主键
+     * @return
+     */
+    @Override
+    public P deleteOfficialAccount(String woaId) {
+        return P.p(removeById(woaId));
+    }
 }

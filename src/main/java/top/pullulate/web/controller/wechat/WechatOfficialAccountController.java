@@ -70,5 +70,18 @@ public class WechatOfficialAccountController {
         return officialAccountService.updateOfficialAccount(officialAccountVo);
     }
 
+    /**
+     * 删除我的微信公众号信息
+     *
+     * @param woaId 微信公众号主键
+     * @return
+     */
+    @DeleteMapping
+    @PreAuthorize("hasAuthority('woa.manager.del')")
+    @OperationRecord(title = "我的微信公众号-删除微信公众号")
+    public P deleteOfficialAccount(String woaId) {
+        return officialAccountService.deleteOfficialAccount(woaId);
+    }
+
 }
 

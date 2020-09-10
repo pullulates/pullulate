@@ -44,4 +44,12 @@ public interface IWechatOfficialAccountService extends IService<WechatOfficialAc
      * @return
      */
     P updateOfficialAccount(WechatOfficialAccountVo officialAccountVo);
+
+    /**
+     * 删除我的微信公众号信息
+     *
+     * @param woaId 微信公众号主键
+     * @return
+     */
+    P deleteOfficialAccount(String woaId);
 }
