@@ -1,7 +1,10 @@
 package top.pullulate.wechat.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountViewVo;
 import top.pullulate.web.data.vo.wechat.WechatOfficialAccountVo;
 import top.pullulate.wechat.entity.WechatOfficialAccount;
@@ -33,5 +36,50 @@ public class WechatOfficialAccountServiceImpl extends ServiceImpl<WechatOfficial
     public IPage<List<WechatOfficialAccountViewVo>> getOfficialAccountList(WechatOfficialAccountVo officialAccountVo, Page page) {
         IPage<List<WechatOfficialAccountViewVo>> pages = baseMapper.selectOfficialAccountPage(officialAccountVo, page);
         return pages;
+    }
+
+    /**
+     * 保存我的微信公众号信息
+     *
+     * @param officialAccountVo 微信公众号信息
+     * @return
+     */
+    @Override
+    public P saveOfficialAccount(WechatOfficialAccountVo officialAccountVo) {
+        int count = count(Wrappers.<WechatOfficialAccount>lambdaQuery()
+                .eq(WechatOfficialAccount::getName, officialAccountVo.getName())
+                .or()
+                .eq(WechatOfficialAccount::getAppId, officialAccountVo.getAppId())
+                .or()
+                .eq(WechatOfficialAccount::getOriginalId, officialAccountVo.getOriginalId()));
+        if (count > 0) {
+            return P.error("微信公众号已存在，请检查公众号的名称、原始ID或开发者ID是否重复");
+        }
+        WechatOfficialAccount officialAccount = BeanUtil.toBean(officialAccountVo, WechatOfficialAccount.class);
+        return P.p(save(officialAccount));
+    }
+
+    /**
+     * 修改我的微信公众号信息
+     *
+     * @param officialAccountVo 微信公众号信息
+     * @return
+     */
+    @Override
+    public P updateOfficialAccount(WechatOfficialAccountVo officialAccountVo) {
+        int count = count(Wrappers.<WechatOfficialAccount>lambdaQuery()
+                .ne(WechatOfficialAccount::getWoaId, officialAccountVo.getWoaId())
+                .and(wrapper -> wrapper
+                    .eq(WechatOfficialAccount::getName, officialAccountVo.getName())
+                    .or()
+                    .eq(WechatOfficialAccount::getAppId, officialAccountVo.getAppId())
+                    .or()
+                    .eq(WechatOfficialAccount::getOriginalId, officialAccountVo.getOriginalId())
+                ));
+        if (count > 0) {
+            return P.error("微信公众号已存在，请检查公众号的名称、原始ID或开发者ID是否重复");
+        }
+        WechatOfficialAccount officialAccount = BeanUtil.toBean(officialAccountVo, WechatOfficialAccount.class);
+        return P.p(updateById(officialAccount));
     }
 }

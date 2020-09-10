@@ -23,6 +23,11 @@
         select woa_id, name, woa_type, certification_result, original_id, app_id, app_secret,
         token, encrypt_key, subject_name, subject_type, remark, create_by, create_at
         from wechat_official_account
+        <where>
+            <if test="officialAccountVo.name != null and officialAccountVo.name != ''">
+                and name LIKE CONCAT('%',#{officialAccountVo.name},'%')
+            </if>
+        </where>
         order by create_at desc
     </select>
 </mapper>

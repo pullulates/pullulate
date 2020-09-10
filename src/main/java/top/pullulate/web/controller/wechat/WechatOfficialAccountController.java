@@ -5,9 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import top.pullulate.common.validate.Common;
+import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountViewVo;
 import top.pullulate.web.data.vo.wechat.WechatOfficialAccountVo;
@@ -37,10 +38,36 @@ public class WechatOfficialAccountController {
      * @return
      */
     @GetMapping
-    @PreAuthorize("hasAuthority('wechat.official.account.query')")
+    @PreAuthorize("hasAuthority('woa.manager.query')")
     public P getOfficialAccountList(WechatOfficialAccountVo officialAccountVo, Page page) {
         IPage<List<WechatOfficialAccountViewVo>> pages = officialAccountService.getOfficialAccountList(officialAccountVo, page);
         return P.data(pages);
+    }
+
+    /**
+     * 保存我的微信公众号信息
+     *
+     * @param officialAccountVo 微信公众号信息
+     * @return
+     */
+    @PostMapping
+    @PreAuthorize("hasAuthority('woa.manager.save')")
+    @OperationRecord(title = "我的微信公众号-保存微信公众号")
+    public P saveOfficialAccount(@RequestBody @Validated(Common.Save.class) WechatOfficialAccountVo officialAccountVo) {
+        return officialAccountService.saveOfficialAccount(officialAccountVo);
+    }
+
+    /**
+     * 修改我的微信公众号信息
+     *
+     * @param officialAccountVo 微信公众号信息
+     * @return
+     */
+    @PutMapping
+    @PreAuthorize("hasAuthority('woa.manager.edit')")
+    @OperationRecord(title = "我的微信公众号-修改微信公众号")
+    public P updateOfficialAccount(@RequestBody @Validated(Common.Update.class) WechatOfficialAccountVo officialAccountVo) {
+        return officialAccountService.updateOfficialAccount(officialAccountVo);
     }
 
 }

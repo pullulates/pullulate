@@ -26,14 +26,12 @@ public class AutoFillFieldHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        log.info("新增自动填充创建人及创建时间...");
         this.fillStrategy(metaObject, "createAt", LocalDateTime.now());
         this.fillStrategy(metaObject, "createBy", tokenUtils.getUserName());
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        log.info("更新自动填充更新人及更新时间...");
         this.fillStrategy(metaObject, "updateAt", LocalDateTime.now());
         this.fillStrategy(metaObject, "updateBy", tokenUtils.getUserName());
     }

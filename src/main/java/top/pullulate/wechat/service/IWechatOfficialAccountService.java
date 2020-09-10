@@ -2,6 +2,7 @@ package top.pullulate.wechat.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountViewVo;
 import top.pullulate.web.data.vo.wechat.WechatOfficialAccountVo;
 import top.pullulate.wechat.entity.WechatOfficialAccount;
@@ -27,4 +28,20 @@ public interface IWechatOfficialAccountService extends IService<WechatOfficialAc
      * @return
      */
     IPage<List<WechatOfficialAccountViewVo>> getOfficialAccountList(WechatOfficialAccountVo officialAccountVo, Page page);
+
+    /**
+     * 保存我的微信公众号信息
+     *
+     * @param officialAccountVo 微信公众号信息
+     * @return
+     */
+    P saveOfficialAccount(WechatOfficialAccountVo officialAccountVo);
+
+    /**
+     * 修改我的微信公众号信息
+     *
+     * @param officialAccountVo 微信公众号信息
+     * @return
+     */
+    P updateOfficialAccount(WechatOfficialAccountVo officialAccountVo);
 }

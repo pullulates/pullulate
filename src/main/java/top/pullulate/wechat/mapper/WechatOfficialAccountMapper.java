@@ -2,6 +2,7 @@ package top.pullulate.wechat.mapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.ibatis.annotations.Param;
 import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountViewVo;
 import top.pullulate.web.data.vo.wechat.WechatOfficialAccountVo;
 import top.pullulate.wechat.entity.WechatOfficialAccount;
@@ -26,5 +27,5 @@ public interface WechatOfficialAccountMapper extends BaseMapper<WechatOfficialAc
      * @param page  分页参数
      * @return
      */
-    IPage<List<WechatOfficialAccountViewVo>> selectOfficialAccountPage(WechatOfficialAccountVo officialAccountVo, Page page);
+    IPage<List<WechatOfficialAccountViewVo>> selectOfficialAccountPage(@Param("officialAccountVo") WechatOfficialAccountVo officialAccountVo, Page page);
 }
