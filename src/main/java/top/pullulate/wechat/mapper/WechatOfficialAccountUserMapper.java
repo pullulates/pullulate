@@ -13,4 +13,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface WechatOfficialAccountUserMapper extends BaseMapper<WechatOfficialAccountUser> {
 
+    /**
+     * 清空微信公众号已关注用户
+     *
+     */
+    void truncateUser();
 }

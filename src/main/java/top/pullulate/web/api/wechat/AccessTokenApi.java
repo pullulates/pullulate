@@ -30,7 +30,7 @@ public class AccessTokenApi {
     public static String getAccessToken(String appId, String appSecret) {
         log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 获取接口调用凭证方法开始执行");
         log.info("第三方用户唯一凭证：{}，凭证密钥：{}", appId, appSecret);
-        String url = WechatConstant.ACCESS_TOKEN_URL + "?grant_type=client_credential&appid=" + appId + "&secret=" + appSecret;
+        String url = StrFormatter.format(WechatConstant.ACCESS_TOKEN_URL, appId, appSecret);
         log.info("请求地址：{}", url);
         String result = HttpUtil.get(url);
         log.info("获取到响应结果：{}", result);

@@ -8,8 +8,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import top.pullulate.common.constants.ParamConstant;
 import top.pullulate.web.api.wechat.AccessTokenApi;
+import top.pullulate.web.api.wechat.WechatOfficialAccountUserApi;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountViewVo;
 import top.pullulate.web.data.vo.wechat.WechatOfficialAccountUserVo;
@@ -61,12 +63,17 @@ public class WechatOfficialAccountUserServiceImpl extends ServiceImpl<WechatOffi
      * @return
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public P syncUser(String woaId) {
         WechatOfficialAccount officialAccount = officialAccountMapper.selectById(woaId);
         if (ObjectUtil.isNull(officialAccount)) {
             return P.error("未查询到微信公众号信息");
         }
         String accessToken = AccessTokenApi.getAccessToken(officialAccount.getAppId(), officialAccount.getAppSecret());
+        List<String> openIds = WechatOfficialAccountUserApi.getUsers(accessToken, "");
+        List<WechatOfficialAccountUser> users = WechatOfficialAccountUserApi.batchGetUserInfo(openIds, accessToken);
+        baseMapper.truncateUser();
+        saveBatch(users);
         return P.success();
     }
 }
