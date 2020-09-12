@@ -142,4 +142,16 @@ public class GlobalExceptionHandler {
         log.error("数据校验异常：{}", fieldError.getDefaultMessage());
         return P.error(fieldError.getDefaultMessage());
     }
+
+    /**
+     * api异常
+     *
+     * @param e 异常信息
+     * @return  P
+     */
+    @ExceptionHandler(ApiException.class)
+    public P apiExceptionHandler(ApiException e){
+        log.error("api异常：", e);
+        return P.error(e.getMessage());
+    }
 }

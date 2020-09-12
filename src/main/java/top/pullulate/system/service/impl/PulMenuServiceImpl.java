@@ -350,7 +350,7 @@ public class PulMenuServiceImpl extends ServiceImpl<PulMenuMapper, PulMenu> impl
     private PulMenu buildMenuByMenuType(PulMenuVo menuVo) {
         PulMenu menu;
         if (MenuType.directory(menuVo.getMenuType())) {
-            menu = new PulMenu(ParamConstant.TOP_MENU_ID, menuVo.getTitle(), menuVo.getUsTitle(), menuVo.getName(), menuVo.getPath(),
+            menu = new PulMenu(ParamConstant.TOP_ID, menuVo.getTitle(), menuVo.getUsTitle(), menuVo.getName(), menuVo.getPath(),
                     menuVo.getRedirect(), menuVo.getComponent(), KeepAlive.UNALIVE.getCode(), menuVo.getPermission(), null,
                     menuVo.getHidden(), menuVo.getHideChildrenInMenu(), Show.SHOW.getCode(), menuVo.getIcon(), menuVo.getMenuType(),
                     menuVo.getOrderNum(), menuVo.getRemark());

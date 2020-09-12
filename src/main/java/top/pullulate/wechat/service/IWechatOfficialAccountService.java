@@ -3,6 +3,7 @@ package top.pullulate.wechat.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import top.pullulate.web.data.dto.response.P;
+import top.pullulate.web.data.dto.tree.Tree;
 import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountViewVo;
 import top.pullulate.web.data.vo.wechat.WechatOfficialAccountVo;
 import top.pullulate.wechat.entity.WechatOfficialAccount;
@@ -52,4 +53,11 @@ public interface IWechatOfficialAccountService extends IService<WechatOfficialAc
      * @return
      */
     P deleteOfficialAccount(String woaId);
+
+    /**
+     * 获取微信公众号树结构数据
+     *
+     * @return
+     */
+    List<Tree> getOfficialAccountTree();
 }

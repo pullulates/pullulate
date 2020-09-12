@@ -31,7 +31,7 @@ public class ParamConstant {
     public static final String _BLANK = "_blank";
 
     /**
-     * 顶级路由主键
+     * 顶级主键
      */
-    public static final String TOP_MENU_ID = "0";
+    public static final String TOP_ID = "0";
 }

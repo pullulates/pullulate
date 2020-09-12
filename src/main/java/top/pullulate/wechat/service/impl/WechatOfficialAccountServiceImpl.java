@@ -4,7 +4,9 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import top.pullulate.common.constants.ParamConstant;
 import top.pullulate.web.data.dto.response.P;
+import top.pullulate.web.data.dto.tree.Tree;
 import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountViewVo;
 import top.pullulate.web.data.vo.wechat.WechatOfficialAccountVo;
 import top.pullulate.wechat.entity.WechatOfficialAccount;
@@ -12,7 +14,10 @@ import top.pullulate.wechat.mapper.WechatOfficialAccountMapper;
 import top.pullulate.wechat.service.IWechatOfficialAccountService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @功能描述:   微信公众号服务接口实现类
@@ -92,5 +97,24 @@ public class WechatOfficialAccountServiceImpl extends ServiceImpl<WechatOfficial
     @Override
     public P deleteOfficialAccount(String woaId) {
         return P.p(removeById(woaId));
+    }
+
+    /**
+     * 获取微信公众号树结构数据
+     *
+     * @return
+     */
+    @Override
+    public List<Tree> getOfficialAccountTree() {
+        List<WechatOfficialAccount> wechatOfficialAccounts = list();
+        List<Tree> trees = new ArrayList<>(1);
+        // 添加我的公众号作为顶级树结构
+        Tree tree = new Tree("我的公众号", ParamConstant.TOP_ID, ParamConstant.TOP_ID);
+        List<Tree> children = wechatOfficialAccounts.stream()
+                .map(item -> new Tree(item.getName(), item.getWoaId(), item.getWoaId()))
+                .collect(Collectors.toList());
+        tree.setChildren(children);
+        trees.add(tree);
+        return trees;
     }
 }

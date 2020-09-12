@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import top.pullulate.common.validate.Common;
 import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.web.data.dto.response.P;
+import top.pullulate.web.data.dto.tree.Tree;
 import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountViewVo;
 import top.pullulate.web.data.vo.wechat.WechatOfficialAccountVo;
 import top.pullulate.wechat.service.IWechatOfficialAccountService;
@@ -42,6 +43,17 @@ public class WechatOfficialAccountController {
     public P getOfficialAccountList(WechatOfficialAccountVo officialAccountVo, Page page) {
         IPage<List<WechatOfficialAccountViewVo>> pages = officialAccountService.getOfficialAccountList(officialAccountVo, page);
         return P.data(pages);
+    }
+
+    /**
+     * 获取微信公众号树结构数据
+     *
+     * @return
+     */
+    @GetMapping("/tree")
+    public P getOfficialAccountTree() {
+        List<Tree> tree = officialAccountService.getOfficialAccountTree();
+        return P.data(tree);
     }
 
     /**

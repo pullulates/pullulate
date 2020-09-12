@@ -3,6 +3,7 @@ package top.pullulate.web.data.vo.wechat;
 import lombok.Data;
 import top.pullulate.common.validate.Common;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
