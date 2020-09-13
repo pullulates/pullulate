@@ -23,12 +23,12 @@ public class PulDictDataVo {
 
     /** 值 */
     @NotBlank(message = "字典值不能为空")
-    @Size(max = 20, message = "字典值最多50字")
+    @Size(max = 50, message = "字典值最多50字")
     private String dictValue;
 
     /** 标签 */
     @NotBlank(message = "字典标签不能为空")
-    @Size(max = 20, message = "字典标签最多20字")
+    @Size(max = 50, message = "字典标签最多50字")
     private String dictLabel;
 
     /** 排序编号 */

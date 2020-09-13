@@ -1,10 +1,11 @@
 package top.pullulate.wechat.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * <p>
@@ -14,9 +15,9 @@ import lombok.EqualsAndHashCode;
  * @author xuyong
  * @since 2020-09-11
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@TableName("wechat_official_account_user")
+@Getter
+@Setter
+@NoArgsConstructor
 public class WechatOfficialAccountUser implements Serializable {
 
     private static final long serialVersionUID=1L;
@@ -24,6 +25,7 @@ public class WechatOfficialAccountUser implements Serializable {
     /**
      * 用户主键
      */
+    @TableId
     private String woaUserId;
 
     /**
@@ -100,6 +102,4 @@ public class WechatOfficialAccountUser implements Serializable {
      * 用户所在的分组id
      */
     private String groupId;
-
-
 }

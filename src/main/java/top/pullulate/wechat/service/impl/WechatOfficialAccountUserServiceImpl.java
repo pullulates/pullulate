@@ -37,6 +37,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WechatOfficialAccountUserServiceImpl extends ServiceImpl<WechatOfficialAccountUserMapper, WechatOfficialAccountUser> implements IWechatOfficialAccountUserService {
 
+    private final AccessTokenApi accessTokenApi;
+
     private final WechatOfficialAccountMapper officialAccountMapper;
 
     /**
@@ -69,9 +71,9 @@ public class WechatOfficialAccountUserServiceImpl extends ServiceImpl<WechatOffi
         if (ObjectUtil.isNull(officialAccount)) {
             return P.error("未查询到微信公众号信息");
         }
-        String accessToken = AccessTokenApi.getAccessToken(officialAccount.getAppId(), officialAccount.getAppSecret());
+        String accessToken = accessTokenApi.getAccessToken(officialAccount.getAppId(), officialAccount.getAppSecret());
         List<String> openIds = WechatOfficialAccountUserApi.getUsers(accessToken, "");
-        List<WechatOfficialAccountUser> users = WechatOfficialAccountUserApi.batchGetUserInfo(openIds, accessToken);
+        List<WechatOfficialAccountUser> users = WechatOfficialAccountUserApi.batchGetUserInfo(woaId, openIds, accessToken);
         baseMapper.truncateUser();
         saveBatch(users);
         return P.success();

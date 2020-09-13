@@ -109,4 +109,9 @@ public class CacheConstant {
      * 地区列表树缓存键
      */
     public static final String CACHE_DISTRICT_LIST_TREE = "pullulate_district_list_tree";
+
+    /**
+     * 微信接口凭证缓存前缀
+     */
+    public static final String CACHE_WECHAT_ACCESS_TOKEN_PREFFIX = "pullulate_wechat_access_token_";
 }
