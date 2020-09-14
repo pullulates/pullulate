@@ -3,7 +3,7 @@ package top.pullulate.wechat.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import top.pullulate.web.data.dto.response.P;
-import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountViewVo;
+import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountUserViewVo;
 import top.pullulate.web.data.vo.wechat.WechatOfficialAccountUserVo;
 import top.pullulate.wechat.entity.WechatOfficialAccountUser;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -27,7 +27,7 @@ public interface IWechatOfficialAccountUserService extends IService<WechatOffici
      * @param page      分页参数
      * @return
      */
-    IPage<List<WechatOfficialAccountViewVo>> getUserPage(WechatOfficialAccountUserVo userVo, Page page);
+    IPage<List<WechatOfficialAccountUserViewVo>> getUserPage(WechatOfficialAccountUserVo userVo, Page page);
 
     /**
      * 同步用户信息

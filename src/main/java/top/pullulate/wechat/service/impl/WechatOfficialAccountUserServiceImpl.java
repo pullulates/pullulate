@@ -2,7 +2,6 @@ package top.pullulate.wechat.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.db.sql.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -13,7 +12,7 @@ import top.pullulate.common.constants.ParamConstant;
 import top.pullulate.web.api.wechat.AccessTokenApi;
 import top.pullulate.web.api.wechat.WechatOfficialAccountUserApi;
 import top.pullulate.web.data.dto.response.P;
-import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountViewVo;
+import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountUserViewVo;
 import top.pullulate.web.data.vo.wechat.WechatOfficialAccountUserVo;
 import top.pullulate.wechat.entity.WechatOfficialAccount;
 import top.pullulate.wechat.entity.WechatOfficialAccountUser;
@@ -22,7 +21,6 @@ import top.pullulate.wechat.mapper.WechatOfficialAccountUserMapper;
 import top.pullulate.wechat.service.IWechatOfficialAccountUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 /**
@@ -49,12 +47,12 @@ public class WechatOfficialAccountUserServiceImpl extends ServiceImpl<WechatOffi
      * @return
      */
     @Override
-    public IPage<List<WechatOfficialAccountViewVo>> getUserPage(WechatOfficialAccountUserVo userVo, Page page) {
+    public IPage<List<WechatOfficialAccountUserViewVo>> getUserPage(WechatOfficialAccountUserVo userVo, Page page) {
         LambdaQueryWrapper<WechatOfficialAccountUser> wrappers = Wrappers.lambdaQuery();
         if (!(StrUtil.isBlank(userVo.getWoaId()) || ParamConstant.TOP_ID.equals(userVo.getWoaId()))) {
             wrappers.eq(WechatOfficialAccountUser::getWoaId, userVo.getWoaId());
         }
-        IPage<List<WechatOfficialAccountViewVo>> pages = page(page, wrappers);
+        IPage<List<WechatOfficialAccountUserViewVo>> pages = page(page, wrappers);
         return pages;
     }
 

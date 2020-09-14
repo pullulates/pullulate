@@ -1,6 +1,6 @@
 package top.pullulate.utils;
 
-import java.time.LocalDate;
+import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,5 +79,15 @@ public class LocalDateUtils {
             list.add(f);
         });
         return list;
+    }
+
+    /**
+     * 将时间戳转换为LocalDateTime
+     *
+     * @param timestamp 时间戳
+     * @return
+     */
+    public static LocalDateTime getLocalDateTimeByTimestamp(long timestamp) {
+        return LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.ofHours(8));
     }
 }

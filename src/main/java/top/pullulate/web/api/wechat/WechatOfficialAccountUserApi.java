@@ -1,8 +1,6 @@
 package top.pullulate.web.api.wechat;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateUnit;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.text.StrFormatter;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
@@ -13,11 +11,8 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import top.pullulate.common.constants.WechatConstant;
 import top.pullulate.core.exception.ApiException;
+import top.pullulate.utils.LocalDateUtils;
 import top.pullulate.wechat.entity.WechatOfficialAccountUser;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,7 +103,7 @@ public class WechatOfficialAccountUserApi {
             }
         }
         List<WechatOfficialAccountUser> users = new ArrayList<>(openIds.size());
-        log.info("成功获取所有用户详细信息，开始转换信息格式:{}", jsonArray.size());
+        log.info("成功获取所有用户详细信息，开始转换信息格式");
         List<WechatUserInfo> userInfos = jsonArray.toList(WechatUserInfo.class);
         userInfos.forEach(userInfo -> {
             WechatOfficialAccountUser user = BeanUtil.toBean(userInfo, WechatOfficialAccountUser.class);
@@ -116,7 +111,7 @@ public class WechatOfficialAccountUserApi {
             user.setUnionId(userInfo.getUnionid());
             user.setOpenId(userInfo.getOpenid());
             user.setNickName(userInfo.getNickname());
-            user.setSubscribeTime(DateUtil.toLocalDateTime(DateUtil.date(userInfo.getSubscribe_time())));
+            user.setSubscribeTime(LocalDateUtils.getLocalDateTimeByTimestamp(userInfo.getSubscribe_time()));
             user.setSubscribeScene(userInfo.getSubscribe_scene());
             user.setHeadImgUrl(userInfo.getHeadimgurl());
             user.setGroupId(userInfo.getGroupid());

@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.pullulate.web.data.dto.response.P;
+import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountUserViewVo;
 import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountViewVo;
 import top.pullulate.web.data.vo.wechat.WechatOfficialAccountUserVo;
 import top.pullulate.wechat.service.IWechatOfficialAccountUserService;
@@ -38,7 +39,7 @@ public class WechatOfficialAccountUserController {
     @GetMapping
     @PreAuthorize("hasAuthority('woa.user.query')")
     public P getUserPage(WechatOfficialAccountUserVo userVo, Page page) {
-        IPage<List<WechatOfficialAccountViewVo>> pages = wechatOfficialAccountUserService.getUserPage(userVo, page);
+        IPage<List<WechatOfficialAccountUserViewVo>> pages = wechatOfficialAccountUserService.getUserPage(userVo, page);
         return P.data(pages);
     }
 
