@@ -1,9 +1,9 @@
 package top.pullulate.web.data.vo.wechat;
 
 import lombok.Data;
-import top.pullulate.common.validate.wechat.WechatOfficialUser;
-
+import top.pullulate.common.validate.wechat.WechatOfficial;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * @功能描述:   微信公众号用户参数接收类
@@ -24,7 +24,8 @@ public class WechatOfficialAccountUserVo {
     /**
      * 微信公众号主键
      */
-    @NotBlank(message = "请选择微信公众号", groups = {WechatOfficialUser.Sync.class})
+    @NotBlank(message = "请选择微信公众号", groups = {WechatOfficial.Sync.class})
+    @Size(max = 32, message = "非法的微信公众号信息", groups = {WechatOfficial.Sync.class})
     private String woaId;
 
     /**

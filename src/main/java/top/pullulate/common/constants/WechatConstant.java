@@ -34,4 +34,14 @@ public class WechatConstant {
      * 批量获取微信公众号关注者详细信息的接口地址
      */
     public static final String WOA_USER_INFO_BATCH_URL = "https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token={}";
+
+    /**
+     * 获取微信公众号已创建标签列表的接口地址
+     */
+    public static final String WOA_TAG_LIST_URL = "https://api.weixin.qq.com/cgi-bin/tags/get?access_token={}";
+
+    /**
+     * 微信公众号创建标签的接口地址
+     */
+    public static final String WOA_TAG_CREATE_URL = "https://api.weixin.qq.com/cgi-bin/tags/create?access_token={}";
 }

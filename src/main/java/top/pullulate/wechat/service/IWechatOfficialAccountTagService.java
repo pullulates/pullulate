@@ -2,6 +2,7 @@ package top.pullulate.wechat.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountTagViewVo;
 import top.pullulate.web.data.vo.wechat.WechatOfficialAccountTagVo;
 import top.pullulate.wechat.entity.WechatOfficialAccountTag;
@@ -27,4 +28,28 @@ public interface IWechatOfficialAccountTagService extends IService<WechatOfficia
      * @return
      */
     IPage<List<WechatOfficialAccountTagViewVo>> getTagPage(WechatOfficialAccountTagVo tagVo, Page page);
+
+    /**
+     * 同步用户标签信息
+     *
+     * @param woaId    微信公众号主键
+     * @return
+     */
+    P syncTag(String woaId);
+
+    /**
+     * 创建用户标签信息
+     *
+     * @param tagVo    微信公众号信息
+     * @return
+     */
+    P saveTag(WechatOfficialAccountTagVo tagVo);
+
+    /**
+     * 编辑用户标签信息
+     *
+     * @param tagVo    微信公众号信息
+     * @return
+     */
+    P updateTag(WechatOfficialAccountTagVo tagVo);
 }

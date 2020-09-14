@@ -1,6 +1,8 @@
 package top.pullulate.wechat.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
@@ -19,6 +21,7 @@ public class WechatOfficialAccountTag implements Serializable {
     /**
      * 标签主键
      */
+    @TableId
     private String woaTagId;
 
     /**
