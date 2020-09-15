@@ -52,4 +52,12 @@ public interface IWechatOfficialAccountTagService extends IService<WechatOfficia
      * @return
      */
     P updateTag(WechatOfficialAccountTagVo tagVo);
+
+    /**
+     * 删除标签
+     *
+     * @param tagVo 标签信息
+     * @return
+     */
+    P deleteTag(WechatOfficialAccountTagVo tagVo);
 }

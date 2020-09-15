@@ -21,29 +21,29 @@ public class WechatOfficialAccountTagVo {
     /**
      * 标签主键
      */
-    @NotBlank(message = "微信公众号标识不能为空", groups = {Common.Update.class})
-    @Size(max = 32, message = "非法的微信公众号信息", groups = {Common.Update.class})
+    @NotBlank(message = "标签主键不能为空", groups = {Common.Update.class, Common.Delete.class})
+    @Size(max = 32, message = "非法的标签主键", groups = {Common.Update.class, Common.Delete.class})
     private String woaTagId;
 
     /**
      * 微信公众号主键
      */
-    @NotBlank(message = "微信公众号标识不能为空", groups = {Common.Save.class, Common.Update.class, WechatOfficial.Sync.class})
-    @Size(max = 32, message = "非法的微信公众号信息", groups = {Common.Save.class, Common.Update.class, WechatOfficial.Sync.class})
+    @NotBlank(message = "微信公众号主键不能为空", groups = {Common.Save.class, Common.Update.class, WechatOfficial.Sync.class})
+    @Size(max = 32, message = "非法的微信公众号主键", groups = {Common.Save.class, Common.Update.class, WechatOfficial.Sync.class})
     private String woaId;
 
     /**
      * 微信标签id
      */
-    @NotBlank(message = "微信公众号标识不能为空", groups = {Common.Update.class})
-    @Size(max = 32, message = "非法的微信公众号信息", groups = {Common.Update.class})
+    @NotBlank(message = "微信标签id不能为空", groups = {Common.Update.class, Common.Delete.class})
+    @Size(max = 32, message = "非法的微信标签id", groups = {Common.Update.class, Common.Delete.class})
     private String id;
 
     /**
      * 标签名称
      */
-    @NotBlank(message = "微信公众号标识不能为空", groups = {Common.Save.class, Common.Update.class})
-    @Size(max = 32, message = "非法的微信公众号信息", groups = {Common.Save.class, Common.Update.class})
+    @NotBlank(message = "标签名称不能为空", groups = {Common.Save.class, Common.Update.class})
+    @Size(max = 32, message = "非法的标签名称", groups = {Common.Save.class, Common.Update.class})
     private String name;
 
 

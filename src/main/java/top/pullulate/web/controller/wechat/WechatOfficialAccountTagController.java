@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.pullulate.common.validate.Common;
 import top.pullulate.common.validate.wechat.WechatOfficial;
+import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountTagViewVo;
 import top.pullulate.web.data.vo.wechat.WechatOfficialAccountTagVo;
@@ -51,6 +52,7 @@ public class WechatOfficialAccountTagController {
      */
     @PostMapping("/sync")
     @PreAuthorize("hasAuthority('woa.tag.sync')")
+    @OperationRecord(title = "微信公众号用户标签-同步标签")
     public P syncTag(@RequestBody @Validated(WechatOfficial.Sync.class) WechatOfficialAccountTagVo tagVo) {
         return tagService.syncTag(tagVo.getWoaId());
     }
@@ -63,6 +65,7 @@ public class WechatOfficialAccountTagController {
      */
     @PostMapping
     @PreAuthorize("hasAuthority('woa.tag.save')")
+    @OperationRecord(title = "微信公众号用户标签-保存标签")
     public P saveTag(@RequestBody @Validated(Common.Save.class) WechatOfficialAccountTagVo tagVo) {
         return tagService.saveTag(tagVo);
     }
@@ -75,8 +78,22 @@ public class WechatOfficialAccountTagController {
      */
     @PutMapping
     @PreAuthorize("hasAuthority('woa.tag.edit')")
+    @OperationRecord(title = "微信公众号用户标签-修改标签")
     public P updateTag(@RequestBody @Validated(Common.Update.class) WechatOfficialAccountTagVo tagVo) {
         return tagService.updateTag(tagVo);
+    }
+
+    /**
+     * 删除标签
+     *
+     * @param tagVo 标签信息
+     * @return
+     */
+    @DeleteMapping
+    @PreAuthorize("hasAuthority('woa.tag.del')")
+    @OperationRecord(title = "微信公众号用户标签-删除标签")
+    public P deleteTag(WechatOfficialAccountTagVo tagVo) {
+        return tagService.deleteTag(tagVo);
     }
 
 }

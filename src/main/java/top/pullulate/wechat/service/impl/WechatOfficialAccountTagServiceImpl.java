@@ -91,6 +91,12 @@ public class WechatOfficialAccountTagServiceImpl extends ServiceImpl<WechatOffic
         if (ObjectUtil.isNull(officialAccount)) {
             return P.error("未查询到微信公众号信息");
         }
+        int count = count(Wrappers.<WechatOfficialAccountTag>lambdaQuery()
+                .eq(WechatOfficialAccountTag::getName, tag.getName())
+                .eq(WechatOfficialAccountTag::getWoaId, tag.getWoaId()));
+        if (count > 0) {
+            return P.error("标签名称已存在");
+        }
         String accessToken = accessTokenApi.getAccessToken(officialAccount.getAppId(), officialAccount.getAppSecret());
         String id = WechatOfficialAccountTagApi.createTag(accessToken, tag.getName());
         tag.setId(id);
@@ -104,14 +110,42 @@ public class WechatOfficialAccountTagServiceImpl extends ServiceImpl<WechatOffic
      * @return
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public P updateTag(WechatOfficialAccountTagVo tagVo) {
         WechatOfficialAccountTag tag = BeanUtil.toBean(tagVo, WechatOfficialAccountTag.class);
         WechatOfficialAccount officialAccount = officialAccountMapper.selectById(tag.getWoaId());
         if (ObjectUtil.isNull(officialAccount)) {
             return P.error("未查询到微信公众号信息");
         }
+        int count = count(Wrappers.<WechatOfficialAccountTag>lambdaQuery()
+                .eq(WechatOfficialAccountTag::getName, tag.getName())
+                .eq(WechatOfficialAccountTag::getWoaId, tag.getWoaId()));
+        if (count > 0) {
+            return P.error("标签名称已存在");
+        }
+        updateById(tag);
         String accessToken = accessTokenApi.getAccessToken(officialAccount.getAppId(), officialAccount.getAppSecret());
-        Boolean result = WechatOfficialAccountTagApi.updateTag(accessToken, tag);
-        return null;
+        WechatOfficialAccountTagApi.updateTag(accessToken, tag);
+        return P.success();
+    }
+
+    /**
+     * 删除标签
+     *
+     * @param tagVo 标签信息
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public P deleteTag(WechatOfficialAccountTagVo tagVo) {
+        WechatOfficialAccountTag tag = BeanUtil.toBean(tagVo, WechatOfficialAccountTag.class);
+        WechatOfficialAccount officialAccount = officialAccountMapper.selectById(tag.getWoaId());
+        if (ObjectUtil.isNull(officialAccount)) {
+            return P.error("未查询到微信公众号信息");
+        }
+        String accessToken = accessTokenApi.getAccessToken(officialAccount.getAppId(), officialAccount.getAppSecret());
+        WechatOfficialAccountTagApi.deleteTag(accessToken, tag);
+        removeById(tagVo.getWoaTagId());
+        return P.success();
     }
 }

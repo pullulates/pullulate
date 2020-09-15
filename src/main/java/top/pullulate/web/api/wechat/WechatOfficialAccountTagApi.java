@@ -83,7 +83,59 @@ public class WechatOfficialAccountTagApi {
         return id;
     }
 
-    public static Boolean updateTag(String accessToken, WechatOfficialAccountTag tag) {
-        return true;
+    /**
+     * 修改用户标签
+     *
+     * @param accessToken   接口调用凭证
+     * @param tag           标签信息
+     */
+    public static void updateTag(String accessToken, WechatOfficialAccountTag tag) {
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 修改用户标签方法开始执行");
+        log.info("接口调用凭证：{}，标签名称：{}", accessToken, tag.getName());
+        String url = StrFormatter.format(WechatConstant.WOA_TAG_UPDATE_URL, accessToken);
+        log.info("请求地址：{}", url);
+        JSONObject param = JSONUtil.createObj();
+        param.set("tag", JSONUtil.createObj().set("name", tag.getName()).set("id", Integer.valueOf(tag.getId())));
+        log.info("请求参数：{}", param.toString());
+        String result = HttpUtil.post(url, param.toString());
+        log.info("获取到响应结果：{}", result);
+        if (StrUtil.isBlank(result)) {
+            throw new ApiException("修改用户标签失败");
+        }
+        JSONObject jsonObject = JSONUtil.parseObj(result);
+        String errCode = jsonObject.getStr(WechatConstant.ERROR_CODE);
+        if (!WechatConstant.SUCCESS_CODE.equals(errCode)) {
+            throw new ApiException(StrFormatter.format("修改用户标签失败，错误码：{}，错误信息：{}",
+                    jsonObject.getStr(WechatConstant.ERROR_CODE), jsonObject.getStr(WechatConstant.ERROR_MSG)));
+        }
+        log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 修改用户标签方法执行结束");
+    }
+
+    /**
+     * 删除用户标签
+     *
+     * @param accessToken   接口调用凭证
+     * @param tag           标签信息
+     */
+    public static void deleteTag(String accessToken, WechatOfficialAccountTag tag) {
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 删除用户标签方法开始执行");
+        log.info("接口调用凭证：{}，标签名称：{}", accessToken, tag.getName());
+        String url = StrFormatter.format(WechatConstant.WOA_TAG_DELETE_URL, accessToken);
+        log.info("请求地址：{}", url);
+        JSONObject param = JSONUtil.createObj();
+        param.set("tag", JSONUtil.createObj().set("id", Integer.valueOf(tag.getId())));
+        log.info("请求参数：{}", param.toString());
+        String result = HttpUtil.post(url, param.toString());
+        log.info("获取到响应结果：{}", result);
+        if (StrUtil.isBlank(result)) {
+            throw new ApiException("删除用户标签失败");
+        }
+        JSONObject jsonObject = JSONUtil.parseObj(result);
+        String errCode = jsonObject.getStr(WechatConstant.ERROR_CODE);
+        if (!WechatConstant.SUCCESS_CODE.equals(errCode)) {
+            throw new ApiException(StrFormatter.format("删除用户标签失败，错误码：{}，错误信息：{}",
+                    jsonObject.getStr(WechatConstant.ERROR_CODE), jsonObject.getStr(WechatConstant.ERROR_MSG)));
+        }
+        log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 删除用户标签方法执行结束");
     }
 }

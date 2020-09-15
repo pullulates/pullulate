@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountUserViewVo;
-import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountViewVo;
 import top.pullulate.web.data.vo.wechat.WechatOfficialAccountUserVo;
 import top.pullulate.wechat.service.IWechatOfficialAccountUserService;
 
@@ -51,6 +51,7 @@ public class WechatOfficialAccountUserController {
      */
     @PostMapping("/sync")
     @PreAuthorize("hasAuthority('woa.user.sync')")
+    @OperationRecord(title = "微信公众号用户管理-同步用户")
     public P syncUser(@RequestBody @Validated WechatOfficialAccountUserVo userVo) {
         return wechatOfficialAccountUserService.syncUser(userVo.getWoaId());
     }

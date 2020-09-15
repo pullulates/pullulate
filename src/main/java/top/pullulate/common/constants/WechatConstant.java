@@ -21,6 +21,11 @@ public class WechatConstant {
     public static final String ERROR_MSG = "errmsg";
 
     /**
+     * 微信官方api返回成功码
+     */
+    public static final String SUCCESS_CODE = "0";
+
+    /**
      * 获取接口调用凭证的接口地址
      */
     public static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={}&secret={}";
@@ -44,4 +49,14 @@ public class WechatConstant {
      * 微信公众号创建标签的接口地址
      */
     public static final String WOA_TAG_CREATE_URL = "https://api.weixin.qq.com/cgi-bin/tags/create?access_token={}";
+
+    /**
+     * 微信公众号修改标签的接口地址
+     */
+    public static final String WOA_TAG_UPDATE_URL = "https://api.weixin.qq.com/cgi-bin/tags/update?access_token={}";
+
+    /**
+     * 微信公众号删除标签的接口地址
+     */
+    public static final String WOA_TAG_DELETE_URL = "https://api.weixin.qq.com/cgi-bin/tags/delete?access_token={}";
 }

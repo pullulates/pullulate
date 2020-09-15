@@ -16,4 +16,6 @@ public class Common {
 
     public interface PatchStatus {}
 
+    public interface Delete {}
+
 }
