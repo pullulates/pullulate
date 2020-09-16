@@ -25,7 +25,6 @@ import top.pullulate.monitor.entity.PulOperationRecord;
 import top.pullulate.utils.IPUtils;
 import top.pullulate.utils.LocationUtils;
 import top.pullulate.utils.ServletUtils;
-
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.time.Duration;
@@ -54,18 +53,23 @@ public class OperationRecordAspect {
     }
 
     @Around("operationRecordPointCut()")
-    public Object around(ProceedingJoinPoint joinPoint) {
+    public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         LocalDateTime begin = LocalDateTime.now();
-        Object result = null;
-        String exceptionInfo = null;
-        try {
-            result = joinPoint.proceed();
-        } catch (Throwable throwable) {
-            exceptionInfo = throwable.getMessage();
-        }
-        long cost = Duration.between(begin, LocalDateTime.now()).toMillis();
-        buildOperationRecord(joinPoint, cost, result, exceptionInfo);
+        Object result = joinPoint.proceed();
+        String cost = Duration.between(begin, LocalDateTime.now()).toMillis() + "ms";
+        buildOperationRecord(joinPoint, cost, result, null);
         return result;
+    }
+
+    /**
+     * 拦截异常操作
+     *
+     * @param joinPoint 切点
+     * @param e 异常
+     */
+    @AfterThrowing(value = "operationRecordPointCut()", throwing = "e")
+    public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
+        buildOperationRecord((ProceedingJoinPoint) joinPoint, null, null, e.getMessage());
     }
 
     /**
@@ -74,7 +78,7 @@ public class OperationRecordAspect {
      * @param joinPoint
      * @param cost
      */
-    public void buildOperationRecord(ProceedingJoinPoint joinPoint, long cost, Object result, String exceptionInfo) {
+    public void buildOperationRecord(ProceedingJoinPoint joinPoint, String cost, Object result, String exceptionInfo) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         OperationRecord recordAnnotation = method.getAnnotation(OperationRecord.class);
@@ -86,13 +90,12 @@ public class OperationRecordAspect {
             HttpServletRequest request = ServletUtils.getRequest();
             String params = getReqestParams(request, joinPoint);
             UserInfo userInfo = tokenUtils.getUserInfo(request);
-            String costText = cost + "ms";
             PulOperationRecord operationRecord = new PulOperationRecord(
                     IdUtil.fastSimpleUUID(), title, ServletUtils.getRequest().getRequestURI(),
                     ip, location, userAgent.getBrowser().getName(), userAgent.getOs().getName(),
                     params, JSONUtil.toJsonStr(result), StrUtil.isBlank(exceptionInfo) ? HasOccurException.NORMAL.getCode() : HasOccurException.OCCURED.getCode(),
                     exceptionInfo, userInfo.getUserId(), userInfo.getUsername(),
-                    userInfo.getDept().getDeptId(), userInfo.getDept().getDeptName(), LocalDateTime.now(), costText);
+                    userInfo.getDept().getDeptId(), userInfo.getDept().getDeptName(), LocalDateTime.now(), cost);
             operationRecordProducer.sendOperationInfor(operationRecord);
         }
     }
