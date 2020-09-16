@@ -8,7 +8,9 @@ package top.pullulate.common.validate.wechat;
  * @GitHub: https://github.com/pullulates
  * @Gitee: https://gitee.com/pullulates
  */
-public class WechatOfficial {
+public class WechatOfficialAccount {
 
     public interface Sync {}
+
+    public interface UpdateUserRemark {}
 }

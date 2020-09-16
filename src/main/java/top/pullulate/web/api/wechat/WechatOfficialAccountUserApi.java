@@ -150,6 +150,34 @@ public class WechatOfficialAccountUserApi {
         }
         return openIds;
     }
+
+    /**
+     * 修改用户备注信息
+     *
+     * @param accessToken   接口调用凭证
+     * @param openId        用户openId
+     * @param remark        备注信息
+     */
+    public static void updateUserRemark(String accessToken, String openId, String remark) {
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 修改用户备注方法开始执行");
+        String url = StrFormatter.format(WechatConstant.WOA_USER_UPDATE_REMARK_URL, accessToken);
+        log.info("请求地址：{}", url);
+        JSONObject param = JSONUtil.createObj();
+        param.set("openid", openId).set("remark", remark);
+        log.info("请求参数：{}", param.toString());
+        String result = HttpUtil.post(url, param.toString());
+        log.info("获取到响应结果：{}", result);
+        if (StrUtil.isBlank(result)) {
+            throw new ApiException("修改用户标签失败");
+        }
+        JSONObject jsonObject = JSONUtil.parseObj(result);
+        String errCode = jsonObject.getStr(WechatConstant.ERROR_CODE);
+        if (!WechatConstant.SUCCESS_CODE.equals(errCode)) {
+            throw new ApiException(StrFormatter.format("修改用户备注失败，错误码：{}，错误信息：{}",
+                    jsonObject.getStr(WechatConstant.ERROR_CODE), jsonObject.getStr(WechatConstant.ERROR_MSG)));
+        }
+        log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 修改用户备注方法执行结束");
+    }
 }
 
 @Data

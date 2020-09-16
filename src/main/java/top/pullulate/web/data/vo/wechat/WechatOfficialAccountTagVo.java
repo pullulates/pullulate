@@ -2,7 +2,7 @@ package top.pullulate.web.data.vo.wechat;
 
 import lombok.Data;
 import top.pullulate.common.validate.Common;
-import top.pullulate.common.validate.wechat.WechatOfficial;
+import top.pullulate.common.validate.wechat.WechatOfficialAccount;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -28,8 +28,8 @@ public class WechatOfficialAccountTagVo {
     /**
      * 微信公众号主键
      */
-    @NotBlank(message = "微信公众号主键不能为空", groups = {Common.Save.class, Common.Update.class, WechatOfficial.Sync.class})
-    @Size(max = 32, message = "非法的微信公众号主键", groups = {Common.Save.class, Common.Update.class, WechatOfficial.Sync.class})
+    @NotBlank(message = "微信公众号主键不能为空", groups = {Common.Save.class, Common.Update.class, WechatOfficialAccount.Sync.class})
+    @Size(max = 32, message = "非法的微信公众号主键", groups = {Common.Save.class, Common.Update.class, WechatOfficialAccount.Sync.class})
     private String woaId;
 
     /**

@@ -34,4 +34,14 @@ public class ParamConstant {
      * 顶级主键
      */
     public static final String TOP_ID = "0";
+
+    /**
+     * 未拉黑
+     */
+    public static final String NOT_IN_BLACK_LIST = "0";
+
+    /**
+     * 拉黑
+     */
+    public static final String IN_BLACK_LIST = "1";
 }

@@ -93,4 +93,9 @@ public class WechatOfficialAccountUserViewVo {
      * 用户所在的分组id
      */
     private String groupId;
+
+    /**
+     * 是否拉黑
+     */
+    private String inBlackList;
 }

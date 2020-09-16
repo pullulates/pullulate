@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.pullulate.common.validate.Common;
-import top.pullulate.common.validate.wechat.WechatOfficial;
+import top.pullulate.common.validate.wechat.WechatOfficialAccount;
 import top.pullulate.core.annotations.OperationRecord;
 import top.pullulate.web.data.dto.response.P;
 import top.pullulate.web.data.viewvo.wechat.WechatOfficialAccountTagViewVo;
@@ -53,7 +53,7 @@ public class WechatOfficialAccountTagController {
     @PostMapping("/sync")
     @PreAuthorize("hasAuthority('woa.tag.sync')")
     @OperationRecord(title = "微信公众号用户标签-同步标签")
-    public P syncTag(@RequestBody @Validated(WechatOfficial.Sync.class) WechatOfficialAccountTagVo tagVo) {
+    public P syncTag(@RequestBody @Validated(WechatOfficialAccount.Sync.class) WechatOfficialAccountTagVo tagVo) {
         return tagService.syncTag(tagVo.getWoaId());
     }
 

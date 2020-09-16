@@ -1,5 +1,6 @@
 package top.pullulate.wechat.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -52,6 +53,7 @@ public class WechatOfficialAccountUserServiceImpl extends ServiceImpl<WechatOffi
         if (!(StrUtil.isBlank(userVo.getWoaId()) || ParamConstant.TOP_ID.equals(userVo.getWoaId()))) {
             wrappers.eq(WechatOfficialAccountUser::getWoaId, userVo.getWoaId());
         }
+        wrappers.eq(WechatOfficialAccountUser::getInBlackList, ParamConstant.NOT_IN_BLACK_LIST);
         IPage<List<WechatOfficialAccountUserViewVo>> pages = page(page, wrappers);
         return pages;
     }
@@ -74,6 +76,30 @@ public class WechatOfficialAccountUserServiceImpl extends ServiceImpl<WechatOffi
         List<WechatOfficialAccountUser> users = WechatOfficialAccountUserApi.batchGetUserInfo(woaId, openIds, accessToken);
         baseMapper.truncateUser();
         saveBatch(users);
+        return P.success();
+    }
+
+    /**
+     * 设置用户备注
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public P updateUserRemark(WechatOfficialAccountUserVo userVo) {
+        WechatOfficialAccountUser user = BeanUtil.toBean(userVo, WechatOfficialAccountUser.class);
+        WechatOfficialAccount officialAccount = officialAccountMapper.selectById(user.getWoaId());
+        if (ObjectUtil.isNull(officialAccount)) {
+            return P.error("未查询到微信公众号信息");
+        }
+        WechatOfficialAccountUser check = getById(user.getWoaUserId());
+        if (ObjectUtil.isNull(check)) {
+            return P.error("未查询到用户信息");
+        }
+        updateById(user);
+        String accessToken = accessTokenApi.getAccessToken(officialAccount.getAppId(), officialAccount.getAppSecret());
+        WechatOfficialAccountUserApi.updateUserRemark(accessToken, check.getOpenId(), user.getRemark());
         return P.success();
     }
 }

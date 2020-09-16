@@ -36,4 +36,12 @@ public interface IWechatOfficialAccountUserService extends IService<WechatOffici
      * @return
      */
     P syncUser(String woaId);
+
+    /**
+     * 设置用户备注
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    P updateUserRemark(WechatOfficialAccountUserVo userVo);
 }
