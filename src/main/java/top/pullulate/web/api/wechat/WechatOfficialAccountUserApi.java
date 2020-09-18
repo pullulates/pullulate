@@ -10,6 +10,7 @@ import cn.hutool.json.JSONUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import top.pullulate.common.constants.WechatConstant;
+import top.pullulate.common.enums.InBlackList;
 import top.pullulate.core.exception.ApiException;
 import top.pullulate.utils.LocalDateUtils;
 import top.pullulate.wechat.entity.WechatOfficialAccountUser;
@@ -28,6 +29,27 @@ import java.util.List;
 public class WechatOfficialAccountUserApi {
 
     /**
+     * 获取所有用户信息
+     *
+     * @param accessToken   接口调用凭证
+     * @param woaId         微信公众号主键
+     * @return
+     */
+    public static List<WechatOfficialAccountUser> getUsers(String accessToken, String woaId) {
+        List<String> normalUserOpenIds = getNormalUsers(accessToken, "");
+        List<WechatOfficialAccountUser> normalUsers = batchGetUserInfo(woaId, normalUserOpenIds, accessToken);
+        List<String> blackedUserOpenIds = getBlackedUsers(accessToken, "");
+        blackedUserOpenIds.forEach(openId -> {
+            normalUsers.forEach(user -> {
+                if (user.getOpenId().equals(openId)) {
+                    user.setInBlackList(InBlackList.IN_BLACK_LIST.getCode());
+                }
+            });
+        });
+        return normalUsers;
+    }
+
+    /**
      * 获取微信公众号关注用户列表
      * 一次最多拉取10000个用户
      *
@@ -35,7 +57,7 @@ public class WechatOfficialAccountUserApi {
      * @param nextOpenId    第一个拉取的OPENID，不填默认从头开始拉取
      * @return
      */
-    public static List<String> getUsers(String accessToken, String nextOpenId) {
+    public static List<String> getNormalUsers(String accessToken, String nextOpenId) {
         log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 获取微信公众号关注用户列表方法开始执行");
         log.info("接口调用凭证：{}，第一个拉取的OPENID：{}", accessToken, nextOpenId);
         String url = StrFormatter.format(WechatConstant.WOA_USER_LIST_URL, accessToken, nextOpenId);
@@ -60,6 +82,44 @@ public class WechatOfficialAccountUserApi {
             openIds = getLeftUsers(accessToken, wxNextOpenId, openIds);
         }
         log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 获取微信公众号关注用户列表方法执行结束");
+        return openIds;
+    }
+
+    /**
+     * 获取微信公众号已拉黑用户列表
+     * 一次最多拉取10000个用户
+     *
+     * @param accessToken   接口调用凭证
+     * @param nextOpenId    第一个拉取的OPENID，不填默认从头开始拉取
+     * @return
+     */
+    public static List<String> getBlackedUsers(String accessToken, String nextOpenId) {
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 获取微信公众号已拉黑用户列表方法开始执行");
+        log.info("接口调用凭证：{}，第一个拉取的OPENID：{}", accessToken, nextOpenId);
+        String url = StrFormatter.format(WechatConstant.WOA_USER_BLACK_LIST_URL, accessToken);
+        log.info("请求地址：{}", url);
+        JSONObject param = JSONUtil.createObj();
+        param.set("begin_openid", nextOpenId);
+        log.info("请求参数：{}", param.toString());
+        String result = HttpUtil.post(url, param.toString());
+        if (StrUtil.isBlank(result)) {
+            throw new ApiException("获取微信公众号已拉黑用户列表失败");
+        }
+        JSONObject jsonObject = JSONUtil.parseObj(result);
+        if (result.contains(WechatConstant.ERROR_CODE)) {
+            throw new ApiException(StrFormatter.format("获取微信公众号已拉黑用户列表失败，错误码：{}，错误信息：{}",
+                    jsonObject.getStr(WechatConstant.ERROR_CODE), jsonObject.getStr(WechatConstant.ERROR_MSG)));
+        }
+        int total = jsonObject.getInt("total");
+        if (total == 0) {
+            return new ArrayList<>();
+        }
+        List<String> openIds = jsonObject.getJSONObject("data").getJSONArray("openid").toList(String.class);
+        if (total > 10000) {
+            String wxNextOpenId = jsonObject.getStr("next_openid");
+            openIds = getLeftUsers(accessToken, wxNextOpenId, openIds);
+        }
+        log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 获取微信公众号已拉黑用户列表方法执行结束");
         return openIds;
     }
 
@@ -177,6 +237,60 @@ public class WechatOfficialAccountUserApi {
                     jsonObject.getStr(WechatConstant.ERROR_CODE), jsonObject.getStr(WechatConstant.ERROR_MSG)));
         }
         log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 修改用户备注方法执行结束");
+    }
+
+    /**
+     * 拉黑用户
+     *
+     * @param accessToken   接口调用凭证
+     * @param openIds       用户openid集合
+     */
+    public static void blackUser(String accessToken, List<String> openIds) {
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 拉黑用户方法开始执行");
+        String url = StrFormatter.format(WechatConstant.WOA_USER_BLACK_URL, accessToken);
+        log.info("请求地址：{}", url);
+        JSONObject param = JSONUtil.createObj();
+        param.set("openid_list", openIds.toArray());
+        log.info("请求参数：{}", param.toString());
+        String result = HttpUtil.post(url, param.toString());
+        log.info("获取到响应结果：{}", result);
+        if (StrUtil.isBlank(result)) {
+            throw new ApiException("拉黑用户失败");
+        }
+        JSONObject jsonObject = JSONUtil.parseObj(result);
+        String errCode = jsonObject.getStr(WechatConstant.ERROR_CODE);
+        if (!WechatConstant.SUCCESS_CODE.equals(errCode)) {
+            throw new ApiException(StrFormatter.format("拉黑用户失败，错误码：{}，错误信息：{}",
+                    jsonObject.getStr(WechatConstant.ERROR_CODE), jsonObject.getStr(WechatConstant.ERROR_MSG)));
+        }
+        log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 拉黑用户方法执行结束");
+    }
+
+    /**
+     * 取消拉黑用户
+     *
+     * @param accessToken   接口调用凭证
+     * @param openIds       用户openid集合
+     */
+    public static void unblackUser(String accessToken, List<String> openIds) {
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 取消拉黑用户方法开始执行");
+        String url = StrFormatter.format(WechatConstant.WOA_USER_UNBLACK_URL, accessToken);
+        log.info("请求地址：{}", url);
+        JSONObject param = JSONUtil.createObj();
+        param.set("openid_list", openIds.toArray());
+        log.info("请求参数：{}", param.toString());
+        String result = HttpUtil.post(url, param.toString());
+        log.info("获取到响应结果：{}", result);
+        if (StrUtil.isBlank(result)) {
+            throw new ApiException("取消拉黑用户失败");
+        }
+        JSONObject jsonObject = JSONUtil.parseObj(result);
+        String errCode = jsonObject.getStr(WechatConstant.ERROR_CODE);
+        if (!WechatConstant.SUCCESS_CODE.equals(errCode)) {
+            throw new ApiException(StrFormatter.format("取消拉黑用户失败，错误码：{}，错误信息：{}",
+                    jsonObject.getStr(WechatConstant.ERROR_CODE), jsonObject.getStr(WechatConstant.ERROR_MSG)));
+        }
+        log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 取消拉黑用户方法执行结束");
     }
 }
 

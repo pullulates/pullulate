@@ -13,4 +13,6 @@ public class WechatOfficialAccount {
     public interface Sync {}
 
     public interface UpdateUserRemark {}
+
+    public interface BlackUser {}
 }

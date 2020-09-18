@@ -63,11 +63,37 @@ public class WechatOfficialAccountUserController {
      * @param userVo    用户信息
      * @return
      */
-    @PatchMapping
-    @PreAuthorize("hasAuthority('woa.user.edit.remark')")
+    @PatchMapping("/remark")
+    @PreAuthorize("hasAuthority('woa.user.remark')")
     @OperationRecord(title = "微信公众号用户管理-设置备注")
     public P updateUserRemark(@RequestBody @Validated(WechatOfficialAccount.UpdateUserRemark.class) WechatOfficialAccountUserVo userVo) {
         return wechatOfficialAccountUserService.updateUserRemark(userVo);
+    }
+
+    /**
+     * 拉黑用户
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    @PatchMapping("/black")
+    @PreAuthorize("hasAuthority('woa.user.black')")
+    @OperationRecord(title = "微信公众号用户管理-拉黑用户")
+    public P blackUser(@RequestBody @Validated(WechatOfficialAccount.BlackUser.class) WechatOfficialAccountUserVo userVo) {
+        return wechatOfficialAccountUserService.blackUser(userVo);
+    }
+
+    /**
+     * 取消拉黑用户
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    @PatchMapping("/unblack")
+    @PreAuthorize("hasAuthority('woa.user.unblack')")
+    @OperationRecord(title = "微信公众号用户管理-取消拉黑用户")
+    public P unblackUser(@RequestBody @Validated(WechatOfficialAccount.BlackUser.class) WechatOfficialAccountUserVo userVo) {
+        return wechatOfficialAccountUserService.unblackUser(userVo);
     }
 
 }

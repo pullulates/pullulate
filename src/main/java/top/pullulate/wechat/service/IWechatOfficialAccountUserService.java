@@ -44,4 +44,20 @@ public interface IWechatOfficialAccountUserService extends IService<WechatOffici
      * @return
      */
     P updateUserRemark(WechatOfficialAccountUserVo userVo);
+
+    /**
+     * 拉黑用户
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    P blackUser(WechatOfficialAccountUserVo userVo);
+
+    /**
+     * 取消拉黑用户
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    P unblackUser(WechatOfficialAccountUserVo userVo);
 }

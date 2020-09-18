@@ -46,6 +46,21 @@ public class WechatConstant {
     public static final String WOA_USER_UPDATE_REMARK_URL = "https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token={}";
 
     /**
+     * 微信公众号获取已拉黑用户列表的接口地址
+     */
+    public static final String WOA_USER_BLACK_LIST_URL = "https://api.weixin.qq.com/cgi-bin/tags/members/getblacklist?access_token={}";
+
+    /**
+     * 微信公众号拉黑用户的接口地址
+     */
+    public static final String WOA_USER_BLACK_URL = "https://api.weixin.qq.com/cgi-bin/tags/members/batchblacklist?access_token={}";
+
+    /**
+     * 微信公众号取消拉黑用户的接口地址
+     */
+    public static final String WOA_USER_UNBLACK_URL = "https://api.weixin.qq.com/cgi-bin/tags/members/batchunblacklist?access_token={}";
+
+    /**
      * 获取微信公众号已创建标签列表的接口地址
      */
     public static final String WOA_TAG_LIST_URL = "https://api.weixin.qq.com/cgi-bin/tags/get?access_token={}";

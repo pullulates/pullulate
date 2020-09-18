@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import top.pullulate.common.constants.ParamConstant;
+import top.pullulate.common.enums.InBlackList;
 import top.pullulate.web.api.wechat.AccessTokenApi;
 import top.pullulate.web.api.wechat.WechatOfficialAccountUserApi;
 import top.pullulate.web.data.dto.response.P;
@@ -22,6 +23,8 @@ import top.pullulate.wechat.mapper.WechatOfficialAccountUserMapper;
 import top.pullulate.wechat.service.IWechatOfficialAccountUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,7 +56,9 @@ public class WechatOfficialAccountUserServiceImpl extends ServiceImpl<WechatOffi
         if (!(StrUtil.isBlank(userVo.getWoaId()) || ParamConstant.TOP_ID.equals(userVo.getWoaId()))) {
             wrappers.eq(WechatOfficialAccountUser::getWoaId, userVo.getWoaId());
         }
-        wrappers.eq(WechatOfficialAccountUser::getInBlackList, ParamConstant.NOT_IN_BLACK_LIST);
+        if (StrUtil.isNotBlank(userVo.getInBlackList())) {
+            wrappers.eq(WechatOfficialAccountUser::getInBlackList, userVo.getInBlackList());
+        }
         IPage<List<WechatOfficialAccountUserViewVo>> pages = page(page, wrappers);
         return pages;
     }
@@ -72,8 +77,7 @@ public class WechatOfficialAccountUserServiceImpl extends ServiceImpl<WechatOffi
             return P.error("未查询到微信公众号信息");
         }
         String accessToken = accessTokenApi.getAccessToken(officialAccount.getAppId(), officialAccount.getAppSecret());
-        List<String> openIds = WechatOfficialAccountUserApi.getUsers(accessToken, "");
-        List<WechatOfficialAccountUser> users = WechatOfficialAccountUserApi.batchGetUserInfo(woaId, openIds, accessToken);
+        List<WechatOfficialAccountUser> users = WechatOfficialAccountUserApi.getUsers(accessToken, woaId);
         baseMapper.truncateUser();
         saveBatch(users);
         return P.success();
@@ -100,6 +104,60 @@ public class WechatOfficialAccountUserServiceImpl extends ServiceImpl<WechatOffi
         updateById(user);
         String accessToken = accessTokenApi.getAccessToken(officialAccount.getAppId(), officialAccount.getAppSecret());
         WechatOfficialAccountUserApi.updateUserRemark(accessToken, check.getOpenId(), user.getRemark());
+        return P.success();
+    }
+
+    /**
+     * 拉黑用户
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public P blackUser(WechatOfficialAccountUserVo userVo) {
+        WechatOfficialAccountUser user = BeanUtil.toBean(userVo, WechatOfficialAccountUser.class);
+        WechatOfficialAccount officialAccount = officialAccountMapper.selectById(user.getWoaId());
+        if (ObjectUtil.isNull(officialAccount)) {
+            return P.error("未查询到微信公众号信息");
+        }
+        WechatOfficialAccountUser check = getById(user.getWoaUserId());
+        if (ObjectUtil.isNull(check)) {
+            return P.error("未查询到用户信息");
+        }
+        user.setInBlackList(InBlackList.IN_BLACK_LIST.getCode());
+        updateById(user);
+        String accessToken = accessTokenApi.getAccessToken(officialAccount.getAppId(), officialAccount.getAppSecret());
+        List<String> openIds = new ArrayList<>(1);
+        openIds.add(check.getOpenId());
+        WechatOfficialAccountUserApi.blackUser(accessToken, openIds);
+        return P.success();
+    }
+
+    /**
+     * 取消拉黑用户
+     *
+     * @param userVo    用户信息
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public P unblackUser(WechatOfficialAccountUserVo userVo) {
+        WechatOfficialAccountUser user = BeanUtil.toBean(userVo, WechatOfficialAccountUser.class);
+        WechatOfficialAccount officialAccount = officialAccountMapper.selectById(user.getWoaId());
+        if (ObjectUtil.isNull(officialAccount)) {
+            return P.error("未查询到微信公众号信息");
+        }
+        WechatOfficialAccountUser check = getById(user.getWoaUserId());
+        if (ObjectUtil.isNull(check)) {
+            return P.error("未查询到用户信息");
+        }
+        user.setInBlackList(InBlackList.NOT_IN_BLACK_LIST.getCode());
+        updateById(user);
+        String accessToken = accessTokenApi.getAccessToken(officialAccount.getAppId(), officialAccount.getAppSecret());
+        List<String> openIds = new ArrayList<>(1);
+        openIds.add(check.getOpenId());
+        WechatOfficialAccountUserApi.unblackUser(accessToken, openIds);
         return P.success();
     }
 }
