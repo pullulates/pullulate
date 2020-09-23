@@ -24,10 +24,10 @@ import java.util.List;
  */
 public class CodeGeneration {
 
-    private static final String moduleName = "business";
+    private static final String moduleName = "wechat";
     private static final String parentPackageName = "top.pullulate";
-    private static final String tables = "biz_banner";
-    private static final String table_preffix = "biz_";
+    private static final String tables = "wechat_official_temporary_material";
+    private static final String table_preffix = "";
 
     public static void main(String[] args) {
         AutoGenerator generator = new AutoGenerator();
@@ -40,10 +40,10 @@ public class CodeGeneration {
         generator.setGlobalConfig(gc);
         // 数据源配置
         DataSourceConfig dataSource = new DataSourceConfig();
-        dataSource.setUrl("jdbc:mysql://");
+        dataSource.setUrl("jdbc:mysql://106.55.165.80:3306/pullulates?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8");
         dataSource.setDriverName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUsername("");
-        dataSource.setPassword("");
+        dataSource.setUsername("root");
+        dataSource.setPassword("pullulates123456");
         generator.setDataSource(dataSource);
         // 包配置
         PackageConfig pc = new PackageConfig();
