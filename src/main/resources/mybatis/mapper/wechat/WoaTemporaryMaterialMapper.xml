@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.pullulate.wechat.mapper.WoaTemporaryMaterialMapper">
+
+    <resultMap id="WoaTemporaryMaterialViewVoResultMap" type="top.pullulate.web.data.viewvo.wechat.WoaTemporaryMaterialViewVo">
+        <id column="material_id" property="materialId"/>
+        <result column="woa_id" property="woaId"/>
+        <result column="media_id" property="mediaId"/>
+        <result column="material_type" property="materialType"/>
+        <result column="upload_at" property="uploadAt"/>
+        <result column="expire_at" property="expireAt"/>
+        <result column="name" property="name"/>
+        <result column="original_name" property="originalName"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_at" property="createAt"/>
+    </resultMap>
+
+    <select id="getTemporaryMaterialPage" resultMap="WoaTemporaryMaterialViewVoResultMap">
+        select material_id, woa_id, media_id, material_type, upload_at, expire_at, name, original_name, create_by, create_at
+        from wechat_official_account_temporary_material
+        <where>
+            <if test="materialVo.woaId != null and materialVo.woaId != ''">
+                and woa_id LIKE CONCAT('%',#{materialVo.woaId},'%')
+            </if>
+            <if test="materialVo.name != null and materialVo.name != ''">
+                and name LIKE CONCAT('%',#{materialVo.name},'%')
+            </if>
+        </where>
+        order by upload_at desc
+    </select>
+</mapper>
